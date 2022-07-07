@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.samm.mapper.ReviewMapper">
+	<select id="select" parameterType="int" resultType="ReviewVo">
+		SELECT * FROM review pnum=#{pnum}
+	</select>
+	<select id="selectall" resultType="ReviewVo">
+		SELECT * FROM review
+	</select>
+	<select id="list" parameterType="int" resultType="ReviewVo">
+		SELECT * FROM review LIMIT 0, 5
+	</select>
+
+	<insert id="insert" parameterType="ReviewVo" useGeneratedKeys="true" keyProperty="pnum">
+			INSERT INTO review VALUES (NULL,#{contents},#{star},now(),now(),#{uid})
+	</insert>
+	<update id="update" parameterType="ReviewVo">
+		UPDATE review SET
+		<choose>
+			<when test="contents == null or contents.equals('')"></when>
+			<otherwise>
+				contents=#{contents},
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="star == null or star.equals('')"></when>
+			<otherwise>
+				star=#{star},
+			</otherwise>
+		</choose>
+		udate=now()
+		WHERE pnum=#{pnum}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM review WHERE pnum=#{pnum}
+	</delete>
+	<select id="selectperuser" parameterType="String" resultType="ReviewVo">
+		SELECT * FROM review WHERE uid=#{uid}
+	</select>
+
+	<select id="selectpertitle" parameterType="String" resultType="ReviewVo">
+		SELECT * FROM review
+		<if test="search != ' '">
+			WHERE title LIKE '%' || #{search} || '%'
+		</if>
+		LIMIT (#{page} - 1) * 20, 20
+	</select>
+
+	<select id="selectpercontents" parameterType="String" resultType="ReviewVo">
+		SELECT * FROM review
+		<if test="search != ' '">
+			WHERE contents LIKE '%' || #{search} || '%'
+		</if>
+		LIMIT (#{page} - 1) * 20, 20
+	</select>
+</mapper>

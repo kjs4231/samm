@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.samm.mapper.AdmintblMapper">
+
+	<select id="select" parameterType="String" resultType="admintblVo">
+		SELECT * FROM admintbl id=#{id}
+	</select>
+	<select id="selectall" resultType="admintblVo">
+		SELECT * FROM admintbl
+	</select>
+
+	<insert id="insert" parameterType="admintblVo">
+		INSERT INTO admintbl VALUES (#{id},#{pwd},#{name}
+		<choose>
+			<when test="address == null or address.equals('')"></when>
+			<otherwise>
+				,#{address}
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="phone == null or phone.equals('')"></when>
+			<otherwise>
+				,#{phone}
+			</otherwise>
+		</choose>
+		)
+	</insert>
+	<update id="update" parameterType="admintblVo">
+		UPDATE admintbl SET
+		<trim prefix="SET" suffixOverrides=",">
+			<choose>
+				<when test="pwd == null or pwd.equals('')"></when>
+				<otherwise>
+				pwd=#{pwd},
+			</otherwise>
+			</choose>
+			<choose>
+				<when test="name == null or name.equals('')"></when>
+				<otherwise>
+				name=#{name},
+			</otherwise>
+			</choose>
+			<choose>
+				<when test="address == null or address.equals('')"></when>
+				<otherwise>
+				address=#{address},
+			</otherwise>
+			</choose>
+			<when test="phone == null or phone.equals('')"></when>
+			<otherwise>
+				phone=#{phone},
+			</otherwise>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="String">
+		DELETE FROM admintbl WHERE id=#{id}
+	</delete>
+
+</mapper>
