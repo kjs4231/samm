@@ -39,14 +39,6 @@
 		SELECT * FROM review WHERE uid=#{uid}
 	</select>
 
-	<select id="selectpertitle" parameterType="String" resultType="ReviewVo">
-		SELECT * FROM review
-		<if test="search != ' '">
-			WHERE title LIKE '%' || #{search} || '%'
-		</if>
-		LIMIT (#{page} - 1) * 20, 20
-	</select>
-
 	<select id="selectpercontents" parameterType="String" resultType="ReviewVo">
 		SELECT * FROM review
 		<if test="search != ' '">
