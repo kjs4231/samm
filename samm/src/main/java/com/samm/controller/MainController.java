@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.samm.vo.AdmintblVo;
+
 @Controller
 public class MainController {
 	
@@ -23,7 +25,6 @@ public class MainController {
 	
 	@RequestMapping("/searchfestival")
 	public String searchfestival(Model m) {
-		
 		m.addAttribute("center","searchfestival");
 		return "index";
 	}
