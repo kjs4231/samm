@@ -11,7 +11,8 @@ import com.samm.vo.AdmintblVo;
 
 @Service
 public class AdmintblBiz implements Biz<String,AdmintblVo> {
-    @Autowired
+    
+	@Autowired
     AdmintblMapper admintblDao;
 
     @Override

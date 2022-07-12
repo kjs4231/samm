@@ -32,24 +32,26 @@
 				<when test="pwd == null or pwd.equals('')"></when>
 				<otherwise>
 				pwd=#{pwd},
-			</otherwise>
+				</otherwise>
 			</choose>
 			<choose>
 				<when test="name == null or name.equals('')"></when>
 				<otherwise>
 				name=#{name},
-			</otherwise>
+				</otherwise>
 			</choose>
 			<choose>
 				<when test="address == null or address.equals('')"></when>
 				<otherwise>
 				address=#{address},
-			</otherwise>
+				</otherwise>
 			</choose>
-			<when test="phone == null or phone.equals('')"></when>
-			<otherwise>
+			<choose>
+				<when test="phone == null or phone.equals('')"></when>
+				<otherwise>
 				phone=#{phone},
-			</otherwise>
+				</otherwise>
+			</choose>
 		</trim>
 		WHERE id=#{id}
 	</update>
