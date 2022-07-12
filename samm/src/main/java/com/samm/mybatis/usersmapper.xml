@@ -3,7 +3,8 @@
 <mapper namespace="com.samm.mapper.UsersMapper">
 
 	<select id="select" parameterType="String" resultType="UsersVo">
-		SELECT * FROM users id=#{id}
+		SELECT *
+		FROM users id=#{id}
 	</select>
 	<select id="selectall" resultType="UsersVo">
 		SELECT * FROM users
@@ -31,30 +32,34 @@
 			<choose>
 				<when test="pwd == null or pwd.equals('')"></when>
 				<otherwise>
-				pwd=#{pwd},
-			</otherwise>
+					pwd=#{pwd},
+				</otherwise>
 			</choose>
 			<choose>
 				<when test="name == null or name.equals('')"></when>
 				<otherwise>
-				name=#{name},
-			</otherwise>
+					name=#{name},
+				</otherwise>
 			</choose>
 			<choose>
 				<when test="address == null or address.equals('')"></when>
 				<otherwise>
-				address=#{address},
-			</otherwise>
+					address=#{address},
+				</otherwise>
 			</choose>
-			<when test="phone == null or phone.equals('')"></when>
-			<otherwise>
+			
+			<choose>
+				<when test="phone == null or phone.equals('')"></when>
+				<otherwise>
 				phone=#{phone},
-			</otherwise>
+				</otherwise>
+			</choose>
 		</trim>
 		WHERE id=#{id}
 	</update>
 	<delete id="delete" parameterType="String">
-		DELETE FROM users WHERE id=#{id}
+		DELETE FROM users WHERE
+		id=#{id}
 	</delete>
 
 </mapper>

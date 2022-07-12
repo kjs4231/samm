@@ -7,8 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.samm.vo.AdmintblVo;
 
-@Repository
+
 @Mapper
+@Repository
 public interface AdmintblMapper {
     public void insert(AdmintblVo v) throws Exception;
     public void delete(String k) throws Exception;
