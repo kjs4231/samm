@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.samm.mapper.ReviewMapper">
 	<select id="select" parameterType="int" resultType="ReviewVo">
-		SELECT * FROM review pnum=#{pnum}
+		SELECT * FROM review where pnum=#{pnum}
 	</select>
 	<select id="selectall" resultType="ReviewVo">
 		SELECT * FROM review
@@ -35,15 +35,16 @@
 	<delete id="delete" parameterType="int">
 		DELETE FROM review WHERE pnum=#{pnum}
 	</delete>
-	<select id="selectperuser" parameterType="String" resultType="ReviewVo">
+	<select id="selectByUid" parameterType="String" resultType="ReviewVo">
 		SELECT * FROM review WHERE uid=#{uid}
 	</select>
 
-	<select id="selectpercontents" parameterType="String" resultType="ReviewVo">
+	<select id="selectByContents" parameterType="String" resultType="ReviewVo">
+		<bind name="key_offset" value="(page-1)*20"></bind>
 		SELECT * FROM review
-		<if test="search != ' '">
-			WHERE contents LIKE '%' || #{search} || '%'
+		<if test='contents != ""'>
+			WHERE contents LIKE CONCAT('%', #{contents}, '%')
 		</if>
-		LIMIT (#{page} - 1) * 20, 20
+		order by pnum desc LIMIT #{key_offset}, 20
 	</select>
 </mapper>

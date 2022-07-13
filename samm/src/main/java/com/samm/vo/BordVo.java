@@ -30,18 +30,18 @@ public class BordVo {
         this.views = views;
         this.uid = uid;
     }
-
+    
+    // 글 작성시
+    public BordVo(String contents, String title, String uid) {
+    	this.contents = contents;
+    	this.title = title;
+    	this.uid = uid;
+    }
+    
     // 글 수정시
-    public BordVo(Integer pnum, String contents, String title, Date udate, int views) {
+    public BordVo(Integer pnum, String contents, String title) {
         this.pnum = pnum;
         this.contents = contents;
         this.title = title;
-        this.views = views;
-    }
-
-    // 조회수
-    public BordVo(Integer pnum, int views) {
-        this.pnum = pnum;
-        this.views = views;
     }
 }
