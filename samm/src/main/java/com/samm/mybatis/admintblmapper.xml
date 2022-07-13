@@ -3,22 +3,22 @@
 <mapper namespace="com.samm.mapper.AdmintblMapper">
 
 	<select id="select" parameterType="String" resultType="admintblVo">
-		SELECT * FROM admintbl id=#{id}
+		SELECT * FROM admintbl where id=#{id}
 	</select>
-	<select id="selectall" resultType="admintblVo">
+	<select id="selectAll" resultType="admintblVo">
 		SELECT * FROM admintbl
 	</select>
 
 	<insert id="insert" parameterType="admintblVo">
 		INSERT INTO admintbl VALUES (#{id},#{pwd},#{name}
 		<choose>
-			<when test="address == null or address.equals('')"></when>
+			<when test="address == null or address.equals('')">,null</when>
 			<otherwise>
 				,#{address}
 			</otherwise>
 		</choose>
 		<choose>
-			<when test="phone == null or phone.equals('')"></when>
+			<when test="phone == null or phone.equals('')">,null</when>
 			<otherwise>
 				,#{phone}
 			</otherwise>
@@ -26,30 +26,32 @@
 		)
 	</insert>
 	<update id="update" parameterType="admintblVo">
-		UPDATE admintbl SET
+		UPDATE admintbl
 		<trim prefix="SET" suffixOverrides=",">
 			<choose>
 				<when test="pwd == null or pwd.equals('')"></when>
 				<otherwise>
 				pwd=#{pwd},
-			</otherwise>
+				</otherwise>
 			</choose>
 			<choose>
 				<when test="name == null or name.equals('')"></when>
 				<otherwise>
 				name=#{name},
-			</otherwise>
+				</otherwise>
 			</choose>
 			<choose>
 				<when test="address == null or address.equals('')"></when>
 				<otherwise>
 				address=#{address},
-			</otherwise>
+				</otherwise>
 			</choose>
-			<when test="phone == null or phone.equals('')"></when>
-			<otherwise>
+			<choose>
+				<when test="phone == null or phone.equals('')"></when>
+				<otherwise>
 				phone=#{phone},
-			</otherwise>
+				</otherwise>
+			</choose>
 		</trim>
 		WHERE id=#{id}
 	</update>

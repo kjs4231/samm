@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 <mapper namespace="com.samm.mapper.WishMapper">
 	
 	<select id="select" parameterType="int" resultType="WishVo">
-		SELECT * FROM wish id=#{id}
+		SELECT * FROM wish where id=#{id}
 	</select>
 	<select id="selectall" resultType="WishVo">
 		SELECT * FROM wish

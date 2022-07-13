@@ -2,17 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.samm.mapper.BordMapper">
 	<select id="select" parameterType="int" resultType="bordVo">
-		SELECT * FROM bord pnum=#{pnum}
+		SELECT * FROM
+		bord where pnum=#{pnum}
 	</select>
-	<select id="selectall" resultType="bordVo">
+	<select id="selectAll" resultType="bordVo">
 		SELECT * FROM bord
 	</select>
 	<select id="list" parameterType="int" resultType="bordVo">
-		SELECT pnum,title,uid,views,regdate from bord LIMIT (#{page} - 1) * 20, 20
+		<bind name="key_offset" value="(page-1)*20"></bind>
+		SELECT pnum,title,uid,views,regdate from bord order by pnum desc LIMIT
+		#{key_offset}, 20
 	</select>
 
-	<insert id="insert" parameterType="bordVo" useGeneratedKeys="true" keyProperty="pnum">
-			INSERT INTO bord VALUES (NULL,#{contents},#{title},now(),now(),0,#{uid})
+	<insert id="insert" parameterType="bordVo"
+		useGeneratedKeys="true" keyProperty="pnum">
+		INSERT INTO bord VALUES
+		(NULL,#{contents},#{title},now(),now(),0,#{uid})
 	</insert>
 	<update id="update" parameterType="bordVo">
 		UPDATE bord SET
@@ -32,29 +37,38 @@
 		WHERE pnum=#{pnum}
 	</update>
 	<update id="views" parameterType="int">
-		UPDATE bord SET views=views+1 WHERE pnum=#{pnum}
+		UPDATE bord SET views=views+1
+		WHERE pnum=#{pnum}
 	</update>
 	<delete id="delete" parameterType="int">
-		DELETE FROM bord WHERE pnum=#{pnum}
+		DELETE FROM bord WHERE
+		pnum=#{pnum}
 	</delete>
-	<select id="selectbyuid" parameterType="Map" resultType="bordVo">
-		SELECT * FROM bord WHERE uid=#{uid} LIMIT (#{page} - 1) * 20, 20
+	<select id="selectByUid" parameterType="Map" resultType="bordVo">
+		<bind name="key_offset" value="(page-1)*20"></bind>
+		SELECT *
+		FROM bord WHERE uid=#{uid} order by pnum desc LIMIT
+		#{key_offset}, 20
 	</select>
 
-	<select id="selectbytitle" parameterType="Map" resultType="bordVo">
+	<select id="selectByTitle" parameterType="Map"
+		resultType="bordVo">
+		<bind name="key_offset" value="(page-1)*20"></bind>
 		SELECT * FROM bord
-		<if test="search != ' '">
-			WHERE title LIKE '%' || #{search} || '%'
+		<if test='title != ""'>
+			WHERE title LIKE CONCAT('%', #{title}, '%')
 		</if>
-		LIMIT (#{page} - 1) * 20, 20
+		order by pnum desc LIMIT #{key_offset}, 20
 	</select>
 
-	<select id="selectbycontents" parameterType="Map" resultType="bordVo">
+	<select id="selectByContents" parameterType="Map"
+		resultType="bordVo">
+		<bind name="key_offset" value="(page-1)*20"></bind>
 		SELECT * FROM bord
-		<if test="search != ' '">
-			WHERE contents LIKE '%' || #{search} || '%'
+		<if test='contents != ""'>
+			WHERE contents LIKE CONCAT('%', #{contents}, '%')
 		</if>
-		LIMIT (#{page} - 1) * 20, 20
+		order by pnum desc LIMIT #{key_offset}, 20
 	</select>
 
 </mapper>

@@ -3,58 +3,86 @@
 <mapper namespace="com.samm.mapper.UsersMapper">
 
 	<select id="select" parameterType="String" resultType="UsersVo">
-		SELECT * FROM users id=#{id}
+		SELECT *
+		FROM users where id=#{id}
 	</select>
-	<select id="selectall" resultType="UsersVo">
+	<select id="selectAll" resultType="UsersVo">
 		SELECT * FROM users
 	</select>
 
 	<insert id="insert" parameterType="UsersVo">
 		INSERT INTO users VALUES (#{id},#{pwd},#{name}
 		<choose>
-			<when test="address == null or address.equals('')"></when>
+			<when test="email == null or email.equals('')">,null</when>
+			<otherwise>
+				,#{email}
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="address == null or address.equals('')">,null</when>
 			<otherwise>
 				,#{address}
 			</otherwise>
 		</choose>
 		<choose>
-			<when test="phone == null or phone.equals('')"></when>
+			<when test="phone == null or phone.equals('')">,null</when>
 			<otherwise>
 				,#{phone}
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="gender == null or gender.equals('')">,null</when>
+			<otherwise>
+				,#{gender}
 			</otherwise>
 		</choose>
 		)
 	</insert>
 	<update id="update" parameterType="UsersVo">
-		UPDATE users SET
+		UPDATE users
 		<trim prefix="SET" suffixOverrides=",">
 			<choose>
 				<when test="pwd == null or pwd.equals('')"></when>
 				<otherwise>
-				pwd=#{pwd},
-			</otherwise>
+					pwd=#{pwd},
+				</otherwise>
 			</choose>
 			<choose>
 				<when test="name == null or name.equals('')"></when>
 				<otherwise>
-				name=#{name},
-			</otherwise>
+					name=#{name},
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="email == null or email.equals('')"></when>
+				<otherwise>
+					email=#{email},
+				</otherwise>
 			</choose>
 			<choose>
 				<when test="address == null or address.equals('')"></when>
 				<otherwise>
-				address=#{address},
-			</otherwise>
+					address=#{address},
+				</otherwise>
 			</choose>
-			<when test="phone == null or phone.equals('')"></when>
-			<otherwise>
-				phone=#{phone},
-			</otherwise>
+			<choose>
+				<when test="phone == null or phone.equals('')"></when>
+				<otherwise>
+					phone=#{phone},
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="gender == null or gender.equals('')"></when>
+				<otherwise>
+					gender=#{gender},
+				</otherwise>
+			</choose>
 		</trim>
 		WHERE id=#{id}
 	</update>
 	<delete id="delete" parameterType="String">
-		DELETE FROM users WHERE id=#{id}
+		DELETE FROM users WHERE
+		id=#{id}
 	</delete>
 
 </mapper>
