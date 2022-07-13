@@ -1,24 +1,40 @@
 package com.samm.vo;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-public class AdmintblVo extends UsersVo {
+public class AdmintblVo {
+    private String id;
+    private String pwd;
+    private String name;
+    private String address;
+    private String phone;
+
+    // 기본 생성자
     public AdmintblVo(String id, String pwd, String name, String address, String phone) {
-        super(id, pwd, name, address, phone);
+        this.id = id;
+        this.pwd = pwd;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+    }
+    public AdmintblVo() {
     }
 
+    // 로그인
     public AdmintblVo(String id, String pwd) {
-        super(id, pwd);
+        this.id = id;
+        this.pwd = pwd;
     }
 
+    // 최소 회원가입
     public AdmintblVo(String id, String pwd, String name) {
-        super(id, pwd, name);
+        this.id = id;
+        this.pwd = pwd;
+        this.name = name;
     }
 }
