@@ -10097,4 +10097,6 @@ textarea.form-control {
 #footer--screen{
 	display: flex;
 	width: -webkit-fill-available;
+	position: absolute; 
+	
 }
