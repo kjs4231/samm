@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="select" parameterType="int" resultType="WishVo">
 		SELECT * FROM wish where id=#{id}
 	</select>
-	<select id="selectall" resultType="WishVo">
+	<select id="selectAll" resultType="WishVo">
 		SELECT * FROM wish
 	</select>
 	
