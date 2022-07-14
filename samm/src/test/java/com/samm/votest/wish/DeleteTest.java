@@ -16,7 +16,7 @@ class DeleteTest {
 	void contextLoads() {
 	
 		try {
-			biz.remove(1);
+			biz.remove(13);
 			System.out.println("delete test 완료");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

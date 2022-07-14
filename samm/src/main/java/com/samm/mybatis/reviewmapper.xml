@@ -4,7 +4,7 @@
 	<select id="select" parameterType="int" resultType="ReviewVo">
 		SELECT * FROM review where pnum=#{pnum}
 	</select>
-	<select id="selectall" resultType="ReviewVo">
+	<select id="selectAll" resultType="ReviewVo">
 		SELECT * FROM review
 	</select>
 	<select id="list" parameterType="int" resultType="ReviewVo">

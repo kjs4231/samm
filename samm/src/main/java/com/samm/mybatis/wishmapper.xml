@@ -7,15 +7,15 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="select" parameterType="int" resultType="WishVo">
 		SELECT * FROM wish where id=#{id}
 	</select>
-	<select id="selectall" resultType="WishVo">
+	<select id="selectAll" resultType="WishVo">
 		SELECT * FROM wish
 	</select>
 	
 	<insert id="insert" parameterType="WishVo" useGeneratedKeys="true" keyProperty="id">
-			INSERT INTO wish VALUES (NULL,#{table},#{fid},#{uid},#{id2})
+			INSERT INTO wish VALUES (NULL,#{tablename},#{fid},#{uid},#{id2})
 	</insert>
 <!--	<update id="update" parameterType="WishVo">
-		 	UPDATE wish SET table=#{table},fid=#{fid},uid=#{uid},id2=#{id2} WHERE id=#{id}
+		 	UPDATE wish SET tablename=#{tablename},fid=#{fid},uid=#{uid},id2=#{id2} WHERE id=#{id}
 	</update> -->
 	<delete id="delete" parameterType="int">
 		DELETE FROM wish WHERE id=#{id}
