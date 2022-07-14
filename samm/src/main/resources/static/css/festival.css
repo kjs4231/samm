@@ -1,0 +1,43 @@
+.festival--subject{
+	text-align: center;
+}
+
+.areacode{
+	display:flex;
+	margin-top: 3em;
+	margin-left:auto;
+	margin-right:auto;
+	width:100%;
+	border: 1px solid black;
+	justify-content: space-around;
+	align-items:center;
+}
+
+.area--ul{
+	display: flex;
+	flex-direction: row;
+
+}
+
+.area--li{
+	padding:3px;
+}
+
+.nosearchtxt{
+	text-align: center;
+	
+}
+
+.area--a:hover{
+	cursor: pointer;
+}
+
+.area--a:active{
+	font-weight: bold;
+	color: #fd7e14;
+}
+
+.active-area{
+	font-weight: bold;
+	color: #fd7e14;
+}
