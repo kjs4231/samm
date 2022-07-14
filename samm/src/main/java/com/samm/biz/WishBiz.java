@@ -3,11 +3,13 @@ package com.samm.biz;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.samm.frame.Biz;
 import com.samm.mapper.WishMapper;
 import com.samm.vo.WishVo;
 
+@Service
 public class WishBiz implements Biz<Integer,WishVo> {
     @Autowired
     WishMapper wishDao;
