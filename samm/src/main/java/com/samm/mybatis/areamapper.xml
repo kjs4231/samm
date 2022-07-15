@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.samm.mapper.AreaMapper">
+
+	
+
+	<insert id="insert" parameterType="Map">
+		INSERT INTO areacode VALUES (#{code},#{name})
+	</insert>
+	
+	<insert id="insert2" parameterType="Map">
+		INSERT INTO sigungucode VALUES (#{code},#{name},#{pcode})
+	</insert>
+	
+	<select id="select" resultType="String">
+		select code from areacode
+	</select>
+	
+	<select id="selectAll" resultType="Map">
+		select * from areacode
+	</select>
+
+</mapper>
