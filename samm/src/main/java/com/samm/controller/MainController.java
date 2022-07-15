@@ -59,9 +59,9 @@ public class MainController {
 		return "index";
 	}
 	
-	@RequestMapping("/searchfestival")
+	@RequestMapping("/map")
 	public String searchfestival(Model m) {
-		m.addAttribute("center","searchfestival");
-		return "index";
+		
+		return "map";
 	}
 }
