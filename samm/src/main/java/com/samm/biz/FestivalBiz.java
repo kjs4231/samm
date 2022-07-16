@@ -42,5 +42,10 @@ public class FestivalBiz implements Biz<Integer, FestivalVo> {
 	public List<FestivalVo> get() throws Exception {
 		return festivalDao.selectAll();
 	}
+	
+	public List<String> getContentId() throws Exception{
+		
+		return festivalDao.getContentId();
+	}
 
 }

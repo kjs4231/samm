@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.samm.mapper.FestivalDetailMapper">
+
+	<insert id="introInsert" parameterType="Map" >
+		INSERT INTO detailintro VALUES (#{contentid},#{agelimit},#{eventplace},#{eventstartdate},#{eventenddate},
+		#{festivaltype},#{bookingplace},#{placeinfo},#{playtime},#{program},#{progresstype},#{spendtimefestival}
+		,#{sponsor1},#{sponsortel1},#{sponsor2},#{sponsor1tel2},#{subevent},#{usetimefestival})
+	</insert>
+	
+	<insert id="infoInsert" parameterType="Map" >
+		INSERT INTO detailinfo VALUES (#{contentid},#{infoname},#{infotext},#{infoname2},#{infotext2})
+	</insert>
+	
+	<insert id="commonInsert" parameterType="Map" >
+		INSERT INTO detailcommon VALUES (#{contentid},#{createdtime},#{addr1},#{areacode},#{firstimage},#{firstimage2},
+		#{homepage},#{mapx},#{mapy},#{modifiedtime},#{overview},#{tel},#{telname},#{title},#{zipcode},#{sigungucode})
+	</insert>
+	
+
+</mapper>
