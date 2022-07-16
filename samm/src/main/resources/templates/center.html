@@ -37,19 +37,19 @@
 			<div class="col-md-4 ftco-animate" th:each="list:${festival}">
 				<div class="project-wrap">
 					<a class="img"
-						th:style="'background-image:url('+@{${list['firstimage']}}+');'">
+						th:style="'background-image:url('+@{${list.firstimage}}+');'">
 						<span class="price">진행중</span>
 					</a>
 					<div class="text p-4">
 						<span class="days"><span
-							th:text="${list['eventstartdate']}"></span> ~ <span
-							th:text="${list['eventenddate']}"></span></span>
+							th:text="${list.eventstartdate}"></span> ~ <span
+							th:text="${list.eventenddate}"></span></span>
 						<h3>
-							<a href="#" th:text="${list['title']}"><input name="contentid" hidden th:value="${list['contentid']}">Banaue Rice Terraces</a>
+							<a href="#" th:text="${list.title}"><input name="contentid" hidden th:value="${list.contentid}">Banaue Rice Terraces</a>
 						</h3>
 						<p class="location">
 							<span class="fa fa-map-marker"></span><span
-								th:text="${list['addr1']}"></span>
+								th:text="${list.address1}"></span>
 						</p>
 						<!--
  						<ul>

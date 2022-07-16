@@ -2,34 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.samm.mapper.FestivalMapper">
 	<select id="select" parameterType="int" resultType="FestivalVo">
-		SELECT * FROM festival WHERE id=#{id}
+		SELECT * FROM festival WHERE contentid=#{contentid}
 	</select>
-	
+
 	<select id="selectAll" resultType="FestivalVo">
 		SELECT * FROM festival
 	</select>
-	
+
 	<select id="getContentId" resultType="String">
 		SELECT contentid FROM festival
 	</select>
 
-	<insert id="insert" parameterType="FestivalVo" useGeneratedKeys="true" keyProperty="id">
+	<select id="searchFestival" parameterType="Map" resultType="FestivalVo">
+		SELECT * FROM festival WHERE areacode=#{areacode} and eventstartdate <![CDATA[ <= #{eventstartdate}]]> and eventenddate <![CDATA[ >= #{eventenddate}]]> 
+	</select>
+
+	<insert id="insert" parameterType="FestivalVo" useGeneratedKeys="true" keyProperty="contentid">
 		INSERT INTO festival VALUES (#{contentid},#{title},#{areacode},#{eventstartdate},#{eventenddate},
 		#{tel},#{addr1},#{mapx},#{mapy},#{createdtime},#{firstimage},#{firstimage2})
 	</insert>
-	
-	<insert id="apiinsert" parameterType="Map" >
+
+	<insert id="apiinsert" parameterType="Map">
 		INSERT INTO festival VALUES (#{contentid},#{title},#{areacode},#{eventstartdate},#{eventenddate},
 		#{tel},#{addr1},#{mapx},#{mapy},#{createdtime},#{firstimage},#{firstimage2})
 	</insert>
-	
+
 	<update id="update" parameterType="FestivalVo">
 		Update festival SET name=#{name}, area=#{area}, sdate=#{sdate}, edate=#{edate}
 		, contents=#{contents}, manage=#{manage}, host=#{host}, donate=#{donate}, phone=#{phone}
 		, homepage=#{homepage}, relatedInfo=#{relatedInfo}, address1=#{address1}, address2=#{address2}
 		, latitude=#{latitude}, longitude=#{longitude},udate=SYSDATE() WHERE ID =#{id}
 	</update>
-	
+
 	<delete id="delete" parameterType="int">
 		DELETE FROM festival WHERE
 		id=#{id}
