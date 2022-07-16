@@ -17,7 +17,7 @@ class SelectTest {
 	void contextLoads() {
 		FestivalVo obj = null;
 		try {
-			obj = biz.get(770);
+			obj = biz.get(140660);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
