@@ -64,4 +64,9 @@ public class MainController {
 		
 		return "map";
 	}
+
+	@RequestMapping("/sandbox")
+	public String sandbox(Model m) {
+		return "sandbox";
+	}
 }

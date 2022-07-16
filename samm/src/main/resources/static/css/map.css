@@ -2,19 +2,30 @@
 
 
 
-html, body {
-	margin:0;
+html,
+body {
+	margin: 0;
 	height: 100%;
-	overflow:hidden;
+	overflow: hidden;
 }
 
 .map-paintting {
-	display:flex;
+	display: flex;
 	flex-direction: row;
-	overflow:hidden;
-	color: green;
-	margin-top : 88.8px;
+	overflow: hidden;
+	background: #fff;
+	margin-top: 88.8px;
 	height: 88%;
 	width: 100%;
 	border: 1px solid black;
+	position: relative;
+}
+
+#map-searchbox {
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	align-items: center;
 }
