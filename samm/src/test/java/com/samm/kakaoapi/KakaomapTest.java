@@ -1,13 +1,10 @@
-package com.samm;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+package com.samm.kakaoapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SammApplicationTests {
+class KakaomapTest {
 
 	@Test
 	void contextLoads() {

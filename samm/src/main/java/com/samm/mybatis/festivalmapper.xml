@@ -8,11 +8,19 @@
 	<select id="selectAll" resultType="FestivalVo">
 		SELECT * FROM festival
 	</select>
+	
+	<select id="getContentId" resultType="String">
+		SELECT contentid FROM festival
+	</select>
 
 	<insert id="insert" parameterType="FestivalVo" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO festival VALUES (NULL,#{name},#{area},#{sdate},#{edate},#{contents}
-		,#{manage},#{host},#{donate},#{phone},#{homepage},#{relatedInfo},#{address1}
-		,#{address2},#{latitude},#{longitude},SYSDATE())
+		INSERT INTO festival VALUES (#{contentid},#{title},#{areacode},#{eventstartdate},#{eventenddate},
+		#{tel},#{addr1},#{mapx},#{mapy},#{createdtime},#{firstimage},#{firstimage2})
+	</insert>
+	
+	<insert id="apiinsert" parameterType="Map" >
+		INSERT INTO festival VALUES (#{contentid},#{title},#{areacode},#{eventstartdate},#{eventenddate},
+		#{tel},#{addr1},#{mapx},#{mapy},#{createdtime},#{firstimage},#{firstimage2})
 	</insert>
 	
 	<update id="update" parameterType="FestivalVo">
