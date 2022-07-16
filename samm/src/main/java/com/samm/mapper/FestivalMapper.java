@@ -16,7 +16,8 @@ public interface FestivalMapper {
 	public void update(FestivalVo f) throws Exception;
 	public FestivalVo select(int k) throws Exception;
 	public List<FestivalVo> selectAll() throws Exception;
-	
+	public List<FestivalVo> searchFestival(HashMap<String, String> hashmap) throws Exception;
+
 	public void apiinsert (HashMap<String, String> hashmap) throws Exception;
 	public List<String> getContentId() throws Exception;
 }

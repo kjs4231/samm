@@ -68,6 +68,7 @@ public class TourFestivalAPI {
 
 		URL url = new URL(urlBuilder.toString());
 		String strURL = urlBuilder.toString();
+		System.out.println(strURL);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Content-type", "application/json");

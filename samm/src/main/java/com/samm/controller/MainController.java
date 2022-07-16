@@ -3,7 +3,6 @@ package com.samm.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,13 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.samm.biz.AreaBiz;
-import com.samm.restapi.TourFestivalAPI;
+import com.samm.biz.FestivalBiz;
+import com.samm.vo.FestivalVo;
 
 @Controller
 public class MainController {
 	
 	@Autowired
-	TourFestivalAPI tour;
+	FestivalBiz fbiz;
 	@Autowired
 	AreaBiz abiz;
 	
@@ -34,10 +34,10 @@ public class MainController {
 		}
 		eventstartdate = today.format(date).toString();
 		eventenddate = today.format(date).toString();
-		List<HashMap<String, String>> list = null;
+		List<FestivalVo> list = null;
 		List<Map<String, String>> area = null;
 		try {
-			list = tour.searchFestival(areacode, eventstartdate, eventenddate);
+			list = fbiz.searchFestival(areacode, eventstartdate, eventenddate);
 			area = abiz.get();
 		} catch (IOException e) {
 			e.printStackTrace();
