@@ -43,7 +43,7 @@ public class TourFestivalAPI {
 		StringBuilder urlBuilder = new StringBuilder(
 				"http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchFestival"); /* 행사정보 URL */
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8")
-				+ "=daFe2av2mANluZHrEgRotgYJfcr%2BNJpDzHNx53PoqBnCL97Xxd7yCqRvF507%2FxLykBOPWv8XYq%2BD2ZPelZgQtA%3D%3D"); // servicekey
+				+ "=tfve0pUOnMXCq5%2F%2Fm0wkmz%2BoE2%2BWsgFwlecdUgsklVSER1UoydTgZG1ZaUOK%2FtsetQnRNi1TuOiEjM%2BHncD9qw%3D%3D"); // servicekey
 		urlBuilder.append(
 				"&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*
 																											 * 한 페이지 결과수
