@@ -1,0 +1,20 @@
+@charset "EUC-KR";
+
+
+
+html, body {
+	margin:0;
+	height: 100%;
+	overflow:hidden;
+}
+
+.map-paintting {
+	display:flex;
+	flex-direction: row;
+	overflow:hidden;
+	color: green;
+	margin-top : 88.8px;
+	height: 88%;
+	width: 100%;
+	border: 1px solid black;
+}
