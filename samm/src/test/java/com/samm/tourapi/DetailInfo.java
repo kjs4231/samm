@@ -97,11 +97,11 @@ class DetailInfo {
 				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
 			}
 
-//			StringBuilder sb = new StringBuilder();
-//			String line;
-//			while ((line = rd.readLine()) != null) {
-//				sb.append(line);
-//			}
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				sb.append(line);
+			}
 
 			DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder;
@@ -149,7 +149,7 @@ class DetailInfo {
 			}
 			rd.close();
 			conn.disconnect();
-//			System.out.println(sb.toString());
+			System.out.println(sb.toString());
 
 		}
 		System.out.println("END----------------------------------");

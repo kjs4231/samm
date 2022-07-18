@@ -1,33 +1,35 @@
 package com.samm.controller;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.samm.biz.FestivalBiz;
 import com.samm.restapi.TourFestivalAPI;
+import com.samm.vo.FestivalVo;
 
 @RestController
 public class AreaController {
 
 	@Autowired
+	FestivalBiz fbiz;
+	@Autowired
 	TourFestivalAPI tour;
 	
 	@RequestMapping("/callArea")
-	public List<HashMap<String, String>> getAreaCode(String code) {
+	public List<FestivalVo> getAreaCode(String code) {
 		Date date = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
 		String sdate = today.format(date).toString();
 		System.out.println(code);
-		List<HashMap<String, String>> list = null;
+		List<FestivalVo> list = null;
 		try {
-			list = tour.searchFestival(code, sdate, sdate);
-		} catch (IOException e) {
+			list = fbiz.searchFestival(code, sdate, sdate);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

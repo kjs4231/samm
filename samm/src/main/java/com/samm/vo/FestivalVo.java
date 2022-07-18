@@ -20,7 +20,7 @@ public class FestivalVo {
     private String eventstartdate; // sdate date,
     private String eventenddate; // edate date,
     private String tel;   // phone varchar(50),
-    private String address1;    // address1 varchar(50),
+    private String addr1;    // address1 varchar(50),
     private double mapx;    // latitude double,
     private double mapy;   // longitude double,
     private Date createdtime;   // regdate date
