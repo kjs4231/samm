@@ -64,9 +64,9 @@
 	</nav>
 
 	<div class="map-paintting">
-		<div></div>
-		<div class="s003" id="map-searchbox">
-			<form>
+		<div id-comment="map"></div>
+		<div class="s003 d-flex flex-column" id="map-searchbox">
+			<form class="item">
 				<div class="inner-form">
 					<div class="input-field second-wrap">
 						<input id="search" type="text" placeholder="Enter Keywords?" />
@@ -82,19 +82,29 @@
 						</button>
 					</div>
 				</div>
-				<div class="mt-2"></div>
-
-				<div container="l-card container">
-					<a href="#">
-						<div class="l-card-ongoing">진행중</div>
-						<div class="l-card-title">남산봉수</div>
-						<div class="l-card-class">축제</div>
-						<div class="l-card-period"><span>19721121</span>~<span>20221022</span></div>
-						<div class="l-card-loc">서울</div>
-						<img class="l-card-pic" src=""></img>
-					</a>
-				</div>
 			</form>
+			<th:block th:each="list:${festival}">
+				<div class="mt-2"></div>
+				<div class="l-card item container">
+					<div class="l-card-left col-3"><img class="l-card-firstimage" th:src="${list.firstimage}"
+							src="http://tong.visitkorea.or.kr/cms/resource/72/2489672_image2_1.jpg"></img></div>
+					<div class="l-card-right col-9">
+
+						<div class="inline">
+							<div class="l-card-txt dbtable">축제</div>
+							<div class="l-card-txt ongoing">진행중</div>
+							<div class="l-card-txt days"><span th:text="${list.eventstartdate}">19721121</span> ~
+								<span th:text="${list.eventenddate}">20221022</span>
+							</div>
+						</div>
+						<div>
+							<div class="l-card-txt title" th:text="${list.title}">남산봉수</div>
+						</div>
+						<div class="l-card-txt location"><span class="fa fa-map-marker"></span> <span
+								th:text="${list.location}">서울</span></div>
+					</div>
+				</div>
+			</th:block>
 		</div>
 		<div></div>
 	</div>
