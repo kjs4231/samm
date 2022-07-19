@@ -67,6 +67,18 @@ public class MainController {
 
 	@RequestMapping("/sandbox")
 	public String sandbox(Model m) {
+		Date date = new Date();
+		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
+		String sdate = today.format(date).toString();
+		List<FestivalVo> list = null;
+		try {
+			list = fbiz.searchFestival("1", sdate, sdate);
+			System.out.println(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m.addAttribute("festival",list);
 		return "sandbox";
 	}
 }

@@ -52,7 +52,7 @@
 	background-size: cover;
 	background-position: center center;
 	padding: 15px;
-	width: 20rem;
+	width: 25rem;
 }
 
 .s003 form {
@@ -87,7 +87,7 @@
 	padding: 10px 32px;
 	font-size: 16px;
 	color: #555;
-	
+
 }
 
 .s003 form .inner-form .input-field input.placeholder {
@@ -264,4 +264,118 @@
 		margin-bottom: 0;
 		width: 100%;
 	}
+}
+
+.s003 #map-searchlist {
+	width: 100%;
+	max-width: 790px;
+	margin: 0;
+	padding: 0;
+	overflow-y: auto;
+}
+
+.s003 .l-card {
+	margin-bottom: 0;
+	background: #fff;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	-ms-flex-align: center;
+	align-items: center;
+	box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+	border-radius: 0;
+}
+
+
+
+.s003 .l-card-left {
+	margin: 0;
+	padding: 0;
+	position: relative;
+    width: 85px;
+    height: 70px;
+	overflow: hidden;
+}
+
+.s003 .l-card-right {
+	margin: 0;
+	padding: 5px 0 5px 15px;
+}
+
+.s003 .l-card-noimage {
+	margin: 0;
+	padding: 5px 0 5px;
+}
+
+.s003 .l-card-firstimage {
+	position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+}
+
+.s003 .l-card-txt.title {
+	color: rgb(0, 0, 0);
+	font-family: "Poppins", Arial, sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.s003 .l-card-txt.location {
+	color: #999999;
+	font-family: "Poppins", Arial, sans-serif;
+	font-size: 13px;
+	line-height: 1.8;
+	font-weight: 400;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-left: 1px;
+}
+
+.s003 .inline {}
+
+.s003 .inline:after {
+	clear: both;
+	display: block;
+	content: ''
+}
+
+.s003 .l-card-txt.dbtable {
+	background-color: white;
+	color: rgb(0, 0, 0);
+	font-family: "Poppins", Arial, sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	float: left;
+	display: inline;
+	margin-left: 1px;
+}
+
+.s003 .l-card-txt.ongoing {
+	color: white;
+	background-color: rgb(241, 93, 48);
+	font-family: "Poppins", Arial, sans-serif;
+	font-size: 13px;
+	font-weight: 400;
+	float: left;
+	display: inline
+}
+
+.s003 .l-card-txt.days {
+	color: rgb(241, 93, 48);
+	font-family: "Poppins", Arial, sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	float: right;
+	display: inline
 }

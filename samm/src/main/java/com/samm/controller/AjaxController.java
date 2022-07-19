@@ -33,9 +33,6 @@ public class AjaxController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	 
-		
 		return list;
 	}
 	
