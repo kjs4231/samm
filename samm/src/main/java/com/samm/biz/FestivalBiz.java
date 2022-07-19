@@ -48,11 +48,25 @@ public class FestivalBiz implements Biz<Integer, FestivalVo> {
 		return festivalDao.getContentId();
 	}
 
+	public List<FestivalVo> searchFestival(String areacode, String eventstartdate, String eventenddate, Integer page) throws Exception {
+		HashMap<String, String> param = new HashMap<>();
+		param.put("areacode", areacode);
+        param.put("eventstartdate", eventstartdate);
+		param.put("eventenddate", eventenddate);
+		if (page == null) {
+			param.put("page","1");
+		} else {
+			param.put("page",page.toString());
+		}
+		return festivalDao.searchFestival(param);
+	}
+
 	public List<FestivalVo> searchFestival(String areacode, String eventstartdate, String eventenddate) throws Exception {
 		HashMap<String, String> param = new HashMap<>();
 		param.put("areacode", areacode);
         param.put("eventstartdate", eventstartdate);
 		param.put("eventenddate", eventenddate);
+		param.put("page","1");
 		return festivalDao.searchFestival(param);
 	}
 }

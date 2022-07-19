@@ -66,7 +66,7 @@
 	<div class="map-paintting">
 		<div id-comment="map"></div>
 		<div class="s003 d-flex flex-column" id="map-searchbox">
-			<form class="item">
+			<form class="item" id="map-searchform">
 				<div class="inner-form">
 					<div class="input-field second-wrap">
 						<input id="search" type="text" placeholder="Enter Keywords?" />
@@ -83,33 +83,51 @@
 					</div>
 				</div>
 			</form>
-			<th:block th:each="list:${festival}">
-				<div class="mt-2"></div>
-				<div class="l-card item container">
-					<div class="l-card-left col-3"><img class="l-card-firstimage" th:src="${list.firstimage}"
-							src="http://tong.visitkorea.or.kr/cms/resource/72/2489672_image2_1.jpg"></img></div>
-					<div class="l-card-right col-9">
-
-						<div class="inline">
-							<div class="l-card-txt dbtable">축제</div>
-							<div class="l-card-txt ongoing">진행중</div>
-							<div class="l-card-txt days"><span th:text="${list.eventstartdate}">19721121</span> ~
-								<span th:text="${list.eventenddate}">20221022</span>
+			<div class="mt-3"></div>
+			<div id="map-searchlist">
+				<th:block th:each="list:${festival}">
+					<a class="l-card item container" href="#">
+						<th:block th:if="${list.firstimage != null}">
+							<div class="l-card-left col-3"><img class="l-card-firstimage" th:src="${list.firstimage}"
+									src="http://tong.visitkorea.or.kr/cms/resource/72/2489672_image2_1.jpg"></img></div>
+						</th:block>
+						<div class="l-card-right"
+							th:class="${list.firstimage != null} ? 'l-card-right col-9' : 'l-card-noimage col-12'">
+							<div class="inline">
+								<div class="l-card-txt dbtable">축제</div>
+								<div class="l-card-txt ongoing">진행중</div>
+								<div class="l-card-txt days"><span th:text="${list.eventstartdate}">19721121</span> ~
+									<span th:text="${list.eventenddate}">20221022</span>
+								</div>
 							</div>
+							<div>
+								<div class="l-card-txt title" th:text="${list.title}">남산봉수</div>
+							</div>
+							<div class="l-card-txt location"><span class="fa fa-map-marker"></span> <span
+									th:text="${list.addr1}">서울</span></div>
 						</div>
-						<div>
-							<div class="l-card-txt title" th:text="${list.title}">남산봉수</div>
+					</a>
+					<div class="mt-2"></div>
+				</th:block>
+			</div>
+			<div id="map-searchpager">
+				<div class="row mt-5">
+					<div class="col text-center">
+						<div class="block-27">
+							<ul>
+								<li><a href="#">&lt;</a></li>
+								<li class="active"><span>1</span></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">&gt;</a></li>
+							</ul>
 						</div>
-						<div class="l-card-txt location"><span class="fa fa-map-marker"></span> <span
-								th:text="${list.location}">서울</span></div>
 					</div>
 				</div>
-			</th:block>
+			</div>
 		</div>
-		<div></div>
 	</div>
-
 	<script src="/js/map.js"></script>
-
-
 </body>
