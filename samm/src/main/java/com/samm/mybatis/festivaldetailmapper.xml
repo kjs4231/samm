@@ -17,5 +17,17 @@
 		#{homepage},#{mapx},#{mapy},#{modifiedtime},#{overview},#{tel},#{telname},#{title},#{zipcode},#{sigungucode})
 	</insert>
 	
+	<select id="getIntro" resultType="Map" parameterType="int" >
+		select * from  detailintro where contentid=#{contentid}
+	</select>
+	
+	<select id="getInfo" resultType="Map" parameterType="int" >
+		select * from  detailinfo where contentid=#{contentid}
+	</select>
+	
+	<select id="getCommon" resultType="Map" parameterType="int" >
+		select * from  detailcommon where contentid=#{contentid}
+	</select>
+	
 
 </mapper>

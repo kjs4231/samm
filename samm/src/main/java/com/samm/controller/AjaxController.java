@@ -13,7 +13,7 @@ import com.samm.restapi.TourFestivalAPI;
 import com.samm.vo.FestivalVo;
 
 @RestController
-public class AreaController {
+public class AjaxController {
 
 	@Autowired
 	FestivalBiz fbiz;
@@ -38,5 +38,7 @@ public class AreaController {
 		
 		return list;
 	}
+	
+
 	
 }
