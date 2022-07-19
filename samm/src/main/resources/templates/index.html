@@ -55,7 +55,16 @@
 					<li class="nav-item"><a href="/map"
 						class="nav-link">Festival</a></li>
 					<li class="nav-item"><a href="blog.html" class="nav-link">Board</a></li>
-					<li class="nav-item"><a href="contact.html" class="nav-link">Login</a></li>
+					
+					<li class="nav-item" th:if="${session.loginuser == null}"><a href="/login" class="nav-link">Sign In</a></li>
+					
+					<li class="nav-item" th:unless="${session.loginuser == null}">
+					<a href="/users/mypage" class="nav-link"><span class="nav-item"></span>My page</a>
+					
+					<li class="nav-item" th:unless="${session.loginuser == null}">
+					<a href="/logout" class="nav-link"><span th:text="${session.loginuser.name}"></span><span class="nav-item"></span>Sign Out</a>
+					
+					
 				</ul>
 			</div>
 		</div>
