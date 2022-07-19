@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -98,6 +97,12 @@ class DetailIntro {
 			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
 		}
 
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		
 		DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
 		try {
@@ -131,13 +136,13 @@ class DetailIntro {
 				hashmap.put("subevent", getTagValue("subevent", eElement));
 				hashmap.put("usetimefestival", getTagValue("usetimefestival", eElement));
 				System.out.println("festival ::"+hashmap);
-//				try {
-//					dao.infoInsert(hashmap);
-//					
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				try {
+					dao.introInsert(hashmap);
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			
 
@@ -149,7 +154,7 @@ class DetailIntro {
 		}
 		rd.close();
 		conn.disconnect();
-		
+		System.out.println(sb.toString());
 		}
 		System.out.println("END----------------------------------");
 

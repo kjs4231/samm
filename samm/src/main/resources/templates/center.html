@@ -22,7 +22,7 @@
 	<form>
 	<ul class="navbar-nav area--ul">
 		<li class="area--li" th:each="area:${area}">
-			<a class="area--a " th:text="${area['name']}" th:id="'area'+${area['code']}" th:onClick="'clickArea('+${area['code']}+');'">서울
+			<a class="area--a" th:text="${area['name']}" th:id="'area'+${area['code']}" th:onClick="'clickArea('+${area['code']}+');'">서울
 				<input hidden name="areacode" th:value="${area['code']}">
 			</a>
 		</li>
@@ -45,7 +45,7 @@
 							th:text="${list.eventstartdate}"></span> ~ <span
 							th:text="${list.eventenddate}"></span></span>
 						<h3>
-							<a href="#" th:text="${list.title}"><input name="contentid" hidden th:value="${list.contentid}">Banaue Rice Terraces</a>
+							<a th:href="@{/detail(contentid=${list.contentid})}"  th:text="${list.title}"><input name="contentid" hidden th:value="${list.contentid}">Banaue Rice Terraces</a>
 						</h3>
 						<p class="location">
 							<span class="fa fa-map-marker"></span><span

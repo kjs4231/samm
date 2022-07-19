@@ -2,11 +2,13 @@ package com.samm.biz;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.samm.frame.Biz;
+import com.samm.mapper.FestivalDetailMapper;
 import com.samm.mapper.FestivalMapper;
 import com.samm.vo.FestivalVo;
 
@@ -15,6 +17,8 @@ public class FestivalBiz implements Biz<Integer, FestivalVo> {
 
 	@Autowired
 	FestivalMapper festivalDao;
+	@Autowired
+	FestivalDetailMapper detailDao;
 
 	@Override
 	public void register(FestivalVo v) throws Exception {
@@ -54,5 +58,20 @@ public class FestivalBiz implements Biz<Integer, FestivalVo> {
         param.put("eventstartdate", eventstartdate);
 		param.put("eventenddate", eventenddate);
 		return festivalDao.searchFestival(param);
+	}
+	
+	public Map<String, String> getIntro(int contentid) throws Exception{
+		
+		return detailDao.getIntro(contentid); 
+	}
+	
+	public Map<String, String> getInfo(int contentid) throws Exception{
+		
+		return detailDao.getInfo(contentid);	
+	}
+	
+	public Map<String, String> getCommon(int contentid) throws Exception{
+		
+		return detailDao.getCommon(contentid);	
 	}
 }

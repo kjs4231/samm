@@ -111,6 +111,12 @@ class DetailCommon {
 				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
 			}
 
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				sb.append(line);
+			}
+			
 			DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder;
 			try {
@@ -144,13 +150,13 @@ class DetailCommon {
 
 					System.out.println("festival::  "+hashmap);
 					
-//					try {
-//						dao.commonInsert(hashmap);
-//
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+					try {
+						dao.commonInsert(hashmap);
+
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			} catch (ParserConfigurationException e) {
 				e.printStackTrace();
@@ -159,6 +165,7 @@ class DetailCommon {
 			}
 			rd.close();
 			conn.disconnect();
+			System.out.println(sb.toString());
 		}
 
 		System.out.println("END----------------------------------");

@@ -119,8 +119,8 @@ class DetailInfo {
 				Element eElement = (Element) nNode;
 				Element eElement2 = (Element) nNode2;
 				HashMap<String, String> hashmap = new HashMap<String, String>();
-
-				if(nNode2 == null) {
+				if(nNode == null) {
+				}else if(nNode2 == null) {
 					hashmap.put("contentid", getTagValue("contentid", eElement));
 					hashmap.put("infoname", getTagValue("infoname", eElement));
 					hashmap.put("infotext", getTagValue("infotext", eElement));

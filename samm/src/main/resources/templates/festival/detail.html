@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Pacific - Free Bootstrap 4 Template by Colorlib</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Arizonia&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+<link rel="stylesheet" href="/css/animate.css">
+
+<link rel="stylesheet" href="/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="/css/magnific-popup.css">
+
+<link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="/css/jquery.timepicker.css">
+
+
+<link rel="stylesheet" href="/css/flaticon.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/festival.css">
+<link rel="stylesheet" href="/css/detail.css">
+</head>
+
+
+
+<body>
+	<nav
+		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light scrolled awake">
+		<div class="container">
+			<a class="navbar-brand" href="/">Pacific<span>Travel
+					Agency</span></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#ftco-nav" aria-controls="ftco-nav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+					<li class="nav-item"><a href="/map" class="nav-link">Festival</a></li>
+					<li class="nav-item"><a href="blog.html" class="nav-link">Board</a></li>
+					<li class="nav-item"><a href="contact.html" class="nav-link">Login</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="container-fluid text-center detailMain">
+		<div class="content">
+			<div class="col-sm-3 sidenav text-left">
+				<h1 class="festival-title" th:text="${festival.title}">Festival Name</h1>
+				<h3 class="festival-period"><span th:text="${festival.eventstartdate}+' ~ '+${festival.eventenddate}"></span></h3>
+				<p class="festival--side-nav dactive">
+					<a href="#" id="common">축제 이야기</a>
+				</p>
+				<p class="festival--side-nav">
+					<a href="#" id="photo">축제 사진</a>
+				</p>
+				<p class="festival--side-nav">
+					<a href="#" id="info">축제 정보</a>
+				</p >
+				<p class="festival--side-nav">
+					<a href="#" id="review">축제 리뷰</a>
+				</p>
+			</div>
+			<div class="col-sm-9 text-left dcenter" th:insert="${dcenter} ? ${dcenter} : dcenter" >
+			</div>
+
+		</div>
+	</div>
+
+
+	<script src="/js/festival.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.easing.1.3.js"></script>
+	<script src="/js/jquery.waypoints.min.js"></script>
+	<script src="/js/jquery.stellar.min.js"></script>
+	<script src="/js/owl.carousel.min.js"></script>
+	<script src="/js/jquery.magnific-popup.min.js"></script>
+	<script src="/js/jquery.animateNumber.min.js"></script>
+	<script src="/js/bootstrap-datepicker.js"></script>
+	<script src="/js/scrollax.min.js"></script>
+	<script src="/js/main.js"></script>
+</body>
