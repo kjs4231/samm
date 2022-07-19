@@ -14,7 +14,9 @@
 	</select>
 
 	<select id="searchFestival" parameterType="Map" resultType="FestivalVo">
+		<bind name="key_offset" value="(@java.lang.Integer@valueOf(page)-1)*6" />
 		SELECT * FROM festival WHERE areacode=#{areacode} and eventstartdate <![CDATA[ <= #{eventstartdate}]]> and eventenddate <![CDATA[ >= #{eventenddate}]]> 
+		order by contentid desc LIMIT #{key_offset}, 6
 	</select>
 
 	<insert id="insert" parameterType="FestivalVo" useGeneratedKeys="true" keyProperty="contentid">
