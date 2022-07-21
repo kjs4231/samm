@@ -32,7 +32,7 @@ public class MainController {
 	
 	
 	@RequestMapping("/")
-	public String main(Model m,String areacode,String eventstartdate, String eventenddate ) {
+	public String main(Model m,String areacode,String eventstartdate, String eventenddate,HttpSession session ) {
 		Date date = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
 		if(areacode == null || areacode.equals("")) {
@@ -95,10 +95,21 @@ public class MainController {
 	}	
 	
 	@RequestMapping("/loginimpl")
-	public String loginimpl(Model m, String id, String pwd, HttpSession session) {
-		
+	public String loginimpl(Model m, String id, String pwd, HttpSession session,
+			String areacode,String eventstartdate, String eventenddate) {
+		Date date = new Date();
+		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
+		if(areacode == null || areacode.equals("")) {
+			areacode = "1";
+		}
+		eventstartdate = today.format(date).toString();
+		eventenddate = today.format(date).toString();
+		List<FestivalVo> list = null;
+		List<Map<String, String>> area = null;
 		UsersVo u = null;
 		try {
+			list = fbiz.searchFestival(areacode, eventstartdate, eventenddate);
+			area = abiz.get();
 			u = ubiz.get(id);
 			if (u != null) {
 				if (u.getPwd().equals(pwd)) {
@@ -117,8 +128,9 @@ public class MainController {
 			e.printStackTrace();
 			return login(m);
 		}
-		
-		m.addAttribute("center","center");
+		m.addAttribute("area",area);
+		m.addAttribute("festival",list);
+		m.addAttribute("center","/center");
 		return "index";
 	}
 	

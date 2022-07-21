@@ -3,9 +3,11 @@ package com.samm.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,19 +37,8 @@ public class AjaxController {
 		}
 		return list;
 	}
-	@RequestMapping("/getCommon")
-	public Map<String,String> getCommon(int contentid){
-		Map<String, String> map = null;
-		try {
-			map = fbiz.getCommon(contentid);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(map);
-		return map;
-	}
 	
+
 
 	
 }

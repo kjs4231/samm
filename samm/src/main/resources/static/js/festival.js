@@ -47,12 +47,96 @@ function displayMarker(locPosition) {
 	});
 	map.setCenter(locPosition);
 }
+var queryString = $('#festival--review').serialize();
 
-	$(document).ready(function() {
-		next();
-		prev();
-		paintingMap(lat, lon);
-		$('#moreInfo').click(function(){
-			$('.infoDetail').toggleClass('hidden');
-		})
-	});
+function submitReview() {
+	$('#sumbit-review').click(function() {
+		if($('#star').val() == null || $('#star').val() == ""){
+			alert("별점을 입력해주세요!")
+			$('#star-warnig').text("<--- 별점을 입력해주세요!")
+			return;
+		}
+		if($('#contents').val() == null || $('#contents').val() == ""){
+			alert("내용을 입력해주세요!")
+			return;
+		}
+		
+		if ($('#uid').val() == null) {
+			alert("login후 이용 가능합니다.")
+		} else {
+			$('#festival--review').attr({
+				"method": "post",
+				"action": "/reviewimpl"
+			})
+			$('#festival--review').submit();
+		}		
+	})
+
+}
+
+
+
+
+$(document).ready(function() {
+	next();
+	prev();
+	paintingMap(lat, lon);
+	$('#moreInfo').click(function() {
+		$('.infoDetail').toggleClass('hidden');
+	})
+	$('.fa-star').click(function(event) {
+		if (event.target.classList.contains('4')) {
+			if ($('.fa-star').hasClass('star')) {
+				$('.fa-star').removeClass("star");
+				$('.fa-star').addClass("star");
+			} else {
+				$('.fa-star').addClass("star");
+			}
+		} else if (event.target.classList.contains('3')) {
+			if ($('.fa-star').hasClass('star')) {
+				$('.fa-star').removeClass("star");
+				$('.fa-star').eq(0).toggleClass("star");
+				$('.fa-star').eq(1).toggleClass("star");
+				$('.fa-star').eq(2).toggleClass("star");
+				$('.fa-star').eq(3).toggleClass("star");
+			} else {
+				$('.fa-star').eq(0).toggleClass("star");
+				$('.fa-star').eq(1).toggleClass("star");
+				$('.fa-star').eq(2).toggleClass("star");
+				$('.fa-star').eq(3).toggleClass("star");
+			}
+		} else if (event.target.classList.contains('2')) {
+			if ($('.fa-star').hasClass('star')) {
+				$('.fa-star').removeClass("star");
+				$('.fa-star').eq(0).toggleClass("star");
+				$('.fa-star').eq(1).toggleClass("star");
+				$('.fa-star').eq(2).toggleClass("star");
+			} else {
+				$('.fa-star').eq(0).toggleClass("star");
+				$('.fa-star').eq(1).toggleClass("star");
+				$('.fa-star').eq(2).toggleClass("star");
+			}
+		} else if (event.target.classList.contains('1')) {
+			if ($('.fa-star').hasClass('star')) {
+				$('.fa-star').removeClass("star");
+				$('.fa-star').eq(0).toggleClass("star");
+				$('.fa-star').eq(1).toggleClass("star");
+			} else {
+				$('.fa-star').eq(0).toggleClass("star");
+				$('.fa-star').eq(1).toggleClass("star");
+			}
+		} else if (event.target.classList.contains('0')) {
+			if ($('.fa-star').hasClass('star')) {
+				$('.fa-star').removeClass("star");
+				$('.fa-star').eq(0).addClass("star");
+			} else {
+				$('.fa-star').eq(0).addClass("star");
+			}
+		}
+		var stars = document.getElementsByClassName('star').length;
+		$('#star').val(stars)
+	})
+	submitReview();
+});
+
+

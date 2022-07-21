@@ -62,4 +62,12 @@ public class ReviewBiz implements Biz<Integer, ReviewVo> {
         List<ReviewVo> result = reviewDao.selectByContents(param);
         return result;
     }
+    
+    public List<ReviewVo> getfestivalreview(int fid) throws Exception{
+    	return reviewDao.getfestivalreview(fid);
+    }
+    
+	public int getCount(int contentid) throws Exception{
+		return reviewDao.getCount(contentid);
+	}
 }

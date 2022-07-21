@@ -51,3 +51,12 @@
 	text-align: center;
 	
 }
+
+.review-star{
+	font-size: 1.2em;
+	border-color: #fd7e14;
+}
+.fa-star:hover {
+	cursor: pointer;
+}
+
