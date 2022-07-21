@@ -3,6 +3,7 @@ package com.samm.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,6 @@ public class AjaxController {
 		Date date = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
 		String sdate = today.format(date).toString();
-		System.out.println(code);
 		List<FestivalVo> list = null;
 		try {
 			list = fbiz.searchFestival(code, sdate, sdate);
@@ -34,6 +34,18 @@ public class AjaxController {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	@RequestMapping("/getCommon")
+	public Map<String,String> getCommon(int contentid){
+		Map<String, String> map = null;
+		try {
+			map = fbiz.getCommon(contentid);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(map);
+		return map;
 	}
 	
 
