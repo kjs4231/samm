@@ -17,43 +17,36 @@ public class FestivalController {
 	FestivalBiz festbiz;
 	
 	@RequestMapping("/detail")
-	public String detail(Model m,int contentid,FestivalVo festival) {
+	public String detail(Model m,Integer contentid,FestivalVo festival) {
+		System.out.println("contentid::"+contentid);
 		Map<String,String> common = null;
-		Map<String,String> info = null;
 		Map<String,String> intro = null;
+		Map<String,String> info = null;
+		
 		try {
 			festival = festbiz.get(contentid); 
+			intro = festbiz.getIntro(contentid);
+			info = festbiz.getInfo(contentid);
 			common = festbiz.getCommon(contentid);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(common);
+		System.out.println("festival::"+festival);
+		System.out.println("common::"+common);
+		System.out.println("info::"+info);
+		System.out.println("intro::"+intro);
 		
-		m.addAttribute("dcenter","/festival/dcenter");
+		m.addAttribute("center","/festival/detail");
 		m.addAttribute("common",common);
+		m.addAttribute("info",info);
+		m.addAttribute("intro",intro);
 		m.addAttribute("festival",festival);	
-		return "/festival/detail";
+		return "/index";
 	}
-	
-	@RequestMapping("/common")
-	public String common(Model m,int contentid,FestivalVo festival) {
-		Map<String,String> common = null;
-		try {
-			festival = festbiz.get(contentid); 
-			common = festbiz.getCommon(contentid);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(common);
+	@RequestMapping("/reviewimpl")
+	public String review(String contents,double star) {
 		
-		m.addAttribute("dcenter","/festival/dcenter");
-		m.addAttribute("common",common);
-		m.addAttribute("festival",festival);	
-		return "/festival/detail";
+		return "a";
 	}
-	
-	
 
 }
