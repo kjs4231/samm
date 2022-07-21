@@ -20,13 +20,18 @@ public class ReviewVo {
     private Date regdate;
     private Date udate;
     private String uid;
+    private int fid;
+    
+    private String username;
 
     // 리뷰 삽입시
-    public ReviewVo(String contents, double star, String uid) {
-        this.contents = contents;
-        this.star = star;
-        this.uid = uid;
-    }
+	public ReviewVo(String contents, double star, Date regdate, String uid, int fid) {
+		this.contents = contents;
+		this.star = star;
+		this.regdate = regdate;
+		this.uid = uid;
+		this.fid = fid;
+	}
 
     // 리뷰 수정시
     public ReviewVo(int pnum, String contents, double star) {
@@ -34,4 +39,6 @@ public class ReviewVo {
         this.contents = contents;
         this.star = star;
     }
+
+
 }

@@ -88,4 +88,6 @@ public class FestivalBiz implements Biz<Integer, FestivalVo> {
 		
 		return detailDao.getCommon(contentid);	
 	}
+	
+
 }
