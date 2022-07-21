@@ -14,9 +14,34 @@
 	</select>
 
 	<select id="searchFestival" parameterType="Map" resultType="FestivalVo">
-		<bind name="key_offset" value="(@java.lang.Integer@valueOf(page)-1)*6" />
-		SELECT * FROM festival WHERE areacode=#{areacode} and eventstartdate <![CDATA[ <= #{eventstartdate}]]> and eventenddate <![CDATA[ >= #{eventenddate}]]> 
-		order by contentid desc LIMIT #{key_offset}, 6
+		<bind name="key_offset" value="(@java.lang.Integer@valueOf(page)-1)*12" />
+		SELECT * FROM festival WHERE
+		<choose>
+			<when test="areacode == null or areacode.equals('')"></when>
+			<otherwise>
+				areacode=#{areacode} and
+			</otherwise>
+		</choose>
+		eventstartdate <![CDATA[ <= #{eventstartdate}]]> and eventenddate <![CDATA[ >= #{eventenddate}]]>
+		and addr1 not like '%온라인%' and mapx is not null
+		order by contentid desc LIMIT #{key_offset}, 12
+	</select>
+
+	<select id="searchMap" parameterType="Map" resultType="FestivalVo">
+		<bind name="key_offset" value="(@java.lang.Integer@valueOf(page)-1)*12" />
+		<bind name="lat" value="@java.lang.Double@valueOf(mapy)" />
+		<bind name="lng" value="@java.lang.Double@valueOf(mapx)" />
+		SELECT * FROM festival WHERE
+		eventstartdate <![CDATA[ <= #{eventstartdate}]]> and eventenddate <![CDATA[ >= #{eventenddate}]]>
+		and addr1 not like '%온라인%' and mapx is not null
+		<choose>
+			<when test="keyword == null or keyword.equals('')"></when>
+			<otherwise>
+				and concat(title,addr1) like concat('%',#{keyword},'%')
+			</otherwise>
+		</choose>
+		ORDER BY ST_DISTANCE_SPHERE(ST_GeomFromText(concat('POINT(',#{mapy},' ',#{mapx},')'),4326), mappoint) asc
+		LIMIT #{key_offset}, 12
 	</select>
 
 	<insert id="insert" parameterType="FestivalVo" useGeneratedKeys="true" keyProperty="contentid">

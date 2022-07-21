@@ -216,13 +216,13 @@
 }
 
 @media screen and (max-width: 992px) {
-	.s003 form .inner-form .input-field {
+	/* .s003 form .inner-form .input-field {
 		height: 50px;
-	}
+	} */
 }
 
 @media screen and (max-width: 767px) {
-	.s003 form .inner-form {
+	/* .s003 form .inner-form {
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
 		padding: 20px;
@@ -263,15 +263,16 @@
 	.s003 form .inner-form .input-field.third-wrap {
 		margin-bottom: 0;
 		width: 100%;
-	}
+	} */
 }
 
 .s003 #map-searchlist {
 	width: 100%;
+	height: calc(100vh - 250px);;
 	max-width: 790px;
 	margin: 0;
 	padding: 0;
-	overflow-y: auto;
+	overflow: scroll;
 }
 
 .s003 .l-card {
