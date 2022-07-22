@@ -1,0 +1,28 @@
+<div id="map-searchlist">
+    <th:block th:each="list:${festival}">
+        <a class="l-card item container" href="#" th:attr="mapx=${list.mapx}, mapy=${list.mapy}">
+            <th:block th:if="${list.firstimage != null}">
+                <div class="l-card-left col-3"><img class="l-card-firstimage" th:src="${list.firstimage}"
+                        src="http://tong.visitkorea.or.kr/cms/resource/72/2489672_image2_1.jpg"></img></div>
+            </th:block>
+            <div class="l-card-right"
+                th:class="${list.firstimage != null} ? 'l-card-right col-9' : 'l-card-noimage col-12'">
+                <div class="inline">
+                    <div class="l-card-txt dbtable">축제</div>
+                    <div class="l-card-txt ongoing">진행중</div>
+                    <div class="l-card-txt days"><span th:text="${list.eventstartdate}">19721121</span> ~
+                        <span th:text="${list.eventenddate}">20221022</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="l-card-txt title" th:text="${list.title}">남산봉수</div>
+                </div>
+                <th:block th:if="${list.firstimage != null}">
+                    <div class="l-card-txt location"><span class="fa fa-map-marker"></span> <span
+                            th:text="${list.addr1}">서울</span></div>
+                </th:block>
+            </div>
+        </a>
+        <div class="mt-2"></div>
+    </th:block>
+</div>

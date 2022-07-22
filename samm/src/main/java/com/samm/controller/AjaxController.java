@@ -38,6 +38,40 @@ public class AjaxController {
 		return list;
 	}
 	
+	@RequestMapping("/searchmap")
+	public List<FestivalVo> searchmap(String keyword, String page, String mapx, String mapy) {
+		Date date = new Date();
+		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
+		String sdate = today.format(date).toString();
+		System.out.println(keyword+", "+page);
+		List<FestivalVo> list = null;
+		if (mapx == null || mapx.equals("")){
+			mapx = "127.052153";
+			mapy = "37.5071772";
+		}
+		try {
+			list = fbiz.searchMap(keyword,sdate,sdate,page,mapx,mapy);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@RequestMapping("/countsearchmap")
+	public int countsearchmap(String keyword, String page) {
+		Date date = new Date();
+		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
+		String sdate = today.format(date).toString();
+		int count = 0;
+		try {
+			count = fbiz.countSearchMap(keyword,sdate,sdate);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
 
 
 	

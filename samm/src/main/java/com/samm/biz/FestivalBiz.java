@@ -74,6 +74,27 @@ public class FestivalBiz implements Biz<Integer, FestivalVo> {
 		return festivalDao.searchFestival(param);
 	}
 	
+	public List<FestivalVo> searchMap(String keyword, String eventstartdate, String eventenddate, String page, String mapx, String mapy) throws Exception {
+		HashMap<String, String> param = new HashMap<>();
+		param.put("keyword", keyword);
+		param.put("eventstartdate", eventstartdate);
+		param.put("eventenddate", eventenddate);
+		param.put("page",page);
+		param.put("mapx",mapx);
+		param.put("mapy",mapy);
+		System.out.println(param);
+		return festivalDao.searchMap(param);
+	}
+
+	public int countSearchMap(String keyword, String eventstartdate, String eventenddate) throws Exception {
+		HashMap<String, String> param = new HashMap<>();
+		param.put("keyword", keyword);
+		param.put("eventstartdate", eventstartdate);
+		param.put("eventenddate", eventenddate);
+		System.out.println(param);
+		return festivalDao.countSearchMap(param);
+	}
+
 	public Map<String, String> getIntro(int contentid) throws Exception{
 		
 		return detailDao.getIntro(contentid); 
