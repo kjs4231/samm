@@ -55,36 +55,39 @@ function displayMarker(locPosition) {
 	map.setCenter(locPosition);
 }
 
-function mapElementGen(mapx, mapy, firstimage, eventstartdate, eventenddate, title, addr1) {
-	$('<a />', { className: "l-card item container", href: "#", mapx: mapx, mapy: mapy }).html(
-		function (firstimage) {
-			if (firstimage != null && firstimage != "") {
-				$('<div />', { className: "l-card-left col-3" }).html(
-					$('<img />', { className: "l-card-firstimage", src: firstimage }))
-			}
-		}).append(
-			$('<div />', { className: "l-card-right" }).addClass(function (firstimage) {
-				if (firstimage != null && firstimage != "") {
-					'l-card-right col-9'
-				} else {
-					'l-card-noimage col-12'
-				}
-			}).html(
-				$('<div />', { className: "inline" })
-					.html('<div class="l-card-txt dbtable">축제</div>')
-					.append('<div class="l-card-txt ongoing">진행중</div>')
-					.append('<div class="l-card-txt days">' + $('<span />').text(eventstartdate + ' ~ ' + eventenddate) + '</div>')
-			).append(
-				$('<div />').html($('<div />', { className: "l-card-txt title" }).text(title)
-				))
-				.append(function (addr1) {
-					if (addr1 != null && addr1 != "") {
-						$('<div />', { className: "l-card-txt location" }).html(
-							'<span class="fa fa - map - marker"></span> ' + $('<span />').text(addr1))
-					}
-				})
-		)
-		.append($('<div />', { className: "mt-2" }));
+function e_searchmap(mapx, mapy, firstimage, eventstartdate, eventenddate, title, addr1) {
+	if (typeof firstimage == "undefined" || firstimage == null || firstimage == "") {
+		var gen_l_card_left = ''
+		var class_l_card_right = 'l-card-noimage col-12';
+	} else {
+		var gen_l_card_left = '<div class="l-card-left col-3"><img class="l-card-firstimage"' +
+			'src="' + firstimage + '"></img></div>';
+		var class_l_card_right = 'l-card-right col-9';
+	};
+	if (typeof addr1 == "undefined" || addr1 == null || addr1 == "") {
+		var gen_l_card_txt_location = '';
+	} else {
+		var gen_l_card_txt_location = '<div class="l-card-txt location"><span class="fa fa-map-marker"></span> ' +
+			'<span>' + addr1 + '</span></div>';
+	};
+	var e = '<a class="l-card item container" href="#" mapx=' + mapx + ' mapy=' + mapy + '>' +
+		gen_l_card_left +
+		'<div class="' + class_l_card_right + '">' +
+		'<div class="inline">' +
+		'<div class="l-card-txt dbtable">축제</div>' +
+		'<div class="l-card-txt ongoing">진행중</div>' +
+		'<div class="l-card-txt days"><span>' + eventstartdate + '</span> ~ ' +
+		'<span>' + eventenddate + '</span>' +
+		'</div>' +
+		'</div>' +
+		'<div>' +
+		'<div class="l-card-txt title">' + title + '</div>' +
+		'</div>' +
+		gen_l_card_txt_location +
+		'</div>' +
+		'</a>' +
+		'<div class="mt-2"></div>';
+	return e;
 };
 
 function searchmap(keyword, page, mapx, mapy) {
@@ -94,26 +97,72 @@ function searchmap(keyword, page, mapx, mapy) {
 		method: 'get',
 		dataType: 'json',
 		success: function (json) {
-			alert(JSON.stringify(json));
-			json.forEach(element => {
-					alert(element.mapx+element.mapy+element.firstimage+element.eventstartdate+element.eventenddate+element.title+element.addr1);
+			var result = '';
+			$.each(json, function (i, element) {
+				result = result.concat(e_searchmap(element.mapx, element.mapy, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1));
 			});
+			$('#map-searchlist').html(result);
 		}
 	})
 };
 
+function e_countsearchmap(count, page) {
+	var maxPage = parseInt(count / 12) + 1;
+	var startPage = parseInt((page - 1) / 5) * 5 + 1;
+	var endPage = startPage + 4;
+	if (endPage > maxPage) {
+		endPage = maxPage;
+	}
+
+	var pager = '';
+	for (var i = startPage; i <= endPage; i++) {
+		if (i == page) {
+			pager = pager + '<li class="active"><span>' + i + '</span></li> '
+		} else {
+			pager = pager + '<li><a href="#">' + i + '</a></li> '
+		}
+	};
+
+	var e = $('<div />', { "class": "row mt-3" }).html(
+		$('<div />', { "class": "col text-center" }).html(
+			$('<div />', { "class": "block-27" }).html(
+				$('<ul />').html(
+					$('<li />').html($('<a />').text('<'))
+						.append('&nbsp;')
+						.append(pager)
+						.append($('<li />').html($('<a />').text('>')))
+				)
+			)
+		));
+	return $(e).prop('outerHTML');
+}
+
+function countsearchmap(keyword) {
+	$.ajax({
+		url: '/countsearchmap',
+		data: { keyword: keyword },
+		method: 'get',
+		dataType: 'text',
+		success: function (count) {
+			var result = '';
+			result = result.concat(e_countsearchmap(count, 1));
+			$('#map-searchpager').html(result);
+		}
+	})
+};
 
 $(document).ready(function () {
 	getGeolocation();
 });
 
-$('.l-card').click(function () {
+$(document).on("click", ".l-card", function () {
 	var loc = new kakao.maps.LatLng($(this).attr('mapy'), $(this).attr('mapx'))
 	map.panTo(loc);
 	displayMarker(loc)
 });
 
-$('.btn-search').click(function () {
+$(document).on("click", ".btn-search", function () {
 	var keyword = $('#map-searchform input[name="search"]').val();
 	searchmap(keyword, 1, 127.052153, 37.5071772);
+	countsearchmap(keyword);
 });

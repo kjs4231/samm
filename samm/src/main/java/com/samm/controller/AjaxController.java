@@ -56,5 +56,20 @@ public class AjaxController {
 		return list;
 	}
 
+	@RequestMapping("/countsearchmap")
+	public int countsearchmap(String keyword, String page) {
+		Date date = new Date();
+		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
+		String sdate = today.format(date).toString();
+		int count = 0;
+		try {
+			count = fbiz.countSearchMap(keyword,sdate,sdate);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+
 	
 }

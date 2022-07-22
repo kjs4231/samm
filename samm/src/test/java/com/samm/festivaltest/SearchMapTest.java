@@ -28,17 +28,19 @@ class SearchMapTest {
 		String page = "1";
 		String mapx = "126.955869";
 		String mapy = "37.546037";		
-		String keyword = "걷";
-
+		String keyword = "서울";
+		int count = 0;
 		try {
 			list = biz.searchMap(keyword,eventstartdate, eventenddate, page, mapx, mapy);
+			count = biz.countSearchMap(keyword, eventstartdate, eventenddate);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (FestivalVo obj : list) {
-			System.out.print(obj);
+			System.out.println(obj);
 		}
+		System.out.println(count);
 	}
 
 }

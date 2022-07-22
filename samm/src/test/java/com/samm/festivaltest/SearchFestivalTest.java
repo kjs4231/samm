@@ -33,7 +33,7 @@ class SearchFestivalTest {
 			e.printStackTrace();
 		}
 		for (FestivalVo obj : list) {
-			System.out.print(obj);
+			System.out.println(obj);
 		}
 	}
 
