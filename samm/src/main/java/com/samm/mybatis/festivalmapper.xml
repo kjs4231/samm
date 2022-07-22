@@ -10,7 +10,7 @@
 	</select>
 
 	<select id="getContentId" resultType="String">
-		SELECT contentid FROM festival where contentid > 2492893
+		SELECT contentid FROM festival 
 	</select>
 
 	<select id="searchFestival" parameterType="Map" resultType="FestivalVo">

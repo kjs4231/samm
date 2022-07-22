@@ -9,10 +9,9 @@
 			class="row no-gutters slider-text js-fullheight align-items-center"
 			data-scrollax-parent="true">
 			<div class="col-md-7 ftco-animate">
-				<span class="subheading">Go Serach Festival</span>
-				<h1 class="mb-4">Search Festival Enjoy The Festival</h1>
-				<p class="caps">Travel to the any corner of the world, without
-					going around in circles</p>
+				<span class="subheading">SAMM FINAL PROJECT</span>
+				<h1 class="mb-4">Search Festival & Enjoy Festival</h1>
+				<p class="caps"><a href="/searchfestival">Go Serach Festival</a></p>
 			</div>
 
 		</div>
@@ -20,32 +19,36 @@
 </div>
 <div class="container areacode">
 	<form>
-	<ul class="navbar-nav area--ul">
-		<li class="area--li" th:each="area:${area}">
-			<a class="area--a" th:text="${area['name']}" th:id="'area'+${area['code']}" th:onClick="'clickArea('+${area['code']}+');'">서울
-				<input hidden name="areacode" th:value="${area['code']}">
-			</a>
-		</li>
-	</ul>
+		<ul class="navbar-nav area--ul">
+			<li class="area--li" th:each="area:${area}"><a class="area--a"
+				th:text="${area['name']}" th:id="'area'+${area['code']}"
+				th:onClick="'clickArea('+${area['code']}+');'">서울 <input hidden
+					name="areacode" th:value="${area['code']}">
+			</a></li>
+		</ul>
 	</form>
 </div>
 
 <section class="ftco-section2">
 	<div class="container">
-		<h1 class="festival--subject">현재 진행중인 축제</h1>
+		<h2 class="festival--subject">현재 진행중인 축제</h2>
 		<div class="row" id="festivalING">
 			<div class="col-md-4 ftco-animate" th:each="list:${festival}">
 				<div class="project-wrap">
-					<a class="img"
+					<a class="img" th:if="${list.firstimage} != null"
 						th:style="'background-image:url('+@{${list.firstimage}}+');'">
+						<span class="price">진행중</span>
+					</a> <a class="img" th:unless="${list.firstimage} != null"
+						th:style="'background-image:url('+@{/images/noimage.jpg}+');'">
 						<span class="price">진행중</span>
 					</a>
 					<div class="text p-4">
-						<span class="days"><span
-							th:text="${list.eventstartdate}"></span> ~ <span
-							th:text="${list.eventenddate}"></span></span>
+						<span class="days"><span th:text="${#temporals.createDate(list.eventstartdate,'yyyyMMdd')}"></span>
+							~ <span th:text="${#temporals.createDate(list.eventenddate,'yyyyMMdd')}"></span></span>
 						<h3>
-							<a th:href="@{/detail(contentid=${list.contentid})}"  th:text="${list.title}"><input name="contentid" hidden th:value="${list.contentid}">Banaue Rice Terraces</a>
+							<a th:href="@{/detail(contentid=${list.contentid})}"
+								th:text="${list.title}"><input name="contentid" hidden
+								th:value="${list.contentid}">Banaue Rice Terraces</a>
 						</h3>
 						<p class="location">
 							<span class="fa fa-map-marker"></span><span
@@ -64,40 +67,7 @@
 			</div>
 		</div>
 
-		<div class="row mt-5">
-			<div class="col text-center">
-				<div class="block-27">
-					<ul>
-						<li><a href="#">&lt;</a></li>
-						<li class="active"><span>1</span></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">&gt;</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
 	</div>
 </section>
 
 
-
-<section class="ftco-intro ftco-section ftco-no-pt">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-md-12 text-center">
-				<div class="img" style="background-image: url(images/bg_2.jpg);">
-					<div class="overlay"></div>
-					<h2>We Are Pacific A Travel Agency</h2>
-					<p>We can manage your dream building A small river named Duden
-						flows by their place</p>
-					<p class="mb-0">
-						<a href="#" class="btn btn-primary px-4 py-3">Ask For A Quote</a>
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
