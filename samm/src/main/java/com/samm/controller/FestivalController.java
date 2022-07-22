@@ -1,5 +1,7 @@
 package com.samm.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.samm.biz.AreaBiz;
 import com.samm.biz.FestivalBiz;
 import com.samm.biz.ReviewBiz;
 import com.samm.vo.FestivalVo;
@@ -22,6 +25,8 @@ public class FestivalController {
 	FestivalBiz festbiz;
 	@Autowired
 	ReviewBiz reviewbiz;
+	@Autowired
+	AreaBiz abiz;
 	
 	@RequestMapping("/detail")
 	public String detail(Model m,Integer contentid,FestivalVo festival,HttpSession session,
@@ -62,11 +67,50 @@ public class FestivalController {
 		try {
 			reviewbiz.register(review);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return "redirect:/detail?contentid="+fid;
 	}
+	
+	@RequestMapping("/searchfestival")
+	public String searchfsetival(Model m,Map<String,String> area,  String areacode, String eventstartdate, String eventenddate) {
+		Date date = new Date();
+		SimpleDateFormat formats = new SimpleDateFormat("yyyyMMdd");
+		String today = formats.format(date).toString();
+		List<Map<String,String>> alist = null;
+		List<FestivalVo> list = null;
+		System.out.println("eventstartdate::"+eventstartdate);
+		try {
+			alist = abiz.get();
+			if( (areacode != null && eventstartdate != null && eventenddate != null) ) {
+				list = festbiz.searchFestival(areacode, eventstartdate, eventenddate);
+				int start = Integer.parseInt(eventstartdate);
+				int end = Integer.parseInt(eventenddate);
+				int todays = Integer.parseInt(today);			
+				m.addAttribute("start", start);
+				m.addAttribute("today", todays);
+				m.addAttribute("end", end);
+				System.out.println(start);
+				System.out.println(todays);
+				System.out.println(end);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
+		m.addAttribute("festival",list);
+		m.addAttribute("area",alist);
+		m.addAttribute("center","/festival/searchfestival");
+		return "index";
+	}
+	
+	@RequestMapping("/searchFestivalimpl")
+	public String searchFestivalimpl(Model m, String areacode, Date startdate, Date enddate) {
+		SimpleDateFormat date = new SimpleDateFormat("yyyyMMdd");
+		String eventstartdate = date.format(startdate).toString();
+		String eventenddate = date.format(enddate).toString();
+		
+		return "redirect:/searchfestival?areacode="+areacode+"&eventstartdate="+eventstartdate+"&eventenddate="+eventenddate;
+	}
 }

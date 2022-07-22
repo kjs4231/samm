@@ -75,8 +75,6 @@ function submitReview() {
 }
 
 
-
-
 $(document).ready(function() {
 	next();
 	prev();
@@ -137,6 +135,8 @@ $(document).ready(function() {
 		$('#star').val(stars)
 	})
 	submitReview();
+	
+
 });
 
 

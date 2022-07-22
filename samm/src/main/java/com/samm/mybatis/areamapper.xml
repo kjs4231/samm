@@ -19,5 +19,9 @@
 	<select id="selectAll" resultType="Map">
 		select * from areacode
 	</select>
+	
+	<select id="selectArea" resultType="Map" parameterType="int">
+		select * from areacode where code=#{code}
+	</select>
 
 </mapper>

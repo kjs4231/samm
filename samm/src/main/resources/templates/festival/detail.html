@@ -54,17 +54,17 @@
 	class="ftco-section2 container navbar navbar-expand-lg detail-navbar">
 	<div class="detail-tab">
 		<ul class="navbar-nav ml-auto">
-			<li class="nav-item"><a href="#" class="nav-link">사진보기</a></li>
-			<li class="nav-item"><a href="#" class="nav-link">상세정보</a></li>
-			<li class="nav-item"><a href="#" class="nav-link">축제톡</a></li>
+			<li class="nav-item"><a href="#menu1" class="nav-link" >사진보기</a></li>
+			<li class="nav-item"><a href="#menu2" class="nav-link" >상세정보</a></li>
+			<li class="nav-item"><a href="#menu3" class="nav-link" >축제톡</a></li>
 		</ul>
 	</div>
 </section>
 <!-- 상세 사진 section -->
-<section class="ftco-section2 container">
+<section class="ftco-section2 container" id="menu1">
 	<div>
 		<h2>
-			<a>사진등록하기</a>
+			<a>사진요청하기</a>
 		</h2>
 	</div>
 	<div id="carouselExampleIndicators" class="carousel slide"
@@ -97,7 +97,7 @@
 
 <!-- 상세정보 개요, 지도, 행사정보.... -->
 
-<section class="ftco-section2 container">
+<section class="ftco-section2 container"  id="menu2">
 	<h1>상세정보</h1>
 	<div>
 		<span th:utext="${common['overview']}"></span>
@@ -132,7 +132,7 @@
 	</div>
 </section>
 <!-- 축제리뷰.. -->
-<section class="ftco-section2 container">
+<section class="ftco-section2 container" id="menu3">
 
 	<div class="pt-5 mt-5">
 		<h3 class="mb-5" style="font-size: 20px; font-weight: bold;"><span th:text="${rcount}"></span>
@@ -143,7 +143,7 @@
 					<img src="images/person_1.jpg" alt="Image placeholder">
 				</div>
 				<div class="comment-body">
-					<h3 th:text="${review.uid}">John Doe</h3>
+					<h3 th:text="${review.uid}+' | '+${review.username}">John Doe</h3>
 					<div class="meta" th:text="${review.regdate}">September 11, 2020 at 2:21pm</div>
 					<p th:text="${review.contents}">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 						Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem,
