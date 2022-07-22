@@ -10,11 +10,11 @@
 	</select>
 
 	<select id="getContentId" resultType="String">
-		SELECT contentid FROM festival  
+		SELECT contentid FROM festival 
 	</select>
 
 	<select id="searchFestival" parameterType="Map" resultType="FestivalVo">
-		<bind name="key_offset" value="(@java.lang.Integer@valueOf(page)-1)*12" />
+		<bind name="key_offset" value="(@java.lang.Integer@valueOf(page)-1)*6" />
 		SELECT * FROM festival WHERE
 		<choose>
 			<when test="areacode == null or areacode.equals('')"></when>
@@ -24,7 +24,7 @@
 		</choose>
 		eventstartdate <![CDATA[ <= #{eventstartdate}]]> and eventenddate <![CDATA[ >= #{eventenddate}]]>
 		and addr1 not like '%온라인%' and mapx is not null
-		order by contentid desc LIMIT #{key_offset}, 12
+		order by contentid desc LIMIT #{key_offset}, 6
 	</select>
 
 	<select id="searchMap" parameterType="Map" resultType="FestivalVo">

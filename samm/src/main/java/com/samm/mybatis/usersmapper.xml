@@ -4,42 +4,18 @@
 
 	<select id="select" parameterType="String" resultType="UsersVo">
 		SELECT *
-		FROM users where id=#{id}
+		FROM users WHERE id=#{id}
 	</select>
 	<select id="selectAll" resultType="UsersVo">
 		SELECT * FROM users
 	</select>
 
 	<insert id="insert" parameterType="UsersVo">
-		INSERT INTO users VALUES (#{id},#{pwd},#{name}
-		<choose>
-			<when test="email == null or email.equals('')">,null</when>
-			<otherwise>
-				,#{email}
-			</otherwise>
-		</choose>
-		<choose>
-			<when test="address == null or address.equals('')">,null</when>
-			<otherwise>
-				,#{address}
-			</otherwise>
-		</choose>
-		<choose>
-			<when test="phone == null or phone.equals('')">,null</when>
-			<otherwise>
-				,#{phone}
-			</otherwise>
-		</choose>
-		<choose>
-			<when test="gender == null or gender.equals('')">,null</when>
-			<otherwise>
-				,#{gender}
-			</otherwise>
-		</choose>
-		)
+		INSERT INTO users VALUES (#{id},#{pwd},#{name},#{email},#{address},#{phone},#{gender})
+		
 	</insert>
 	<update id="update" parameterType="UsersVo">
-		UPDATE users
+		UPDATE users 
 		<trim prefix="SET" suffixOverrides=",">
 			<choose>
 				<when test="pwd == null or pwd.equals('')"></when>
@@ -54,7 +30,7 @@
 				</otherwise>
 			</choose>
 			<choose>
-				<when test="email == null or email.equals('')"></when>
+				<when test="email == null or address.equals('')"></when>
 				<otherwise>
 					email=#{email},
 				</otherwise>
@@ -74,7 +50,7 @@
 			<choose>
 				<when test="gender == null or gender.equals('')"></when>
 				<otherwise>
-					gender=#{gender},
+					gender=#{gender}
 				</otherwise>
 			</choose>
 		</trim>
@@ -84,5 +60,9 @@
 		DELETE FROM users WHERE
 		id=#{id}
 	</delete>
+	<select id="idCheck" resultType="java.lang.String">
+		SELECT id
+		FROM users WHERE id=#{id}
+	</select>
 
 </mapper>

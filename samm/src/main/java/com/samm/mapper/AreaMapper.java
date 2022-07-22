@@ -13,6 +13,7 @@ public interface AreaMapper {
 	public void insert(HashMap<String, String> hashmap) throws Exception;
 	public void insert2(HashMap<String, String> hashmap) throws Exception;
 	
-	public List<String> select() throws Exception; 
+	public List<String> select() throws Exception;
+	public List<Map<String, String>> selectArea(int code) throws Exception;
 	public List<Map<String, String>> selectAll() throws Exception; 
 }
