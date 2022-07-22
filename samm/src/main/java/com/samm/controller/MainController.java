@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.samm.biz.AreaBiz;
 import com.samm.biz.FestivalBiz;
+import com.samm.biz.UsersBiz;
 import com.samm.vo.FestivalVo;
+import com.samm.vo.UsersVo;
 
 @Controller
 public class MainController {
@@ -22,11 +26,13 @@ public class MainController {
 	FestivalBiz fbiz;
 	@Autowired
 	AreaBiz abiz;
+	@Autowired
+	UsersBiz ubiz;
 	
 	
 	
 	@RequestMapping("/")
-	public String main(Model m,String areacode,String eventstartdate, String eventenddate ) {
+	public String main(Model m,String areacode,String eventstartdate, String eventenddate,HttpSession session ) {
 		Date date = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
 		if(areacode == null || areacode.equals("")) {
@@ -44,7 +50,6 @@ public class MainController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		
 		m.addAttribute("area",area);
 		m.addAttribute("festival",list);
@@ -81,4 +86,47 @@ public class MainController {
 		m.addAttribute("festival",list);
 		return "sandbox";
 	}
+	@RequestMapping("/login")
+	public String login(Model m) {
+		
+		m.addAttribute("center","login");
+		return "index";
+	}	
+	
+	@RequestMapping("/loginimpl")
+	public String loginimpl(Model m, String id, String pwd, HttpSession session) {
+	
+		UsersVo u = null;
+		try {;
+			u = ubiz.get(id);
+			if (u != null) {
+				if (u.getPwd().equals(pwd)) {
+					session.setAttribute("loginuser", u);
+					m.addAttribute("loginuser", u);
+					
+				} else {
+					throw new Exception();
+					
+				}
+			} else {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return login(m);
+		}
+		m.addAttribute("center","/center");
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/logout") 
+	public String logout(Model m, HttpSession session) {
+		if(session !=null) {
+			session.invalidate();
+
+		}
+		return "index";
+	}
+	
 }

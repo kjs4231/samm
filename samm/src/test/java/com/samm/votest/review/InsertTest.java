@@ -15,7 +15,7 @@ class InsertTest {
 
 	@Test
 	void contextLoads() {
-		ReviewVo obj = new ReviewVo("예",5,"id01");
+		ReviewVo obj = new ReviewVo("test",5,null,"id01",2492588);
 		try {
 			biz.register(obj);
 			System.out.println("test 완료");

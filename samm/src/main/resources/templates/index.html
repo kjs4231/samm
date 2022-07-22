@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Pacific - Free Bootstrap 4 Template by Colorlib</title>
+<title>SAMM - Go Serach Festival</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -40,8 +40,7 @@
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="/">Pacific<span>Travel
-					Agency</span></a>
+			<a class="navbar-brand" href="/">SAMM<span>Search Festival</span></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#ftco-nav" aria-controls="ftco-nav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +54,16 @@
 					<li class="nav-item"><a href="/map"
 						class="nav-link">Festival</a></li>
 					<li class="nav-item"><a href="blog.html" class="nav-link">Board</a></li>
-					<li class="nav-item"><a href="contact.html" class="nav-link">Login</a></li>
+					
+					<li class="nav-item" th:if="${session.loginuser == null}"><a href="/login" class="nav-link">Sign In</a></li>
+					
+					<li class="nav-item" th:unless="${session.loginuser == null}">
+					<a href="/users/mypage" class="nav-link"><span class="nav-item"></span>My page</a>
+					
+					<li class="nav-item" th:unless="${session.loginuser == null}">
+					<a href="/logout" class="nav-link"><span th:text="${session.loginuser.name}"></span><span class="nav-item"></span>Sign Out</a>
+					
+					
 				</ul>
 			</div>
 		</div>
@@ -167,9 +175,7 @@
 	<script src="/js/jquery.animateNumber.min.js"></script>
 	<script src="/js/bootstrap-datepicker.js"></script>
 	<script src="/js/scrollax.min.js"></script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="/js/google-map.js"></script>
+
 	<script src="/js/main.js"></script>
 
 </body>

@@ -45,6 +45,11 @@ public class AreaBiz implements Biz<Integer, Map<String, String>> {
 		return dao.selectAll();
 	}
 	
+	public List<Map<String,String>> selectArea(int code) throws Exception {
+		
+		return dao.selectArea(code);
+	}
+	
 	
 
 }
