@@ -65,13 +65,7 @@ public class MainController {
 	}
 	
 	@RequestMapping("/map")
-	public String searchfestival(Model m) {
-		
-		return "map";
-	}
-
-	@RequestMapping("/sandbox")
-	public String sandbox(Model m) {
+	public String map(Model m) {
 		Date date = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
 		String sdate = today.format(date).toString();
@@ -84,7 +78,7 @@ public class MainController {
 			e.printStackTrace();
 		}
 		m.addAttribute("festival",list);
-		return "sandbox";
+		return "map";
 	}
 	@RequestMapping("/login")
 	public String login(Model m) {

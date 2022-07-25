@@ -12,8 +12,8 @@ import com.samm.biz.FestivalBiz;
 import com.samm.vo.FestivalVo;
 
 @SpringBootTest
-class SearchFestivalTest {
-	
+class SearchMapTest {
+
 	@Autowired
 	FestivalBiz biz;
 
@@ -22,12 +22,17 @@ class SearchFestivalTest {
 		List<FestivalVo> list = null;
 		Date date = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
-		String areacode = "1";
 		String eventstartdate = today.format(date).toString();
 		System.out.println(eventstartdate);
 		String eventenddate = today.format(date).toString();
+		String page = "1";
+		String mapx = "126.955869";
+		String mapy = "37.546037";		
+		String keyword = "서울";
+		int count = 0;
 		try {
-			list = biz.searchFestival(areacode, eventstartdate, eventenddate);
+			list = biz.searchMap(keyword,eventstartdate, eventenddate, page, mapx, mapy);
+			count = biz.countSearchMap(keyword, eventstartdate, eventenddate);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,6 +40,7 @@ class SearchFestivalTest {
 		for (FestivalVo obj : list) {
 			System.out.println(obj);
 		}
+		System.out.println(count);
 	}
 
 }
