@@ -6,9 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -53,15 +51,6 @@ class TourFestivalInsert {
 	@Test
 	void contextLoads() throws IOException {
 
-		List<String> list = null;
-
-		try {
-			list = dao.select();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
 			StringBuilder urlBuilder = new StringBuilder(
 					"http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchFestival"); /* 행사정보 URL */
 			urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8")
@@ -105,7 +94,7 @@ class TourFestivalInsert {
 				for (int temp = 0; temp < nList.getLength(); temp++) {
 					Node nNode = nList.item(temp);
 					Element eElement = (Element) nNode;
-					HashMap<String, String> hashmap = new HashMap();
+					HashMap<String, String> hashmap = new HashMap<String, String>();
 
 					hashmap.put("contentid", getTagValue("contentid", eElement));
 					hashmap.put("title", getTagValue("title", eElement));
@@ -119,11 +108,11 @@ class TourFestivalInsert {
 					hashmap.put("firstimage", getTagValue("firstimage", eElement));
 					hashmap.put("firstimage2", getTagValue("firstimage2", eElement));
 					hashmap.put("createdtime", getTagValue("createdtime", eElement));
-
+					cnt++;
 					
 					try {
 						fdao.apiinsert(hashmap);
-						cnt++;
+					
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

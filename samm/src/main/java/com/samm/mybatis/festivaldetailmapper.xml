@@ -3,18 +3,38 @@
 <mapper namespace="com.samm.mapper.FestivalDetailMapper">
 
 	<insert id="introInsert" parameterType="Map" >
-		INSERT INTO detailintro VALUES (#{contentid},#{agelimit},#{eventplace},#{eventstartdate},#{eventenddate},
+		INSERT INTO detailintro (contentid,agelimit,eventplace,eventstartdate,eventenddate,festivaltype,
+		bookingplace,placeinfo,playtime,program,progresstype,spendtimefestival,sponsor1,sponsortel1,
+		sponsor2,sponsor1tel2,subevent,usetimefestival)
+		 VALUES (#{contentid},#{agelimit},#{eventplace},#{eventstartdate},#{eventenddate},
 		#{festivaltype},#{bookingplace},#{placeinfo},#{playtime},#{program},#{progresstype},#{spendtimefestival}
 		,#{sponsor1},#{sponsortel1},#{sponsor2},#{sponsor1tel2},#{subevent},#{usetimefestival})
+		ON DUPLICATE KEY UPDATE agelimit=#{agelimit},eventplace=#{eventplace},eventstartdate=#{eventstartdate},
+		eventenddate=#{eventenddate},festivaltype=#{festivaltype},bookingplace=#{bookingplace},placeinfo=#{placeinfo},
+		playtime=#{playtime},program=#{program},progresstype=#{progresstype},spendtimefestival=#{spendtimefestival},
+		sponsor1=#{sponsor1},sponsortel1=#{sponsortel1},sponsor2=#{sponsor2},sponsor1tel2=#{sponsor1tel2},
+		subevent=#{subevent},usetimefestival=#{usetimefestival},updatedate=SYSDATE()
+		
 	</insert>
 	
 	<insert id="infoInsert" parameterType="Map" >
-		INSERT INTO detailinfo VALUES (#{contentid},#{infoname},#{infotext},#{infoname2},#{infotext2})
+		INSERT INTO detailinfo (contentid,infoname,infotext,infoname2,infotext2)
+		VALUES (#{contentid},#{infoname},#{infotext},#{infoname2},#{infotext2})
+		ON DUPLICATE KEY UPDATE infoname=#{infoname},infotext=#{infotext},
+		infoname2=#{infoname2},infotext2=#{infotext2},updatedate=SYSDATE()
 	</insert>
 	
 	<insert id="commonInsert" parameterType="Map" >
-		INSERT INTO detailcommon VALUES (#{contentid},#{createdtime},#{addr1},#{areacode},#{firstimage},#{firstimage2},
+		INSERT INTO detailcommon (contentid,createdtime,addr1,areacode,firstimage,firstimage2,homepage,mapx
+		,mapy,modifiedtime,overview,tel,telname,title,zipcode,sigungucode) 
+		
+		VALUES (#{contentid},#{createdtime},#{addr1},#{areacode},#{firstimage},#{firstimage2},
 		#{homepage},#{mapx},#{mapy},#{modifiedtime},#{overview},#{tel},#{telname},#{title},#{zipcode},#{sigungucode})
+		
+		ON DUPLICATE KEY UPDATE createdtime=#{createdtime},addr1=#{addr1},areacode=#{areacode},
+		firstimage=#{firstimage},firstimage2=#{firstimage2},homepage=#{homepage},mapx=#{mapx},mapy=#{mapy},modifiedtime=#{modifiedtime},
+		overview=#{overview},tel=#{tel},telname=#{telname},title=#{title},zipcode=#{zipcode},sigungucode=#{sigungucode},
+		updatedate=SYSDATE()
 	</insert>
 	
 	<select id="getIntro" resultType="Map" parameterType="int" >
