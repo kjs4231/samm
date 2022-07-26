@@ -4,6 +4,14 @@
 	<select id="select" parameterType="int" resultType="ReviewVo">
 		SELECT * FROM review where pnum=#{pnum}
 	</select>
+	<select id="getfestivalreview" parameterType="int" resultType="ReviewVo">
+		SELECT r.pnum,r.contents,r.star,r.regdate,r.uid,r.fid,u.name as username FROM review r
+		INNER JOIN users u ON r.uid = u.id
+		where fid = #{fid}
+	</select>
+	<select id="getCount" resultType="int">
+		SELECT count(*) From review where fid = #{fid}
+	</select>
 	<select id="selectAll" resultType="ReviewVo">
 		SELECT * FROM review
 	</select>
@@ -12,7 +20,7 @@
 	</select>
 
 	<insert id="insert" parameterType="ReviewVo" useGeneratedKeys="true" keyProperty="pnum">
-			INSERT INTO review VALUES (NULL,#{contents},#{star},now(),now(),#{uid})
+			INSERT INTO review VALUES (NULL,#{contents},#{star},sysdate(),null,#{uid},#{fid})
 	</insert>
 	<update id="update" parameterType="ReviewVo">
 		UPDATE review SET

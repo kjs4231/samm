@@ -4,7 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +28,6 @@ public class AjaxController {
 		Date date = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
 		String sdate = today.format(date).toString();
-		System.out.println(code);
 		List<FestivalVo> list = null;
 		try {
 			list = fbiz.searchFestival(code, sdate, sdate);
@@ -70,6 +72,7 @@ public class AjaxController {
 		}
 		return count;
 	}
+
 
 	
 }

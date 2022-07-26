@@ -1,0 +1,118 @@
+
+<script>
+
+
+
+$(document).ready(function(){
+	
+	
+	$('#registerbtn').click(function(){
+		
+		if($('input[name="id"]').val()==""){
+			alert("아이디를 입력해주세요.");
+			$("#id").focus();
+			return false;
+		}
+		if($('input[name="pwd"]').val()==""){
+			alert("비밀번호를 입력해주세요.");
+			$("#name").focus();
+			return false;
+		}
+		if($('input[name="name"]').val()==""){
+			alert("성명을 입력해주세요.");
+			$("#name").focus();
+			return false;
+		}
+		
+		$('.user').attr({
+			'method' : 'post',
+		    'action' : '/users/addimpl'
+		});
+		$('.user').submit();
+	});
+	
+	$('input[name="id"]').keyup(function(){
+		var id = $(this).val();
+		
+		if(id.length < 4){
+			$("#idCheckDiv").removeClass("alert-success");
+			$("#idCheckDiv").addClass("alert-danger");
+			$("#idCheckDiv").text("4자 이상입력해주세요.");
+			return;
+		
+		}
+		if(id.length > 20){
+			$("#idCheckDiv").removeClass("alert-success");
+			$("#idCheckDiv").addClass("alert-danger");
+			$("#idCheckDiv").text("20자 이내로 입력해주세요.");
+			return;
+		}
+		
+	});
+	
+
+	
+});
+
+</script>
+
+<meta charset="UTF-8">
+<section class="hero-wrap hero-wrap-2 js-fullheight"
+	style="background-image: url('images/bg_1.jpg');">
+	<div class="overlay"></div>
+
+	<div class="container">
+		<div class="col-lg-6">
+			<div class="p-5">
+				<div class="text-center">
+					
+				</div>
+				<form class="user">
+					<div class="form-group">
+						아이디: <span id="id"></span><input type="text"
+							class="form-control form-control-user" placeholder="ex)abc1234"
+							name="id">
+							<div class="alert alert-danger" id="idCheckDiv">4자 이상 20자 이내로 입력해주세요.</div>
+					</div>
+
+					<div class="form-group">
+						비밀번호: <input type="password"
+							class="form-control form-control-user" placeholder="ex)abc123!@"
+							name="pwd">
+					</div>
+
+					<div class="form-group">
+						이름: <input type="text" class="form-control form-control-user"
+							placeholder="ex)홍길동" name="name">
+					</div>
+					<div class="form-group">
+						e-mail: <input type="text" class="form-control form-control-user"
+							placeholder="ex)abc1234@naver.com" name="email">
+					</div>
+					<div class="form-group">
+						주소: <input type="text" class="form-control form-control-user"
+							placeholder="ex)부산시 사상구" name="address">
+					</div>
+
+					<div class="form-group">
+						전화번호: <input type="text" class="form-control form-control-user"
+							placeholder="ex)010-1234-1234" name="phone">
+					</div>
+					<div class="form-group">
+						성별: <input type="text" class="form-control form-control-user"
+							placeholder="ex)남성,여성" name="gender">
+					</div>
+
+
+					<a id="registerbtn" href="#"
+						class="btn btn-primary btn-user btn-block"> REGISTER </a>
+
+				</form>
+				<br>
+				
+
+			</div>
+			<div class="col-md-9 ftco-animate pb-5 text-center"></div>
+		</div>
+	</div>
+</section>

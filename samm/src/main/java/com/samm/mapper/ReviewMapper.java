@@ -18,4 +18,8 @@ public interface ReviewMapper {
     public List<ReviewVo> list(int page) throws Exception;
     public List<ReviewVo> selectByUid(HashMap<String, Object> map) throws Exception;
     public List<ReviewVo> selectByContents(HashMap<String, Object> map) throws Exception;
+    
+    public List<ReviewVo> getfestivalreview(int fid) throws Exception;
+    
+    public int getCount(int fid) throws Exception;
 }
