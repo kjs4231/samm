@@ -41,6 +41,15 @@ public class FestivalImgBiz implements Biz<Integer,FestivalImgVo> {
 		return dao.selectAll();
 	}
 
-
-
+	public List<FestivalImgVo> selctAllFid(Integer k) throws Exception {
+		return dao.selectAllFid(k);
+	}
+	
+	public List<FestivalImgVo> selctAllowY(Integer k) throws Exception {
+		return dao.selectAllowY(k);
+	}
+	
+	public void updateAllow(FestivalImgVo v) throws Exception{
+		dao.updateAllow(v);
+	}
 }

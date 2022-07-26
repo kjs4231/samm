@@ -39,22 +39,25 @@ public class TourFestivalAPI {
 	FestivalDetailMapper fDdao;
 	@Autowired
 	FestivalBiz fbiz;
-
+	
 	// tag값의 정보를 가져오는 함수
 	public static String getTagValue(String tag, Element eElement) {
 
 		// 결과를 저장할 result 변수 선언
 		String result = "";
-
 		if (eElement.getElementsByTagName(tag).item(0) == null) {
 			result = null;
 		} else {
 			NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-			result = nlList.item(0).getTextContent();
+			if(nlList.item(0) == null) {
+				result = null;
+			}else {
+				result = nlList.item(0).getTextContent();
+			}
 		}
 		return result;
 	}
-
+	
 	public boolean insertFestivalApi() throws IOException {
 		StringBuilder urlBuilder = new StringBuilder(
 				"http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchFestival"); /* 행사정보 URL */
@@ -152,7 +155,7 @@ public class TourFestivalAPI {
 			} else if (cnt % 3 == 1) {
 				apikey = "ef66qL2r05NW7EdBh1eB98C%2BxrT35HALxay6h9dV9PqWOtHM%2BD6CtWlwqMnS4ZifsmsKSWHvBFBV9j4slyeRCw%3D%3D";
 			} else if (cnt % 3 == 2) {
-				apikey = "";
+				apikey = "daFe2av2mANluZHrEgRotgYJfcr%2BNJpDzHNx53PoqBnCL97Xxd7yCqRvF507%2FxLykBOPWv8XYq%2BD2ZPelZgQtA%3D%3D";
 			}
 
 			System.out.println("apikey:: " + apikey);
@@ -263,10 +266,12 @@ public class TourFestivalAPI {
 		String apikey = "tfve0pUOnMXCq5%2F%2Fm0wkmz%2BoE2%2BWsgFwlecdUgsklVSER1UoydTgZG1ZaUOK%2FtsetQnRNi1TuOiEjM%2BHncD9qw%3D%3D";
 		for (String contentId : festivalID) {
 			cnt++;
-			if (cnt == 200 || cnt == 400 || cnt == 600 || cnt == 800 || cnt == 1000) {
+			if (cnt % 3 == 0) {
 				apikey = "tfve0pUOnMXCq5%2F%2Fm0wkmz%2BoE2%2BWsgFwlecdUgsklVSER1UoydTgZG1ZaUOK%2FtsetQnRNi1TuOiEjM%2BHncD9qw%3D%3D";
-			} else if (cnt == 100 || cnt == 300 || cnt == 500 || cnt == 700 || cnt == 900) {
+			} else if (cnt % 3 == 1) {
 				apikey = "ef66qL2r05NW7EdBh1eB98C%2BxrT35HALxay6h9dV9PqWOtHM%2BD6CtWlwqMnS4ZifsmsKSWHvBFBV9j4slyeRCw%3D%3D";
+			} else if (cnt % 3 == 2) {
+				apikey = "daFe2av2mANluZHrEgRotgYJfcr%2BNJpDzHNx53PoqBnCL97Xxd7yCqRvF507%2FxLykBOPWv8XYq%2BD2ZPelZgQtA%3D%3D";
 			}
 
 			System.out.println("apikey:: " + apikey);
@@ -397,10 +402,12 @@ public class TourFestivalAPI {
 		String apikey = "tfve0pUOnMXCq5%2F%2Fm0wkmz%2BoE2%2BWsgFwlecdUgsklVSER1UoydTgZG1ZaUOK%2FtsetQnRNi1TuOiEjM%2BHncD9qw%3D%3D";
 		for (String contentId : festivalID) {
 			cnt++;
-			if (cnt == 200 || cnt == 400 || cnt == 600 || cnt == 800 || cnt == 1000) {
+			if (cnt % 3 == 0) {
 				apikey = "tfve0pUOnMXCq5%2F%2Fm0wkmz%2BoE2%2BWsgFwlecdUgsklVSER1UoydTgZG1ZaUOK%2FtsetQnRNi1TuOiEjM%2BHncD9qw%3D%3D";
-			} else if (cnt == 100 || cnt == 300 || cnt == 500 || cnt == 700 || cnt == 900) {
+			} else if (cnt % 3 == 1) {
 				apikey = "ef66qL2r05NW7EdBh1eB98C%2BxrT35HALxay6h9dV9PqWOtHM%2BD6CtWlwqMnS4ZifsmsKSWHvBFBV9j4slyeRCw%3D%3D";
+			} else if (cnt % 3 == 2) {
+				apikey = "daFe2av2mANluZHrEgRotgYJfcr%2BNJpDzHNx53PoqBnCL97Xxd7yCqRvF507%2FxLykBOPWv8XYq%2BD2ZPelZgQtA%3D%3D";
 			}
 			System.out.println("apikey:: " + apikey);
 			System.out.println("count::" + cnt);
@@ -461,8 +468,8 @@ public class TourFestivalAPI {
 				for (int temp = 0; temp < nList.getLength(); temp++) {
 					Node nNode = nList.item(temp);
 					Element eElement = (Element) nNode;
-					HashMap<String, String> hashmap = new HashMap<String, String>();
-
+					
+					HashMap<String, String> hashmap = new HashMap<String, String>();				
 					hashmap.put("contentid", getTagValue("contentid", eElement));
 					hashmap.put("agelimit", getTagValue("agelimit", eElement));
 					hashmap.put("eventplace", getTagValue("eventplace", eElement));
