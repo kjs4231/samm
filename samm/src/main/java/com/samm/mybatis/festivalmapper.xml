@@ -60,9 +60,13 @@
 		#{tel},#{addr1},#{mapx},#{mapy},#{createdtime},#{firstimage},#{firstimage2})
 	</insert>
 
-	<insert id="apiinsert" parameterType="Map">
-		INSERT INTO festival VALUES (#{contentid},#{title},#{areacode},#{eventstartdate},#{eventenddate},
+	<insert id="apiinsert" parameterType="Map" useGeneratedKeys="true" keyProperty="contentid,mapx,mapy">
+		INSERT INTO festival (contentid,title,areacode,eventstartdate,eventenddate,tel,addr1,mapx,mapy,createdtime,firstimage,firstimage2)
+		VALUES (#{contentid},#{title},#{areacode},#{eventstartdate},#{eventenddate},
 		#{tel},#{addr1},#{mapx},#{mapy},#{createdtime},#{firstimage},#{firstimage2})
+		ON DUPLICATE KEY UPDATE title=#{title},areacode=#{areacode},eventstartdate=#{eventstartdate},
+		eventenddate=#{eventenddate},tel=#{tel},addr1=#{addr1},mapx=#{mapx},mapy=#{mapy},updatedate=SYSDATE(),
+		firstimage=#{firstimage}, firstimage2=#{firstimage2}
 	</insert>
 
 	<update id="update" parameterType="FestivalVo">

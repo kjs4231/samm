@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.samm.mapper.FestivalImgMapper">
+
+	<insert id="insert" parameterType="Map">
+		INSERT INTO festivalimg VALUES (NULL,#{name},default,#{fid})
+	</insert>	
+	
+	<select id="selectAll" resultType="FestivalImgVo">
+		SELECT * FROM festivalimg 
+	</select>
+	
+	<select id="selectAllFid" parameterType="int" resultType="FestivalImgVo">
+		SELECT * FROM festivalimg WHERE fid=#{fid} 
+	</select>
+	
+	<select id="selectAllowY" parameterType="int" resultType="FestivalImgVo">
+		SELECT * FROM festivalimg WHERE fid=#{fid} AND allowYN="Y"
+	</select>
+	
+	<update id="updateAllow" parameterType="FestivalImgVo">
+		UPDATE festivalimg SET allowYN=#{allowYN}
+	</update>
+
+</mapper>
+	
+	

@@ -184,7 +184,8 @@
 
 <section class="ftco-section2">
 	<div  class="container" >
-		<h2 class="festival--subject">검색 결과</h2>
+		<h2 class="festival--subject" th:if="${festival} != null">검색 결과</h2>
+		<h2 class="festival--subject" th:unless="${festival} != null">검색 결과가 없습니다.</h2>
 		<div class="row" id="festivalING">
 			<div class="col-md-4 ftco-animate" th:each="list:${festival}">
 				<div class="project-wrap">
