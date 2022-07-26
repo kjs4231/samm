@@ -1,8 +1,14 @@
 let container;
 let map;
-var marker;
-// lat = mapy
-// lng = mapx
+var markers = new Map();
+var infowindows = new Map();
+
+let geoloc_lat = 33.450701;
+let geoloc_lng = 126.570667;
+let currentKeyword = "";
+let maxPage;
+let startPage;
+let endPage;
 
 function paintingMap(lat, lng) {
 	container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -18,44 +24,21 @@ function getGeolocation() {
 	if (navigator.geolocation) {
 		// GeoLocation을 이용해서 접속 위치를 얻어옵니다
 		navigator.geolocation.getCurrentPosition(function (position) {
-			var lat = position.coords.latitude, // 위도
-				lng = position.coords.longitude; // 경도
-			var locPosition = new kakao.maps.LatLng(lat, lng) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-			console.log(lat, lng)
+			geoloc_lat = position.coords.latitude, // 위도
+				geoloc_lng = position.coords.longitude; // 경도
+			var locPosition = new kakao.maps.LatLng(geoloc_lat, geoloc_lng) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+			console.log(geoloc_lat, geoloc_lng)
 			console.log("locPosition::" + locPosition);
-			// 마커와 인포윈도우를 표시합니다
-			paintingMap(lat, lng)
-			displayMarker(locPosition);
+
+			paintingMap(geoloc_lat, geoloc_lng)
 		});
-	} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-		var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
-			message = 'geolocation을 사용할수 없어요..'
-		paintingMap(33.450701, 126.570667);
-		displayMarker(locPosition);
+	} else {
+		paintingMap(geoloc_lat, geoloc_lng);
 	}
 }
 
-// 지도에 마커와 인포윈도우를 표시하는 함수입니다
-function displayMarker(locPosition) {
-	// 마커를 생성합니다
-	marker = new kakao.maps.Marker({
-		map: map,
-		position: locPosition
-	});
-	var iwContent = "t", // 인포윈도우에 표시할 내용
-		iwRemoveable = true;
-	// 인포윈도우를 생성합니다
-	var infowindow = new kakao.maps.InfoWindow({
-		content: iwContent,
-		removable: iwRemoveable
-	});
-	// 인포윈도우를 마커위에 표시합니다 
-	infowindow.open(map, marker);
-	// 지도 중심좌표를 접속위치로 변경합니다
-	map.setCenter(locPosition);
-}
 
-function e_searchmap(mapx, mapy, firstimage, eventstartdate, eventenddate, title, addr1) {
+function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, eventenddate, title, addr1) {
 	if (typeof firstimage == "undefined" || firstimage == null || firstimage == "") {
 		var gen_l_card_left = ''
 		var class_l_card_right = 'l-card-noimage col-12';
@@ -70,7 +53,7 @@ function e_searchmap(mapx, mapy, firstimage, eventstartdate, eventenddate, title
 		var gen_l_card_txt_location = '<div class="l-card-txt location"><span class="fa fa-map-marker"></span> ' +
 			'<span>' + addr1 + '</span></div>';
 	};
-	var e = '<a class="l-card item container" href="#" mapx=' + mapx + ' mapy=' + mapy + '>' +
+	var elm = '<a class="l-card item container" href="#" mapx="' + mapx + '" mapy="' + mapy + '" contentid="' + contentid + '">' +
 		gen_l_card_left +
 		'<div class="' + class_l_card_right + '">' +
 		'<div class="inline">' +
@@ -87,7 +70,22 @@ function e_searchmap(mapx, mapy, firstimage, eventstartdate, eventenddate, title
 		'</div>' +
 		'</a>' +
 		'<div class="mt-2"></div>';
-	return e;
+	return elm;
+};
+
+// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+function removeMarker() {
+	markers.forEach((value) => {
+		value.setMap(null);
+	});
+	markers = new Map();
+};
+
+function removeInfowindow() {
+	infowindows.forEach((value) => {
+		value.close();
+	});
+	infowindows = new Map();
 };
 
 function searchmap(keyword, page, mapx, mapy) {
@@ -97,19 +95,46 @@ function searchmap(keyword, page, mapx, mapy) {
 		method: 'get',
 		dataType: 'json',
 		success: function (json) {
+			bounds = new kakao.maps.LatLngBounds();
 			var result = '';
+			removeMarker();
+			removeInfowindow();
 			$.each(json, function (i, element) {
-				result = result.concat(e_searchmap(element.mapx, element.mapy, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1));
+				result = result.concat(elm_searchmap(element.contentid, element.mapx, element.mapy, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1));
+				var locPosition = new kakao.maps.LatLng(element.mapy, element.mapx);
+				bounds.extend(locPosition);
+				var iwContent = '<div class="map-markercontent" contentid="' + element.contentid + '" style="padding:5px;">Hello World!</div>',
+					iwRemoveable = true;
+				var marker = new kakao.maps.Marker({
+					position: locPosition,
+					clickable: true
+				});
+				var infowindow = new kakao.maps.InfoWindow({
+					content: iwContent,
+					removable: iwRemoveable
+				});
+				marker.setMap(map);
+				markers.set(element.contentid, marker);
+				infowindows.set(element.contentid, infowindow);
+				(function (marker, title) {
+					kakao.maps.event.addListener(marker, 'click', function () {
+						infowindow.open(map, marker);
+					});
+				})(marker, element.title);
+				kakao.maps.event.addListener(marker, 'click', function () {
+					infowindow.open(map, marker);
+				});
 			});
 			$('#map-searchlist').html(result);
+			map.setBounds(bounds);
 		}
 	})
 };
 
-function e_countsearchmap(count, page) {
-	var maxPage = parseInt(count / 12) + 1;
-	var startPage = parseInt((page - 1) / 5) * 5 + 1;
-	var endPage = startPage + 4;
+function elm_countsearchmap(count, page) {
+	maxPage = parseInt(count / 12) + 1;
+	startPage = parseInt((page - 1) / 5) * 5 + 1;
+	endPage = startPage + 4;
 	if (endPage > maxPage) {
 		endPage = maxPage;
 	}
@@ -119,25 +144,25 @@ function e_countsearchmap(count, page) {
 		if (i == page) {
 			pager = pager + '<li class="active"><span>' + i + '</span></li> '
 		} else {
-			pager = pager + '<li><a href="#">' + i + '</a></li> '
+			pager = pager + '<li><a href="javascript:void(0)" onclick="pagemove(' + i + ');">' + i + '</a></li> '
 		}
 	};
 
-	var e = $('<div />', { "class": "row mt-3" }).html(
+	var elm = $('<div />', { "class": "row mt-3" }).html(
 		$('<div />', { "class": "col text-center" }).html(
 			$('<div />', { "class": "block-27" }).html(
 				$('<ul />').html(
-					$('<li />').html($('<a />').text('<'))
+					$('<li class="pager-prev" />').html($('<a />').text('<'))
 						.append('&nbsp;')
 						.append(pager)
-						.append($('<li />').html($('<a />').text('>')))
+						.append($('<li class="pager-next" />').html($('<a />').text('>')))
 				)
 			)
 		));
-	return $(e).prop('outerHTML');
+	return $(elm).prop('outerHTML');
 }
 
-function countsearchmap(keyword) {
+function countsearchmap(keyword, page) {
 	$.ajax({
 		url: '/countsearchmap',
 		data: { keyword: keyword },
@@ -145,24 +170,63 @@ function countsearchmap(keyword) {
 		dataType: 'text',
 		success: function (count) {
 			var result = '';
-			result = result.concat(e_countsearchmap(count, 1));
+			result = result.concat(elm_countsearchmap(count, page));
 			$('#map-searchpager').html(result);
 		}
 	})
+};
+
+function searchmapinput() {
+	currentKeyword = $('#map-searchform input[name="search"]').val();
+	searchmap(currentKeyword, 1, geoloc_lng, geoloc_lat);
+	countsearchmap(currentKeyword, 1);
+};
+
+function pagemove(page) {
+	searchmap(currentKeyword, page, geoloc_lng, geoloc_lat);
+	countsearchmap(currentKeyword, page);
 };
 
 $(document).ready(function () {
 	getGeolocation();
 });
 
-$(document).on("click", ".l-card", function () {
-	var loc = new kakao.maps.LatLng($(this).attr('mapy'), $(this).attr('mapx'))
-	map.panTo(loc);
-	displayMarker(loc)
-});
+
 
 $(document).on("click", ".btn-search", function () {
-	var keyword = $('#map-searchform input[name="search"]').val();
-	searchmap(keyword, 1, 127.052153, 37.5071772);
-	countsearchmap(keyword);
+	searchmapinput();
+});
+
+$('#map-searchform input[name="search"]').keyup(function (e) {
+	if (e.keyCode == 13) {
+		searchmapinput();
+	}
+});
+
+$(document).on("click", ".pager-prev a", function () {
+	// alert($('#map-searchpager li').eq(1).text());
+	// alert($('#map-searchpager li').eq(-2).text());
+	if ($('#map-searchpager li').eq(1).text() == 1) {
+
+	} else {
+		countsearchmap(currentKeyword, startPage - 5);
+	}
+});
+
+$(document).on("click", ".pager-next a", function () {
+	if ($('#map-searchpager li').eq(-2).text() == maxPage) {
+
+	} else {
+		countsearchmap(currentKeyword, startPage + 5);
+	}
+});
+
+$(document).on("click", ".l-card", function (e) {
+	var contentid = $('a', $(e.target).parents(".l-card").parent()).attr("contentid");
+	
+	// locPosition = new kakao.maps.LatLng($('a', $(e.target).parents(".l-card").parent()).attr("mapy"), $('a', $(e.target).parents(".l-card").parent()).attr("mapx"));
+	alert(infowindows.get('"'+contentid+'"'));
+	// marker = new markers.get($('a', $(e.target).parents(".l-card").parent()).attr("contentid"));
+	// infowindow.open(map, marker);
+	// map.panTo(locPosition);
 });
