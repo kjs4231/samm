@@ -51,16 +51,16 @@ var queryString = $('#festival--review').serialize();
 
 function submitReview() {
 	$('#sumbit-review').click(function() {
-		if($('#star').val() == null || $('#star').val() == ""){
+		if ($('#star').val() == null || $('#star').val() == "") {
 			alert("별점을 입력해주세요!")
 			$('#star-warnig').text("<--- 별점을 입력해주세요!")
 			return;
 		}
-		if($('#contents').val() == null || $('#contents').val() == ""){
+		if ($('#contents').val() == null || $('#contents').val() == "") {
 			alert("내용을 입력해주세요!")
 			return;
 		}
-		
+
 		if ($('#uid').val() == null) {
 			alert("login후 이용 가능합니다.")
 		} else {
@@ -69,10 +69,21 @@ function submitReview() {
 				"action": "/reviewimpl"
 			})
 			$('#festival--review').submit();
-		}		
+		}
 	})
 
 }
+
+function filecheck() {
+	$('#file-form').attr({
+		'enctype':'multipart/form-data',
+		'method' : 'post',
+		'action' : '/imgimpl'
+	});
+	$('#file-form').submit();
+	alert("사진 요청이 완료 되었습니다. 관리자가 확인 후 반영 예정입니다.")
+};
+
 
 
 $(document).ready(function() {
@@ -135,8 +146,8 @@ $(document).ready(function() {
 		$('#star').val(stars)
 	})
 	submitReview();
-	
+
+
 
 });
-
 
