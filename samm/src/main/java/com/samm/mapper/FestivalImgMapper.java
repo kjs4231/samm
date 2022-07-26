@@ -16,4 +16,8 @@ public interface FestivalImgMapper{
 	public void delete(int k) throws Exception;
 	public FestivalImgVo select(int k) throws Exception;
 	public List<FestivalImgVo> selectAll() throws Exception;
+	public List<FestivalImgVo> selectAllFid(int k) throws Exception;
+	public List<FestivalImgVo> selectAllowY(int k) throws Exception;
+	
+	public void updateAllow(FestivalImgVo v) throws Exception;
 }

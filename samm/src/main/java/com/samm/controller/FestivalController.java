@@ -8,15 +8,20 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.samm.biz.AreaBiz;
 import com.samm.biz.FestivalBiz;
+import com.samm.biz.FestivalImgBiz;
 import com.samm.biz.ReviewBiz;
+import com.samm.frame.Util;
+import com.samm.vo.FestivalImgVo;
 import com.samm.vo.FestivalVo;
 import com.samm.vo.ReviewVo;
+
 
 @Controller
 public class FestivalController {
@@ -27,6 +32,11 @@ public class FestivalController {
 	ReviewBiz reviewbiz;
 	@Autowired
 	AreaBiz abiz;
+	@Autowired
+	FestivalImgBiz fimgbiz;
+	
+	@Value("${testdir}")
+	String testdir;
 	
 	@RequestMapping("/detail")
 	public String detail(Model m,Integer contentid,FestivalVo festival,HttpSession session,
@@ -36,6 +46,7 @@ public class FestivalController {
 		Map<String,String> intro = null;
 		Map<String,String> info = null;
 		List<ReviewVo> rlist = null;
+		List<FestivalImgVo> imglist = null;
 		int count = 0;
 		try {
 			festival = festbiz.get(contentid); 
@@ -44,12 +55,13 @@ public class FestivalController {
 			common = festbiz.getCommon(contentid);
 			rlist = reviewbiz.getfestivalreview(contentid);
 			count = reviewbiz.getCount(contentid);
+			imglist = fimgbiz.selctAllowY(contentid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("rlist::"+rlist);
 
-		
+		m.addAttribute("img", imglist);
 		m.addAttribute("center","/festival/detail");
 		m.addAttribute("common",common);
 		m.addAttribute("rcount",count);
@@ -112,5 +124,20 @@ public class FestivalController {
 		String eventenddate = date.format(enddate).toString();
 		
 		return "redirect:/searchfestival?areacode="+areacode+"&eventstartdate="+eventstartdate+"&eventenddate="+eventenddate;
+	}
+	@RequestMapping("/imgimpl")
+	public String imgimpl(Model m,FestivalImgVo fimg,int fid) {
+		String imgname = fimg.getMf().getOriginalFilename();
+		fimg.setName(imgname);
+		System.out.println("fimg::"+fimg);
+
+		
+		try {
+			fimgbiz.register(fimg);
+			Util.saveFile(fimg.getMf(), testdir);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/detail?contentid="+fid;
 	}
 }

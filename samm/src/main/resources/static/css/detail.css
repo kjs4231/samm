@@ -14,7 +14,7 @@
     border-color: #f1f1f1;
   }
   .carousel-inner img {
-    width: 100%; /* Set width to 100% */
+    width: 100%; 
     margin: auto;
   }
   .carousel-caption h3 {
@@ -59,4 +59,33 @@
 .fa-star:hover {
 	cursor: pointer;
 }
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+
+.filebox label {
+    display: flex;
+    justify-content:flex-end;
+    padding: 10px 20px;
+    color: black;
+    vertical-align: middle;
+    cursor: pointer;
+    height: 40px;
+    margin-bottom: 30px;
+    font-size: 1.8em;
+    font-weight: 400;
+}
+
+.filebox label:hover{
+	color: #fd7e14;
+}
+
+
 
