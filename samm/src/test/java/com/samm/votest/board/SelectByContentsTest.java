@@ -1,27 +1,31 @@
 package com.samm.votest.bord;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.samm.biz.BordBiz;
-import com.samm.vo.BordVo;
+import com.samm.biz.BoardBiz;
+import com.samm.vo.BoardVo;
 
 @SpringBootTest
-class UpdateTest {
+class SelectByContentsTest {
 	
 	@Autowired
-	BordBiz biz;
+	BoardBiz biz;
 
 	@Test
 	void contextLoads() {
-		BordVo obj = new BordVo(16,null,"제목이 변경됨");
+		List<BoardVo> list = null;
 		try {
-			biz.modify(obj);
-			System.out.println("update test 완료");
+			list = biz.getByContents("inani",1);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		for (BoardVo obj : list) {
+			System.out.println(obj);
 		}
 	}
 
