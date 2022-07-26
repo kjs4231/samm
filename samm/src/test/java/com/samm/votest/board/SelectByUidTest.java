@@ -1,27 +1,31 @@
 package com.samm.votest.bord;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.samm.biz.BordBiz;
-import com.samm.vo.BordVo;
+import com.samm.biz.BoardBiz;
+import com.samm.vo.BoardVo;
 
 @SpringBootTest
-class InsertTest {
+class SelectByUidTest {
 	
 	@Autowired
-	BordBiz biz;
+	BoardBiz biz;
 
 	@Test
 	void contextLoads() {
-		BordVo obj = new BordVo("내용","제목","id01");
+		List<BoardVo> list = null;
 		try {
-			biz.register(obj);
-			System.out.println("test 완료");
+			list = biz.getByUid("id01", 1);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		for (BoardVo obj : list) {
+			System.out.println(obj);
 		}
 	}
 

@@ -1,26 +1,32 @@
-package com.samm.votest.bord;
+package com.samm.votest.board;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.samm.biz.BordBiz;
+import com.samm.biz.BoardBiz;
+import com.samm.vo.BoardVo;
 
 @SpringBootTest
-class ViewsTest {
-
+class SelectAllTest {
+	
 	@Autowired
-	BordBiz biz;
+	BoardBiz biz;
 
 	@Test
 	void contextLoads() {
+		List<BoardVo> list = null;
 		try {
-			biz.views(16);
+			list = biz.getList();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("조회수가 증가됨");
+		for (BoardVo obj : list) {
+			System.out.println(obj);
+		}
 	}
 
 }

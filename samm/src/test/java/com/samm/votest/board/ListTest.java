@@ -6,25 +6,25 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.samm.biz.BordBiz;
-import com.samm.vo.BordVo;
+import com.samm.biz.BoardBiz;
+import com.samm.vo.BoardVo;
 
 @SpringBootTest
-class SelectAllTest {
+class ListTest {
 	
 	@Autowired
-	BordBiz biz;
+	BoardBiz biz;
 
 	@Test
 	void contextLoads() {
-		List<BordVo> list = null;
+		List<BoardVo> list = null;
 		try {
-			list = biz.get();
+			list = biz.list(1);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (BordVo obj : list) {
+		for (BoardVo obj : list) {
 			System.out.println(obj);
 		}
 	}

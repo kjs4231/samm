@@ -14,8 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.samm.biz.AreaBiz;
+import com.samm.biz.BoardBiz;
 import com.samm.biz.FestivalBiz;
 import com.samm.biz.UsersBiz;
+import com.samm.vo.BoardVo;
 import com.samm.vo.FestivalVo;
 import com.samm.vo.UsersVo;
 
@@ -28,6 +30,8 @@ public class MainController {
 	AreaBiz abiz;
 	@Autowired
 	UsersBiz ubiz;
+	@Autowired
+	BoardBiz bbiz;
 	
 	
 	
@@ -122,5 +126,20 @@ public class MainController {
 		}
 		return "index";
 	}
+	
+	@RequestMapping("/board")
+	public String main(Model m) {
+		List<BoardVo> blist = null;
+		try {
+			blist = bbiz.getList();
+			m.addAttribute("blist", blist);
+			m.addAttribute("center", "board");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	return "index";
+}
+	
 	
 }

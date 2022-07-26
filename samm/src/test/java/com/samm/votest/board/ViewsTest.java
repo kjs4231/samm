@@ -4,25 +4,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.samm.biz.BordBiz;
-import com.samm.vo.BordVo;
+import com.samm.biz.BoardBiz;
 
 @SpringBootTest
-class SelectTest {
-	
+class ViewsTest {
+
 	@Autowired
-	BordBiz biz;
+	BoardBiz biz;
 
 	@Test
 	void contextLoads() {
-		BordVo obj = null;
 		try {
-			obj = biz.get(16);
+			biz.views(16);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(obj);
+		System.out.println("조회수가 증가됨");
 	}
 
 }
