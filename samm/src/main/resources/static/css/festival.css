@@ -1,14 +1,14 @@
 .festival--subject {
+	margin-top:70px;
 	text-align: center;
 }
 
 .areacode {
 	display: flex;
-	margin-top: 3em;
+	margin-top: 1.2em;
 	margin-left: auto;
 	margin-right: auto;
 	width: 100%;
-	border: 1px solid black;
 	justify-content: space-around;
 	align-items: center;
 }
@@ -38,6 +38,12 @@
 .active-area {
 	font-weight: bold;
 	color: #fd7e14;
+}
+
+
+
+.festival-section2{
+	padding-top:2em;
 }
 
 .s003 {

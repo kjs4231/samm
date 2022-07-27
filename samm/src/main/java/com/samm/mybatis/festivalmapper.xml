@@ -26,6 +26,14 @@
 		and addr1 not like '%온라인%' and mapx is not null
 		order by contentid desc LIMIT #{key_offset}, 6
 	</select>
+	
+	<select id="searchKeyword" parameterType="HashMap" resultType="FestivalVo">
+		SELECT * FROM festival WHERE title LIKE CONCAT('%',#{keyword},'%') LIMIT ${page}, 12
+	</select>
+	
+	<select id="searchKeywordCount" parameterType="String" resultType="int">
+		SELECT CEILING(count(*)/12) FROM festival WHERE title LIKE CONCAT('%',#{keyword},'%')
+	</select>
 
 	<select id="searchMap" parameterType="Map" resultType="FestivalVo">
 		<bind name="key_offset" value="(@java.lang.Integer@valueOf(page)-1)*12" />
@@ -80,5 +88,5 @@
 		DELETE FROM festival WHERE
 		id=#{id}
 	</delete>
-
+	
 </mapper>

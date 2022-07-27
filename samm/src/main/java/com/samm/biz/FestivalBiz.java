@@ -110,5 +110,21 @@ public class FestivalBiz implements Biz<Integer, FestivalVo> {
 		return detailDao.getCommon(contentid);	
 	}
 	
+	public List<FestivalVo> searchKeyword(String keyword, Integer page) throws Exception{
+		HashMap<String, String> param = new HashMap<>();
+		param.put("keyword", keyword);
+		if (page == null) {
+			page = 1;
+		}
+		page = (page-1)*12;
+		param.put("page",page.toString());
+		return festivalDao.searchKeyword(param);
+	}
+	
+	public int searchKeywordCount(String keyword) throws Exception {
+		int result = festivalDao.searchKeywordCount(keyword);
+		return result;
+	}
+	
 
 }
