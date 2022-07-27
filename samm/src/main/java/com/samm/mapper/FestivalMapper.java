@@ -22,4 +22,7 @@ public interface FestivalMapper {
 
 	public void apiinsert (HashMap<String, String> hashmap) throws Exception;
 	public List<String> getContentId() throws Exception;
+	
+	public List<FestivalVo> searchKeyword(HashMap<String, String> hashmap) throws Exception;
+	public int searchKeywordCount(String keyword) throws Exception;
 }

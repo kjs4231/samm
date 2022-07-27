@@ -1,5 +1,8 @@
 package com.samm.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,10 +25,9 @@ import com.samm.vo.FestivalImgVo;
 import com.samm.vo.FestivalVo;
 import com.samm.vo.ReviewVo;
 
-
 @Controller
 public class FestivalController {
-	
+
 	@Autowired
 	FestivalBiz festbiz;
 	@Autowired
@@ -34,22 +36,21 @@ public class FestivalController {
 	AreaBiz abiz;
 	@Autowired
 	FestivalImgBiz fimgbiz;
-	
+
 	@Value("${testdir}")
 	String testdir;
-	
+
 	@RequestMapping("/detail")
-	public String detail(Model m,Integer contentid,FestivalVo festival,HttpSession session,
-			ReviewVo review) {
-		System.out.println("contentid::"+contentid);
-		Map<String,String> common = null;
-		Map<String,String> intro = null;
-		Map<String,String> info = null;
+	public String detail(Model m, Integer contentid, FestivalVo festival, HttpSession session, ReviewVo review) {
+		System.out.println("contentid::" + contentid);
+		Map<String, String> common = null;
+		Map<String, String> intro = null;
+		Map<String, String> info = null;
 		List<ReviewVo> rlist = null;
 		List<FestivalImgVo> imglist = null;
 		int count = 0;
 		try {
-			festival = festbiz.get(contentid); 
+			festival = festbiz.get(contentid);
 			intro = festbiz.getIntro(contentid);
 			info = festbiz.getInfo(contentid);
 			common = festbiz.getCommon(contentid);
@@ -59,85 +60,114 @@ public class FestivalController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("rlist::"+rlist);
+		System.out.println("rlist::" + rlist);
 
 		m.addAttribute("img", imglist);
-		m.addAttribute("center","/festival/detail");
-		m.addAttribute("common",common);
-		m.addAttribute("rcount",count);
-		m.addAttribute("review",rlist);
-		m.addAttribute("info",info);
-		m.addAttribute("intro",intro);
-		m.addAttribute("festival",festival);	
+		m.addAttribute("center", "/festival/detail");
+		m.addAttribute("common", common);
+		m.addAttribute("rcount", count);
+		m.addAttribute("review", rlist);
+		m.addAttribute("info", info);
+		m.addAttribute("intro", intro);
+		m.addAttribute("festival", festival);
 		return "/index";
 	}
-	
+
 	@RequestMapping("/reviewimpl")
-	public String review(String contents,String star,String uid, int fid,HttpSession session,
-			Model m,ReviewVo review) {
+	public String review(String contents, String star, String uid, int fid, HttpSession session, Model m,
+			ReviewVo review) {
 		System.out.println(review);
 		try {
 			reviewbiz.register(review);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return "redirect:/detail?contentid="+fid;
+
+		return "redirect:/detail?contentid=" + fid;
 	}
-	
+
 	@RequestMapping("/searchfestival")
-	public String searchfsetival(Model m,Map<String,String> area,  String areacode, String eventstartdate, String eventenddate) {
+	public String searchfsetival(Model m, Map<String, String> area, String areacode, String eventstartdate,
+			String eventenddate, String keyword, Integer page) throws Exception {
+		String url = "";
 		Date date = new Date();
 		SimpleDateFormat formats = new SimpleDateFormat("yyyyMMdd");
 		String today = formats.format(date).toString();
-		List<Map<String,String>> alist = null;
+		List<Map<String, String>> alist = null;
 		List<FestivalVo> list = null;
-		System.out.println("eventstartdate::"+eventstartdate);
+		List<FestivalVo> klist = null;
+		int count = 0;
 		try {
+			if (keyword != null ) {
+				url = URLDecoder.decode(keyword, "UTF-8");
+				klist = festbiz.searchKeyword(url,page);
+				count = festbiz.searchKeywordCount(keyword);
+				m.addAttribute("count",count);
+				m.addAttribute("keyword",keyword);
+				m.addAttribute("klist", klist);
+			}
+
 			alist = abiz.get();
-			if( (areacode != null && eventstartdate != null && eventenddate != null) ) {
+			if ((areacode != null && eventstartdate != null && eventenddate != null)) {
 				list = festbiz.searchFestival(areacode, eventstartdate, eventenddate);
 				int start = Integer.parseInt(eventstartdate);
 				int end = Integer.parseInt(eventenddate);
-				int todays = Integer.parseInt(today);			
 				m.addAttribute("start", start);
-				m.addAttribute("today", todays);
 				m.addAttribute("end", end);
-				System.out.println(start);
-				System.out.println(todays);
-				System.out.println(end);
 			}
+
+			int todays = Integer.parseInt(today);
+			m.addAttribute("today", todays);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new Exception("searchfsetival ERROR");
 		}
-
-		m.addAttribute("festival",list);
-		m.addAttribute("area",alist);
-		m.addAttribute("center","/festival/searchfestival");
+		System.out.println("url::" + url);
+		m.addAttribute("festival", list);
+		m.addAttribute("area", alist);
+		m.addAttribute("center", "/festival/searchfestival");
 		return "index";
 	}
-	
+
 	@RequestMapping("/searchFestivalimpl")
 	public String searchFestivalimpl(Model m, String areacode, Date startdate, Date enddate) {
 		SimpleDateFormat date = new SimpleDateFormat("yyyyMMdd");
 		String eventstartdate = date.format(startdate).toString();
 		String eventenddate = date.format(enddate).toString();
-		
-		return "redirect:/searchfestival?areacode="+areacode+"&eventstartdate="+eventstartdate+"&eventenddate="+eventenddate;
+
+		return "redirect:/searchfestival?areacode=" + areacode + "&eventstartdate=" + eventstartdate + "&eventenddate="
+				+ eventenddate;
 	}
+
 	@RequestMapping("/imgimpl")
-	public String imgimpl(Model m,FestivalImgVo fimg,int fid) {
+	public String imgimpl(Model m, FestivalImgVo fimg, int fid) {
 		String imgname = fimg.getMf().getOriginalFilename();
 		fimg.setName(imgname);
-		System.out.println("fimg::"+fimg);
+		System.out.println("fimg::" + fimg);
 
-		
 		try {
 			fimgbiz.register(fimg);
 			Util.saveFile(fimg.getMf(), testdir);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/detail?contentid="+fid;
+		return "redirect:/detail?contentid=" + fid;
+	}
+
+	@RequestMapping("searchKeyword")
+	public String searchKeyword(Model m, String keyword,Integer page) {
+		String url = "";
+		try {
+			url = URLEncoder.encode(keyword, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		if (page == null) {
+			page = 1;
+		}
+		System.out.println(page);
+
+		return "redirect:/searchfestival?keyword="+url+"&page="+page;
 	}
 }
