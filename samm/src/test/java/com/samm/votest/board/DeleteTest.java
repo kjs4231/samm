@@ -1,24 +1,23 @@
-package com.samm.votest.bord;
+package com.samm.votest.board;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.samm.biz.BordBiz;
-import com.samm.vo.BordVo;
+import com.samm.biz.BoardBiz;
 
 @SpringBootTest
-class UpdateTest {
+class DeleteTest {
 	
 	@Autowired
-	BordBiz biz;
+	BoardBiz biz;
 
 	@Test
 	void contextLoads() {
-		BordVo obj = new BordVo(16,null,"제목이 변경됨");
+	
 		try {
-			biz.modify(obj);
-			System.out.println("update test 완료");
+			biz.remove(2);
+			System.out.println("delete test 완료");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.samm.mapper.BoardMapper">
+<select id="count" resultType="int">
+        SELECT count(*) FROM board
+    </select>
+     <insert id="insert" parameterType="BoardVo">
+        INSERT INTO board
+            (title, content, writer,reg_date)
+        VALUES
+            (#{title}, #{content}, #{writer}, now())
+    </insert>
+    <update id="delete" parameterType="BoardVo">
+        UPDATE board
+        SET del_date = now()
+        WHERE bno = #{bno}
+    </update>
+	<sql id="selectFromBoard">
+        SELECT bno, title, content, writer, view_cnt, comment_cnt, reg_date
+        FROM board 
+    </sql>
+	<select id="select" parameterType="int" resultType="BoardVo">
+        <include refid="selectFromBoard"/>
+        WHERE bno = #{bno} and del_date is null
+    </select>
+    <update id="increaseViewCnt" parameterType="int">
+        UPDATE board
+        SET   view_cnt = view_cnt + 1
+        WHERE bno = #{bno}
+    </update>
+    <select id="selectAll" resultType="BoardVo">
+        SELECT bno, title, content, writer, view_cnt, comment_cnt, reg_date
+        FROM board where del_date is null
+        
+    </select>
+    <update id="update" parameterType="BoardVo">
+        UPDATE board
+        SET   title = #{title}
+          , content = #{content}
+          , up_date = now()
+        WHERE bno = #{bno}
+    </update>
+</mapper>
