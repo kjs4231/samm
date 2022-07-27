@@ -53,7 +53,7 @@ function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, evente
 		var gen_l_card_txt_location = '<div class="l-card-txt location"><span class="fa fa-map-marker"></span> ' +
 			'<span>' + addr1 + '</span></div>';
 	};
-	var elm = '<a class="l-card item container" href="#" mapx="' + mapx + '" mapy="' + mapy + '" contentid="' + contentid + '">' +
+	var elm = '<a class="l-card item container" href="javascript:void(0)" onclick="l_card_click(' + contentid + ',' + mapx + ',' + mapy + '); " mapx="' + mapx + '" mapy="' + mapy + '" contentid="' + contentid + '">' +
 		gen_l_card_left +
 		'<div class="' + class_l_card_right + '">' +
 		'<div class="inline">' +
@@ -126,6 +126,7 @@ function searchmap(keyword, page, mapx, mapy) {
 				});
 			});
 			$('#map-searchlist').html(result);
+			$('#map-searchlist').removeAttr("style")
 			map.setBounds(bounds);
 		}
 	})
@@ -172,6 +173,7 @@ function countsearchmap(keyword, page) {
 			var result = '';
 			result = result.concat(elm_countsearchmap(count, page));
 			$('#map-searchpager').html(result);
+			$('#map-searchpager').removeAttr("style");
 		}
 	})
 };
@@ -190,8 +192,6 @@ function pagemove(page) {
 $(document).ready(function () {
 	getGeolocation();
 });
-
-
 
 $(document).on("click", ".btn-search", function () {
 	searchmapinput();
@@ -221,12 +221,18 @@ $(document).on("click", ".pager-next a", function () {
 	}
 });
 
-$(document).on("click", ".l-card", function (e) {
-	var contentid = $('a', $(e.target).parents(".l-card").parent()).attr("contentid");
-	
-	// locPosition = new kakao.maps.LatLng($('a', $(e.target).parents(".l-card").parent()).attr("mapy"), $('a', $(e.target).parents(".l-card").parent()).attr("mapx"));
-	alert(infowindows.get('"'+contentid+'"'));
-	// marker = new markers.get($('a', $(e.target).parents(".l-card").parent()).attr("contentid"));
-	// infowindow.open(map, marker);
-	// map.panTo(locPosition);
-});
+function l_card_click(contentid, mapx, mapy) {
+	locPosition = new kakao.maps.LatLng(mapy, mapx);
+	markers.forEach((value, key) => {
+		if (key == contentid) {
+			var marker = value;
+			infowindows.forEach((value, key) => {
+				value.close();
+				if (key == contentid) {
+					value.open(map, marker);
+				}
+			})
+		}
+	})	
+	map.panTo(locPosition);
+};
