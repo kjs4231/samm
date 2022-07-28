@@ -72,7 +72,13 @@
 
 	<!-- main center page -->
 	<div id="main--screen" th:insert="${center} ? ${center} : center"></div>
-
+	
+	<div id="chatbot-div">
+	<div>
+	<span id="chatbot-text" class="hidden">원하는 축제를 챗봇이 찾아 드려요!</span>
+	</div>
+	<i id="chatbot" class="bi bi-chat-right-dots"></i>
+	</div>
 
 	<footer class="ftco-footer bg-bottom ftco-no-pt" id="footer--screen"
 		style="background-image: url(images/bg_3.jpg);">
@@ -162,7 +168,7 @@
 
 
 
-
+	<script src="/js/chatbot.js"></script>
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="/js/popper.min.js"></script>
