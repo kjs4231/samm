@@ -21,21 +21,12 @@
 		top: 73px !important;
 	}
 }
-
-@
-keyframes down { 0%{
+@keyframes down { 
+	0%{
 	transform: translateY(-50px)
-}
-
-100
-%
-{
-transform
-:
-translateY(
-0px
-)
-}
+	}100%{
+	transform: translateY(0px)
+	}
 }
 .person {
 	border: 10px solid transparent;
@@ -110,7 +101,6 @@ translateY(
 
 .detail-icon {
 	margin-top: 20px;
-	margin-left: 50px;
 }
 
 .dicon {
@@ -205,8 +195,10 @@ translateY(
 	padding-bottom: 10px
 }
 
+
 .share-icon {
 	font-size: 50px;
+	cursor: pointer;
 }
 
 .fsatus {
