@@ -1,4 +1,8 @@
 
+$(document).ready(function(){
+	document.querySelector("#area1").classList.add("active-area");
+})
+
 function clickArea(code){
 	var active = document.querySelector('.active-area')
 	if(active != null){		
@@ -31,9 +35,6 @@ function paintingFestival(code){
 	
 }
 
-$(document).ready(function(){
-	document.querySelector("#area1").classList.add("active-area");
-	
-})
+
 	
 	
