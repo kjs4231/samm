@@ -43,6 +43,16 @@
 		<span class="festival-addr1" th:text="${#temporals.createDate(festival.eventstartdate,'yyyyMMdd') }+' ~ '+${#temporals.createDate(festival.eventenddate,'yyyyMMdd')}"></span>
 	</div>
 
+	
+	
+	<div class="header--info">
+		<span class="header--info-text" th:utext="${info['infotext']}"></span>
+	</div>
+	<div class="detail-icon">
+		<a class="heart dicon" onClick="registerWish()"><i class="bi bi-heart"></i></a>
+		
+		<span class="dicon" data-toggle="modal" data-target="#myModal"><a class="share"  ><i class="bi bi-share" ></i></a></span>	
+	</div>
 	<!-- Modal -->
 	<div id="myModal" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
@@ -71,14 +81,6 @@
 	  </div>
 	</div>
 	<!-- Modal End -->
-	
-	<div class="header--info">
-		<span class="header--info-text" th:utext="${info['infotext']}"></span>
-	</div>
-	<div class="detail-icon">
-		<a class="heart dicon" onClick="registerWish()"><i class="bi bi-heart"></i></a>
-		<span class="dicon" ata-toggle="modal " data-target="#myModal"><a class="share"  ><i class="bi bi-share" ></i></a></span>	
-	</div>
 </section>
 <!-- 상세 NAV -->
 <section class="ftco-section2 container navbar navbar-expand-lg detail-navbar">

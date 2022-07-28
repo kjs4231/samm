@@ -110,7 +110,7 @@ translateY(
 
 .detail-icon {
 	margin-top: 20px;
-	margin-left: 50px;
+	margin-left: 5px;
 }
 
 .dicon {
@@ -205,8 +205,10 @@ translateY(
 	padding-bottom: 10px
 }
 
+
 .share-icon {
 	font-size: 50px;
+	cursor: pointer;
 }
 
 .fsatus {
