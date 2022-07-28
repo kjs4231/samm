@@ -42,7 +42,9 @@ public class FestivalController {
 
 	@RequestMapping("/detail")
 	public String detail(Model m, Integer contentid, FestivalVo festival, HttpSession session, ReviewVo review) {
-		System.out.println("contentid::" + contentid);
+		Date date = new Date();
+		SimpleDateFormat formats = new SimpleDateFormat("yyyyMMdd");
+		String today = formats.format(date).toString();
 		Map<String, String> common = null;
 		Map<String, String> intro = null;
 		Map<String, String> info = null;
@@ -62,6 +64,7 @@ public class FestivalController {
 		}
 		System.out.println("rlist::" + rlist);
 
+		m.addAttribute("today",today);
 		m.addAttribute("img", imglist);
 		m.addAttribute("center", "/festival/detail");
 		m.addAttribute("common", common);
@@ -161,12 +164,10 @@ public class FestivalController {
 			url = URLEncoder.encode(keyword, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		if (page == null) {
 			page = 1;
 		}
-		System.out.println(page);
 
 		return "redirect:/searchfestival?keyword="+url+"&page="+page;
 	}

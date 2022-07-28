@@ -48,9 +48,9 @@
 					<div class="text p-4">
 						<span class="days"><span th:text="${#temporals.createDate(list.eventstartdate,'yyyyMMdd')}"></span>
 							~ <span th:text="${#temporals.createDate(list.eventenddate,'yyyyMMdd')}"></span></span>
-						<h3>
+						<h3 >
 							<a th:href="@{/detail(contentid=${list.contentid})}"
-								th:text="${list.title}"><input name="contentid" hidden
+								th:text="${list.title}" class="festival-name"><input name="contentid" hidden
 								th:value="${list.contentid}">Banaue Rice Terraces</a>
 						</h3>
 						<p class="location">
