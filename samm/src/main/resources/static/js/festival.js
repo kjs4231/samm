@@ -6,6 +6,12 @@ let lon = $('#lon').val();
 let lat = $('#lat').val();
 var locPosition = new kakao.maps.LatLng(lat, lon)
 var length = document.getElementsByClassName("carousel-item").length;
+
+let title = $('#ftitle').text();
+let overview = $('.header--info').text();
+let images = $('#festivalimg').val();
+let url = window.location.href;
+
 function next() {
 	$('#next').click(function() {
 		cnt++;
@@ -47,7 +53,7 @@ function displayMarker(locPosition) {
 	});
 	map.setCenter(locPosition);
 }
-var queryString = $('#festival--review').serialize();
+
 
 function submitReview() {
 	$('#sumbit-review').click(function() {
@@ -75,20 +81,89 @@ function submitReview() {
 }
 
 function filecheck() {
-	$('#file-form').attr({
-		'enctype':'multipart/form-data',
-		'method' : 'post',
-		'action' : '/imgimpl'
-	});
-	$('#file-form').submit();
-	alert("사진 요청이 완료 되었습니다. 관리자가 확인 후 반영 예정입니다.")
+
+	if ($('#uid').val() == null) {
+		alert("login후 이용 가능합니다.")
+	} else {
+		$('#file-form').attr({
+			'enctype': 'multipart/form-data',
+			'method': 'post',
+			'action': '/imgimpl'
+		});
+		$('#file-form').submit();
+		alert("사진 요청이 완료 되었습니다. 관리자가 확인 후 반영 예정입니다.")
+	}
+
+
 };
 
+
+function registerWish() {
+	$('.heart').children().toggleClass("bi-heart");
+	$('.heart').children().toggleClass("bi-heart-fill");
+
+}
+
+
+function shareTwitter() {
+	var sendText = title; // 전달할 텍스트
+	var sendUrl = url; // 전달할 URL
+	window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl, 'Twitter',
+		'top=10,left=10,height=300, status=no, menubar=no, toolbar=no, resizable=no');
+}
+
+
+function shareFacebook() {
+	var sendUrl = url; // 전달할 URL
+	window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl, 'facebook',
+		'top=10,left=10,height=300, status=no, menubar=no, toolbar=no, resizable=no');
+}
+
+
+function shareKakao() {
+	console.log("HI KAKAO")
+	// 사용할 앱의 JavaScript 키 설정
+	Kakao.init('1f0d8b55d9f1a8931df0a3ae663baf4e');
+
+	// 카카오링크 버튼 생성
+	Kakao.Link.createDefaultButton({
+		container: '.kakao', // 카카오공유버튼ID
+		objectType: 'feed',
+		content: {
+			title: title, // 보여질 제목
+			description: overview, // 보여질 설명
+			imageUrl: images, // 콘텐츠 URL
+			link: {
+				mobileWebUrl: url,
+				webUrl: url
+			}
+		}
+	});
+}
+
+function finNav() {
+	const header = document.querySelector('.imgmenu');
+	const headerheight = header.clientHeight;
+
+	document.addEventListener('scroll', onScroll, { passive: true })
+
+	function onScroll() {
+		const scrollposition = pageYOffset;//스크롤 위치
+		const nav = document.querySelector('.detail-navbar');//네비게이션
+		if (headerheight <= scrollposition) {//만약 헤더높이<=스크롤위치라면
+			nav.classList.add('menufixed')//fix클래스를 네비에 추가
+		}
+		else {//그 외의 경우
+			nav.classList.remove('menufixed');//fix클래스를 네비에서 제거
+		}
+	}
+}
 
 
 $(document).ready(function() {
 	next();
 	prev();
+	finNav();
 	paintingMap(lat, lon);
 	$('#moreInfo').click(function() {
 		$('.infoDetail').toggleClass('hidden');
@@ -145,9 +220,8 @@ $(document).ready(function() {
 		var stars = document.getElementsByClassName('star').length;
 		$('#star').val(stars)
 	})
+
 	submitReview();
-
-
 
 });
 

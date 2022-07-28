@@ -26,11 +26,9 @@
 	
 	<insert id="commonInsert" parameterType="Map" >
 		INSERT INTO detailcommon (contentid,createdtime,addr1,areacode,firstimage,firstimage2,homepage,mapx
-		,mapy,modifiedtime,overview,tel,telname,title,zipcode,sigungucode) 
-		
+		,mapy,modifiedtime,overview,tel,telname,title,zipcode,sigungucode) 		
 		VALUES (#{contentid},#{createdtime},#{addr1},#{areacode},#{firstimage},#{firstimage2},
-		#{homepage},#{mapx},#{mapy},#{modifiedtime},#{overview},#{tel},#{telname},#{title},#{zipcode},#{sigungucode})
-		
+		#{homepage},#{mapx},#{mapy},#{modifiedtime},#{overview},#{tel},#{telname},#{title},#{zipcode},#{sigungucode})	
 		ON DUPLICATE KEY UPDATE createdtime=#{createdtime},addr1=#{addr1},areacode=#{areacode},
 		firstimage=#{firstimage},firstimage2=#{firstimage2},homepage=#{homepage},mapx=#{mapx},mapy=#{mapy},modifiedtime=#{modifiedtime},
 		overview=#{overview},tel=#{tel},telname=#{telname},title=#{title},zipcode=#{zipcode},sigungucode=#{sigungucode},
