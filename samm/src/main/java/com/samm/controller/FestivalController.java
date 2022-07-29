@@ -96,6 +96,7 @@ public class FestivalController {
 		Date date = new Date();
 		SimpleDateFormat formats = new SimpleDateFormat("yyyyMMdd");
 		String today = formats.format(date).toString();
+
 		List<Map<String, String>> alist = null;
 		List<FestivalVo> list = null;
 		List<FestivalVo> klist = null;
@@ -112,6 +113,11 @@ public class FestivalController {
 
 			alist = abiz.get();
 			if ((areacode != null && eventstartdate != null && eventenddate != null)) {
+				if(eventstartdate.equals("999") && eventenddate.equals("999")) {
+					System.out.println("HI");
+					eventstartdate = today;
+					eventenddate = today;
+				}
 				list = festbiz.searchFestival(areacode, eventstartdate, eventenddate);
 				int start = Integer.parseInt(eventstartdate);
 				int end = Integer.parseInt(eventenddate);
@@ -125,7 +131,6 @@ public class FestivalController {
 			e.printStackTrace();
 			throw new Exception("searchfsetival ERROR");
 		}
-		System.out.println("url::" + url);
 		m.addAttribute("festival", list);
 		m.addAttribute("area", alist);
 		m.addAttribute("center", "/festival/searchfestival");

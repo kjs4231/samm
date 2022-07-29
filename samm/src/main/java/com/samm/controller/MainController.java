@@ -179,6 +179,7 @@ public class MainController {
 	return "index";
 	}
 	
+ 
 	
 	@RequestMapping("/chatbot")
 	public String goChatBot(Model m) {
@@ -192,7 +193,6 @@ public class MainController {
 		m.addAttribute("center", "mng/center");		
 		return "/mng/main";
 	}
-	
-	
+ 
 	
 }

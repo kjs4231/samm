@@ -1,16 +1,34 @@
 package com.samm.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.io.IOException;
+import java.util.List;
 
-@Controller
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.samm.restapi.Chatbot;
+
+@RestController
 public class ChatbotController {
 
-	@RequestMapping("/chatbot")
-	public String goChatBot(Model m) {
-		
-		return "chatbot";
-	}
 	
+	@Autowired
+	Chatbot chatbot;
+	
+	@RequestMapping("/chat")
+	public List<String> chat(String chat) {
+		System.out.println("chat::"+chat);
+		List<String> result = null;
+		try {
+			result = chatbot.getMessage(chat);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("chatbot::"+result );
+		return result;
+	}
+
 }
+
