@@ -96,6 +96,16 @@ public class FestivalController {
 		Date date = new Date();
 		SimpleDateFormat formats = new SimpleDateFormat("yyyyMMdd");
 		String today = formats.format(date).toString();
+		System.out.println("eventstartdate::"+ eventstartdate);
+		System.out.println("eventenddate::"+ eventenddate);
+		System.out.println("today::"+ today);
+		if(eventstartdate.equals("999") && eventenddate.equals("999")) {
+			System.out.println("HI");
+			eventstartdate = today;
+			eventenddate = today;
+		}
+		System.out.println("eventstartdate::"+ eventstartdate);
+		System.out.println("eventenddate::"+ eventenddate);
 		List<Map<String, String>> alist = null;
 		List<FestivalVo> list = null;
 		List<FestivalVo> klist = null;
