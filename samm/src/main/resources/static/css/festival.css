@@ -51,8 +51,8 @@
 #chatbot{
 	font-size: 2.7em;
     float: right;
-	
 }
+
 
 #chatbot-div{
 	cursor:pointer;
@@ -60,6 +60,19 @@
     bottom: 0px;
     right: 30px;
     z-index: 100;
+    animation: notificationAnimation 3s ease-in-out infinite;
+}
+
+@keyframes notificationAnimation {
+  0% {
+    transform: none;
+  }
+  50% {
+    transform: translateY(15px);
+  }
+  100% {
+    transform: none;
+  }
 }
 
 
