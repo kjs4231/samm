@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Pacific - Free Bootstrap 4 Template by Colorlib</title>
+<title>SAMM - Go Serach Festival</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -79,7 +79,7 @@
 	</nav>
 
 	<div class="map-paintting">
-		<div id="map"></div>
+		<div id="map-kakao"></div>
 		<div class="s003 d-flex flex-column" id="map-searchbox">
 			<form class="item" id="map-searchform">
 				<div class="inner-form">
@@ -107,5 +107,5 @@
 		</div>
 	</div>
 	
-	<script src="/js/map.js"></script>
+	<script type="text/javascript" th:src="@{/js/map.js}"></script>
 </body>
