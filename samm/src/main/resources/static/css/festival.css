@@ -1,14 +1,18 @@
+.hidden{
+	display: none;
+}
+
 .festival--subject {
+	margin-top: 70px;
 	text-align: center;
 }
 
 .areacode {
 	display: flex;
-	margin-top: 3em;
+	margin-top: 1.2em;
 	margin-left: auto;
 	margin-right: auto;
 	width: 100%;
-	border: 1px solid black;
 	justify-content: space-around;
 	align-items: center;
 }
@@ -39,6 +43,26 @@
 	font-weight: bold;
 	color: #fd7e14;
 }
+
+.festival-section2 {
+	padding-top: 2em;
+}
+
+#chatbot{
+	font-size: 2.7em;
+    float: right;
+	
+}
+
+#chatbot-div{
+	cursor:pointer;
+	position: fixed;
+    bottom: 0px;
+    right: 30px;
+    z-index: 100;
+}
+
+
 
 .s003 {
 	display: -ms-flexbox;
@@ -86,7 +110,6 @@
 	padding: 10px 32px;
 	font-size: 16px;
 	color: #555;
-
 }
 
 .s003 form .inner-form .input-field input.placeholder {
@@ -104,8 +127,8 @@
 	font-size: 16px;
 }
 
-.s003 form .inner-form .input-field input:hover,
-.s003 form .inner-form .input-field input:focus {
+.s003 form .inner-form .input-field input:hover, .s003 form .inner-form .input-field input:focus
+	{
 	box-shadow: none;
 	outline: 0;
 	border-color: #fff;
@@ -129,7 +152,8 @@
 	padding: 10px 30px;
 }
 
-.s003 form .inner-form .input-field.first-wrap .choices__inner .choices__list.choices__list--single {
+.s003 form .inner-form .input-field.first-wrap .choices__inner .choices__list.choices__list--single
+	{
 	display: -ms-flexbox;
 	display: flex;
 	padding: 0;
@@ -138,7 +162,8 @@
 	height: 100%;
 }
 
-.s003 form .inner-form .input-field.first-wrap .choices__inner .choices__item.choices__item--selectable.choices__placeholder {
+.s003 form .inner-form .input-field.first-wrap .choices__inner .choices__item.choices__item--selectable.choices__placeholder
+	{
 	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-align: center;
@@ -148,7 +173,8 @@
 	color: #888;
 }
 
-.s003 form .inner-form .input-field.first-wrap .choices__inner .choices__list--single .choices__item {
+.s003 form .inner-form .input-field.first-wrap .choices__inner .choices__list--single .choices__item
+	{
 	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-align: center;
@@ -157,12 +183,14 @@
 	color: #555;
 }
 
-.s003 form .inner-form .input-field.first-wrap .choices[data-type*="select-one"]:after {
+.s003 form .inner-form .input-field.first-wrap .choices[data-type*="select-one"]:after
+	{
 	right: 30px;
 	border-color: #e5e5e5 transparent transparent transparent;
 }
 
-.s003 form .inner-form .input-field.first-wrap .choices__list.choices__list--dropdown {
+.s003 form .inner-form .input-field.first-wrap .choices__list.choices__list--dropdown
+	{
 	border: 0;
 	background: #fff;
 	padding: 20px 30px;
@@ -171,16 +199,19 @@
 	box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
 }
 
-.s003 form .inner-form .input-field.first-wrap .choices__list.choices__list--dropdown .choices__item--selectable {
+.s003 form .inner-form .input-field.first-wrap .choices__list.choices__list--dropdown .choices__item--selectable
+	{
 	padding-right: 0;
 }
 
-.s003 form .inner-form .input-field.first-wrap .choices__list--dropdown .choices__item--selectable.is-highlighted {
+.s003 form .inner-form .input-field.first-wrap .choices__list--dropdown .choices__item--selectable.is-highlighted
+	{
 	background: #fff;
 	color: #63c76a;
 }
 
-.s003 form .inner-form .input-field.first-wrap .choices__list--dropdown .choices__item {
+.s003 form .inner-form .input-field.first-wrap .choices__list--dropdown .choices__item
+	{
 	color: #555;
 	min-height: 24px;
 }
@@ -220,8 +251,7 @@
 	} */
 }
 
-@media screen and (max-width: 767px) {
-	/* .s003 form .inner-form {
+@media screen and (max-width: 767px) { /* .s003 form .inner-form {
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
 		padding: 20px;
@@ -291,8 +321,8 @@
 	margin: 0;
 	padding: 0;
 	position: relative;
-    width: 85px;
-    height: 70px;
+	width: 85px;
+	height: 70px;
 	overflow: hidden;
 }
 
@@ -308,13 +338,13 @@
 
 .s003 .l-card-firstimage {
 	position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(50, 50);
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    margin: auto;
+	top: 0;
+	left: 0;
+	transform: translate(50, 50);
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	margin: auto;
 }
 
 .s003 .l-card-txt.title {
@@ -340,7 +370,9 @@
 	margin-left: 1px;
 }
 
-.s003 .inline {}
+.s003 .inline {
+	
+}
 
 .s003 .inline:after {
 	clear: both;
