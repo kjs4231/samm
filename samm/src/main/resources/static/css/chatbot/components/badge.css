@@ -1,0 +1,11 @@
+.badge {
+  background-color: tomato;
+  width: 23px;
+  height: 23px;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
