@@ -80,28 +80,20 @@ function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, evente
 
 
 function elm_overlay(contentid, firstimage, eventstartdate, eventenddate, title, addr1) {
-	if (typeof firstimage == "undefined" || firstimage == null || firstimage == "") {
-		var gen_imageheader = '<a class="img" style="background-image:url(' + firstimage + ')">';
-	} else {
-		var gen_imageheader = '<a class="img" style="background-image:url(' + firstimage + ')">';
-	};
-	var elm = '<div class="col-md-4 ftco-animate">' +
-		'<div class="project-wrap">' +
-		gen_imageheader +
-		'<span class="price">진행중</span>' +
-		'</a>' +
+	var gen_imageheader = '<a class="img">';
+	var elm =
+		'<div class="project-wrap map-overlay">' +
+		gen_imageheader + '<span class="price">진행중</span>' + '</a>' +
+		'<div class="map-overlayclose" onclick="closeOverlay(' + contentid + ')" title="닫기"></div>' +
 		'<div class="text p-4">' +
-		'<span class="days"><span>' + eventstartdate + '</span> ' +
-		'~ <span>' + eventenddate + '</span></span>' +
-		'<h3>' +
-		'<a href="#"' +
-		// '<a th:href="@{/detail(contentid=${list.contentid})}"' +
-		'><input name="contentid" hidden ' +
-		'value="' + contentid + '">' + title + '</a>' +
-		'</h3>' +
-		'<p class="location">' +
-		'<span class="fa fa-map-marker"></span> <span>' + addr1 + '</span>' +
-		'</p>' +
+		'<span class="days"><span>' + eventstartdate + '</span> ~ <span>' + eventenddate + '</span></span>' +
+		'<h3><a href="/detail?contentid=' + contentid + '"><input name="contentid" hidden value="' + contentid + '">' + title + '</a></h3>' +
+		'<span class="detail">Lorem Ipsum</span>' +
+		'<p class="location"><span class="fa fa-map-marker"></span> <span>' + addr1 + '</span></p>' +
+		'<a class="btn-map-gobtn" href="/detail?contentid=' + contentid + '">이 축제 가기</a>' +
+		'<div class="detail-icon">' +
+		'<a class="heart dicon" onClick="registerWish()"><i class="bi bi-heart"></i></a> ' +
+		'<span class="dicon" data-toggle="modal" data-target="#myModal"><a class="share"><i class="bi bi-share" ></i></a></span>' +
 		'</div>' +
 		'</div>' +
 		'</div>';
@@ -114,7 +106,9 @@ function openOverlay(contentid, mapx, mapy, isPanTo) {
 	var position = new kakao.maps.LatLng(mapy, mapx);
 	customOverlay = new kakao.maps.CustomOverlay({
 		position: position,
-		content: content
+		content: content,
+		xAnchor: 0.5,
+		yAnchor: 0.95
 	});
 	customOverlay.setMap(map);
 
@@ -148,25 +142,29 @@ function searchmap(keyword, page, mapx, mapy) {
 			bounds = new kakao.maps.LatLngBounds();
 			var result = '';
 			removeMarker();
-			$.each(json, function (i, element) {
-				result = result.concat(elm_searchmap(element.contentid, element.mapx, element.mapy, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1));
-				var locPosition = new kakao.maps.LatLng(element.mapy, element.mapx);
-				bounds.extend(locPosition);
-				var marker = new kakao.maps.Marker({
-					position: locPosition,
-					clickable: true
+			if (JSON.stringify(json) === '{}' || JSON.stringify(json) === '[]') {
+				result = result.concat('<a class="l-card item container">없습니다</a>');
+			} else {
+				$.each(json, function (i, element) {
+					result = result.concat(elm_searchmap(element.contentid, element.mapx, element.mapy, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1));
+					var locPosition = new kakao.maps.LatLng(element.mapy, element.mapx);
+					bounds.extend(locPosition);
+					var marker = new kakao.maps.Marker({
+						position: locPosition,
+						clickable: true
+					});
+					var overlay = elm_overlay(element.contentid, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1)
+					marker.setMap(map);
+					markers.set(element.contentid, marker);
+					elm_overlays.set(element.contentid, overlay);
+					kakao.maps.event.addListener(marker, 'click', function () {
+						openOverlay(element.contentid, element.mapx, element.mapy);
+					});
 				});
-				var overlay = elm_overlay(element.contentid, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1)
-				marker.setMap(map);
-				markers.set(element.contentid, marker);
-				elm_overlays.set(element.contentid, overlay);
-				kakao.maps.event.addListener(marker, 'click', function () {
-					openOverlay(element.contentid, element.mapx, element.mapy);
-				});
-			});
+				map.setBounds(bounds);
+			};
 			$('#map-searchlist').html(result);
-			$('#map-searchlist').removeAttr("style")
-			map.setBounds(bounds);
+			$('#map-searchlist').removeAttr("style");
 		}
 	})
 };
