@@ -1,5 +1,10 @@
 <meta charset="utf-8">
 <script src="/js/search.js"></script>
+<style>
+.hidden {
+	display: none !important;
+}
+</style>
 <section class="hero-wrap hero-wrap-2 js-fullheight"
 	style="background-image: url('images/festival2.jpg');">
 	<div class="overlay"></div>
@@ -33,7 +38,9 @@
 									data-toggle="pill" href="#v-pills-1" role="tab"
 									aria-controls="v-pills-1" aria-selected="true">SearchFestival</a>
 
-								<!-- <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Hotel</a> -->
+								<a class="nav-link" id="v-pills-2-tab" data-toggle="pill"
+									href="#v-pills-2" role="tab" aria-controls="v-pills-2"
+									aria-selected="false">Search keyword</a>
 
 							</div>
 						</div>
@@ -47,7 +54,7 @@
 										<div class="row no-gutters">
 											<div class="col-md d-flex">
 												<div class="form-group p-4 border-0">
-													<label for="#">Destination</label>
+													<label for="#">Area</label>
 													<div class="form-field">
 														<div class="select-wrap">
 															<div class="icon">
@@ -73,10 +80,13 @@
 														<div class="icon">
 															<span class="fa fa-calendar"></span>
 														</div>
-														<input th:if="${start} != null" type="text" class="form-control checkin_date"
-															name="startdate" th:placeholder="${#temporals.createDate(start,'yyyyMMdd')}" readonly="readonly">
-														<input th:unless="${start} != null" type="text" class="form-control checkin_date"
-															name="startdate" placeholder="Choose Start Date" readonly="readonly">
+														<input th:if="${start} != null" type="text"
+															class="form-control checkin_date" name="startdate"
+															th:placeholder="${#temporals.createDate(start,'yyyyMMdd')}"
+															readonly="readonly"> <input
+															th:unless="${start} != null" type="text"
+															class="form-control checkin_date" name="startdate"
+															placeholder="Choose Start Date" readonly="readonly">
 													</div>
 												</div>
 											</div>
@@ -87,10 +97,13 @@
 														<div class="icon">
 															<span class="fa fa-calendar"></span>
 														</div>
-														<input th:if="${end} != null" type="text" class="form-control checkin_date"
-															name="enddate" th:placeholder="${#temporals.createDate(end,'yyyyMMdd')}" readonly="readonly">
-														<input th:unless="${end} != null" type="text" class="form-control checkin_date"
-															name="enddate" placeholder="Choose End Date" readonly="readonly">
+														<input th:if="${end} != null" type="text"
+															class="form-control checkin_date" name="enddate"
+															th:placeholder="${#temporals.createDate(end,'yyyyMMdd')}"
+															readonly="readonly"> <input
+															th:unless="${end} != null" type="text"
+															class="form-control checkin_date" name="enddate"
+															placeholder="Choose End Date" readonly="readonly">
 													</div>
 												</div>
 											</div>
@@ -107,102 +120,72 @@
 									</form>
 								</div>
 
-								<!-- <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-										<form action="#" class="search-property-1">
-											<div class="row no-gutters">
-												<div class="col-lg d-flex">
-													<div class="form-group p-4 border-0">
-														<label for="#">Destination</label>
-														<div class="form-field">
-															<div class="icon"><span class="fa fa-search"></span></div>
-															<input type="text" class="form-control" placeholder="Search place">
+								<div class="tab-pane fade" id="v-pills-2" role="tabpanel"
+									aria-labelledby="v-pills-performance-tab">
+									<form id="search-keyword-form" class="search-property-1">
+										<div class="row no-gutters">
+
+											<div class="col-lg-10 d-flex">
+												<div class="form-group p-4 border-0">
+													<label for="#">Keyword</label>
+													<div class="form-field">
+														<div class="icon">
+															<span class="fa fa-search"></span>
 														</div>
-													</div>
-												</div>
-												<div class="col-lg d-flex">
-													<div class="form-group p-4">
-														<label for="#">Check-in date</label>
-														<div class="form-field">
-															<div class="icon"><span class="fa fa-calendar"></span></div>
-															<input type="text" class="form-control checkin_date" placeholder="Check In Date">
-														</div>
-													</div>
-												</div>
-												<div class="col-lg d-flex">
-													<div class="form-group p-4">
-														<label for="#">Check-out date</label>
-														<div class="form-field">
-															<div class="icon"><span class="fa fa-calendar"></span></div>
-															<input type="text" class="form-control checkout_date" placeholder="Check Out Date">
-														</div>
-													</div>
-												</div>
-												<div class="col-lg d-flex">
-													<div class="form-group p-4">
-														<label for="#">Price Limit</label>
-														<div class="form-field">
-															<div class="select-wrap">
-																<div class="icon"><span class="fa fa-chevron-down"></span></div>
-																<select name="" id="" class="form-control">
-																	<option value="">$100</option>
-																	<option value="">$10,000</option>
-																	<option value="">$50,000</option>
-																	<option value="">$100,000</option>
-																	<option value="">$200,000</option>
-																	<option value="">$300,000</option>
-																	<option value="">$400,000</option>
-																	<option value="">$500,000</option>
-																	<option value="">$600,000</option>
-																	<option value="">$700,000</option>
-																	<option value="">$800,000</option>
-																	<option value="">$900,000</option>
-																	<option value="">$1,000,000</option>
-																	<option value="">$2,000,000</option>
-																</select>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg d-flex">
-													<div class="form-group d-flex w-100 border-0">
-														<div class="form-field w-100 align-items-center d-flex">
-															<input type="submit" value="Search" class="align-self-stretch form-control btn btn-primary p-0">
-														</div>
+														<input type="text" class="form-control" name="keyword"
+															placeholder="Search Fesival">
 													</div>
 												</div>
 											</div>
-										</form> -->
+
+
+											<div class="col-lg d-flex">
+												<div class="form-group d-flex w-100 border-0">
+													<div class="form-field w-100 align-items-center d-flex">
+														<input type="submit" value="Search" id="search-btn2"
+															class="align-self-stretch form-control btn btn-primary p-0">
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 
 
 <section class="ftco-section2">
-	<div  class="container" >
-		<h2 class="festival--subject" th:if="${festival} != null">검색 결과</h2>
-		<h2 class="festival--subject" th:unless="${festival} != null">검색 결과가 없습니다.</h2>
+	<div class="container">
+		<h2 class="festival--subject"
+			th:if="${festival} != null or ${klist} != null"></h2>
+		<h2 class="festival--subject"
+			th:if="${festival} == null and ${klist} == null">검색 결과가 없습니다.</h2>
 		<div class="row" id="festivalING">
 			<div class="col-md-4 ftco-animate" th:each="list:${festival}">
 				<div class="project-wrap">
 					<a class="img" th:if="${list.firstimage} != null"
 						th:style="'background-image:url('+@{${list.firstimage}}+');'">
-						<span class="price" th:if="${today} >= ${list.eventstartdate} and ${today} <= ${list.eventenddate}">진행중</span>
+						<span class="price"
+						th:if="${today} >= ${list.eventstartdate} and ${today} <= ${list.eventenddate}">진행중</span>
 						<span class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
 						<span class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
 					</a> <a class="img" th:unless="${list.firstimage} != null"
 						th:style="'background-image:url('+@{/images/noimage.jpg}+');'">
-						<span class="price" th:if="${today} >= ${list.eventstartdate} and ${today} <= ${list.eventenddate}">진행중</span>
+						<span class="price"
+						th:if="${today} >= ${list.eventstartdate} and ${today} <= ${list.eventenddate}">진행중</span>
 						<span class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
 						<span class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
 					</a>
 					<div class="text p-4">
-						<span class="days"><span th:text="${#temporals.createDate(list.eventstartdate,'yyyyMMdd')}"></span>
-							~ <span th:text="${#temporals.createDate(list.eventenddate,'yyyyMMdd')}"></span></span>
+						<span class="days"><span
+							th:text="${#temporals.createDate(list.eventstartdate,'yyyyMMdd')}"></span>
+							~ <span
+							th:text="${#temporals.createDate(list.eventenddate,'yyyyMMdd')}"></span></span>
 						<h3>
 							<a th:href="@{/detail(contentid=${list.contentid})}"
 								th:text="${list.title}"><input name="contentid" hidden
@@ -217,7 +200,57 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-4 ftco-animate" th:each="list:${klist}">
+				<div class="project-wrap">
+					<a class="img" th:if="${list.firstimage} != null"
+						th:style="'background-image:url('+@{${list.firstimage}}+');'">
+						<span class="price"
+						th:if="${today} >= ${list.eventstartdate} and ${today} <= ${list.eventenddate}">진행중</span>
+						<span class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
+						<span class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
+					</a> <a class="img" th:unless="${list.firstimage} != null"
+						th:style="'background-image:url('+@{/images/noimage.jpg}+');'">
+						<span class="price"
+						th:if="${today} >= ${list.eventstartdate} and ${today} <= ${list.eventenddate}">진행중</span>
+						<span class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
+						<span class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
+					</a>
+					<div class="text p-4">
+						<span class="days"><span
+							th:text="${#temporals.createDate(list.eventstartdate,'yyyyMMdd')}"></span>
+							~ <span
+							th:text="${#temporals.createDate(list.eventenddate,'yyyyMMdd')}"></span></span>
+						<h3>
+							<a th:href="@{/detail(contentid=${list.contentid})}"
+								th:text="${list.title}"><input name="contentid" hidden
+								th:value="${list.contentid}">Banaue Rice Terraces</a>
+						</h3>
+						<p class="location">
+							<span class="fa fa-map-marker"></span><span
+								th:text="${list.addr1}"></span>
+						</p>
+
+
+					</div>
+				</div>
+
+			</div>
+
+
 		</div>
+		<div class="row mt-5">
+			<div class="col text-center">
+				<div class="block-27">
+					<input hidden th:value="${count}" id="count"> 
+					<input hidden th:value="${keyword}" id="keyword">
+					<ul th:if="${keyword} != null" id="paging">
+						<li id="page-prev" class="marking"><a onClick="prevpage()">&lt;</a></li>
+						<li id="page-next" class="marking"><a onClick="nextpage()">&gt;</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
 
 	</div>
 </section>

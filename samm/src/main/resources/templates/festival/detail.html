@@ -1,13 +1,10 @@
 <meta charset="utf-8">
 <!-- kakamap javascript -->
+
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f0d8b55d9f1a8931df0a3ae663baf4e"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f0d8b55d9f1a8931df0a3ae663baf4e&libraries=LIBRARY"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f0d8b55d9f1a8931df0a3ae663baf4e&libraries=services"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f0d8b55d9f1a8931df0a3ae663baf4e&libraries=services,clusterer,drawing"></script>
+
 
 <link rel="stylesheet" href="/css/detail.css">
 <section class="hero-wrap hero-wrap-2 js-fullheight"
@@ -22,7 +19,8 @@
 							class="fa fa-chevron-right"></i></a></span> <span>Festival Detail<i
 						class="fa fa-chevron-right"></i></span>
 				</p>
-				<h1 class="mb-0 bread" th:utext="${festival.title}">About Us</h1>
+				<h1 id="ftitle" class="mb-0 bread" th:utext="${festival.title}">
+				</h1>
 			</div>
 		</div>
 	</div>
@@ -30,66 +28,100 @@
 
 <!-- 상세 header -->
 <section class="detail-header ftco-section2 container">
-	<div class="festival-ing">
-		<span>진행중</span>
-		<!-- thif 구문 사용.... 현재 날짜 가져와서 축제 날짜와 비교.. -->
+	<div class="festival-status">
+	<!-- thif 구문 사용.... 현재 날짜 가져와서 축제 날짜와 비교.. -->
+		<span class="fsatus" th:if="${today} >= ${festival.eventstartdate} and ${today} <= ${festival.eventenddate}">진행중</span>
+		<span class="fsatus" th:if="${today} < ${festival.eventstartdate}">진행예정</span>
+		<span class="fsatus" th:if="${today} > ${festival.eventenddate}">진행종료</span>
+		
 	</div>
 	<div class="detail-title">
 		<h1 th:utext="${festival.title}"></h1>
 	</div>
 	<div class="detail-basicInfo">
-		<span th:text="${festival.addr1}"></span> <span
-			th:text="${festival.eventstartdate}+' ~ '+${festival.eventenddate}"></span>
+		<span class="festival-addr1" th:text="${festival.addr1}"></span> 
+		<span class="festival-addr1" th:text="${#temporals.createDate(festival.eventstartdate,'yyyyMMdd') }+' ~ '+${#temporals.createDate(festival.eventenddate,'yyyyMMdd')}"></span>
+	</div>
+
+	
+	
+	<div class="header--info">
+		<span class="header--info-text" th:utext="${info['infotext']}"></span>
 	</div>
 	<div class="detail-icon">
-		<span class="heart"><i class="bi bi-heart"></i></span> <span
-			class="share"><i class="bi bi-share"></i></span>
+		<a class="heart dicon" onClick="registerWish()"><i class="bi bi-heart"></i></a>
+		
+		<span class="dicon" data-toggle="modal" data-target="#myModal"><a class="share"  ><i class="bi bi-share" ></i></a></span>	
 	</div>
-	<div>
-		<span class="header--info" th:utext="${info['infotext']}"></span>
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header  modal-title2">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Share Festival</h4>
+	      </div>
+	      <div class="modal-body mbody1">
+	        <a class="share-icon twitter" onClick="shareTwitter()"><i class="bi bi-twitter share-icon-i"></i>
+	        <span class="icon-text">Twitter</span></a>
+	        <a class="share-icon facebook" onClick="shareFacebook()"><i class="bi bi-facebook share-icon-i"></i>
+	        <span class="icon-text" >Facebook</span></a>
+	        <a class="share-icon kakao" onClick="shareKakao()">  
+		        <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+			    	 alt="카카오톡 공유 보내기 버튼" class="share-icon-i" style="width: 50px;"/><span class="icon-text" >Kakao</span>
+    	 	</a>	 	
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default modal-close" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	
+	  </div>
 	</div>
+	<!-- Modal End -->
 </section>
 <!-- 상세 NAV -->
-<section
-	class="ftco-section2 container navbar navbar-expand-lg detail-navbar">
-	<div class="detail-tab">
-		<ul class="navbar-nav ml-auto">
-			<li class="nav-item"><a href="#menu1" class="nav-link">사진보기</a></li>
-			<li class="nav-item"><a href="#menu2" class="nav-link">상세정보</a></li>
-			<li class="nav-item"><a href="#menu3" class="nav-link">축제톡</a></li>
-		</ul>
-	</div>
+<section class="ftco-section2 container navbar navbar-expand-lg detail-navbar">
+	<span class="nav-item dnav"><a href="#menu1" class="nav-link">사진보기</a></span>
+	<span class="nav-item dnav"><a href="#menu2" class="nav-link">상세정보</a></span>
+	<span class="nav-item dnav"><a href="#menu3" class="nav-link">축제톡</a></span>
 </section>
 <!-- 상세 사진 section -->
-<section class="ftco-section2 container" id="menu1">
-	<form class="filebox" id="file-form">
-		<label for="file" id="label-file">사진요청하기</label><input type="file" id="file" name="mf"
-		onchange="filecheck()">
-		<input name="fid" th:value="${common['contentid']}" hidden>
-	</form>
+<section class="ftco-section2 container imgmenu" id="menu1">
+
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-bs-ride="carousel">
-		<div class="carousel-inner" >
+		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img th:src="${common['firstimage']}" class="d-block w-100" alt="..." style="height:600px;" >
+				<img th:src="${common['firstimage']}" class="d-block " alt="..." style="height: 100%;">
 			</div>
-			<div class="carousel-item" th:each="img:${img}" >
-				<img th:src="@{'/images/festival/'+${img.name}}" class="d-block w-100" alt="...">
+			<div class="carousel-item" th:each="img:${img}">
+				<img th:src="@{'/images/festival/'+${img.name}}"
+					class="d-block w-100" alt="...">
 			</div>
 		</div>
-		<button class="carousel-control-prev" type="button"
+		<button class="carousel-control-prev control-opacity" type="button"
 			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"
 			id="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+			<span class="carousel-control-prev-icon " aria-hidden="true"></span> <span
 				class="visually-hidden">Previous</span>
 		</button>
-		<button class="carousel-control-next" type="button"
+		<button class="carousel-control-next control-opacity" type="button"
 			data-bs-target="#carouselExampleIndicators" data-bs-slide="next"
 			id="next">
 			<span class="carousel-control-next-icon" aria-hidden="true"></span> <span
 				class="visually-hidden">Next</span>
 		</button>
 	</div>
+	<form class="filebox" id="file-form">
+		<label for="file" id="label-file"><span class="file-span">직접 찍은 사진을 등록해주세요.</span><img src="https://cdn.visitkorea.or.kr/resources/images/sub/bg_pic_reg.jpg"></label>
+			<input type="file" id="file" name="mf" onchange="filecheck()"> 
+			<input name="fid" th:value="${common['contentid']}" hidden> 
+			<input id="festivalimg" th:value="${common['firstimage']}" hidden>
+	</form>
+	
 </section>
 
 <!-- 상세정보 개요, 지도, 행사정보.... -->
@@ -155,9 +187,7 @@
 				</div>
 			</li>
 
-
 		</ul>
-		<!-- END comment-list -->
 
 		<div class="comment-form-wrap pt-5">
 			<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">Leave
