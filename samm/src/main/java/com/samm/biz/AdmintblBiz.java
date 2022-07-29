@@ -1,6 +1,7 @@
 package com.samm.biz;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,29 @@ public class AdmintblBiz implements Biz<String,AdmintblVo> {
         List<AdmintblVo> result = admintblDao.selectAll();
         return result;
     }
+
     
+    
+    
+    
+	public String idCheck(String k) throws Exception {
+		return admintblDao.idCheck(k);
+	}
+    
+	public List<AdmintblVo> get(Map<String, Integer> m) throws Exception {
+		return admintblDao.selectlist(m);
+	}
+	
+	public List<AdmintblVo> asearch(Map<String, String> m) throws Exception {
+		return admintblDao.asearch(m);
+	}	
+		
+	public int getTotalNum() throws Exception {
+		return admintblDao.getTotalNum();
+	}
+	
+	
+	
+	
+	
 }

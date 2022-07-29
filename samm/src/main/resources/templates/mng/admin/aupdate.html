@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script>
+
+$(document).ready(function(){ 
+	$('#mod_btn').click(function(){
+		$('#update_form').attr({
+			'method':'post',
+			'action':'modimpl' 
+		});
+		$('#update_form').submit();
+	});
+});
+
+</script>
+</head>
+<body>
+<div class="main-panel">        
+  <div class="content-wrapper">
+    <div class="row">
+   	   <div class="col-md-12 grid-margin stretch-card">
+         <div class="card">
+         
+           <div class="card-body">
+             <h4 class="card-title">관리자 정보 수정</h4>
+             <p class="card-description"></p>
+             <form id="update_form">
+               <div class="form-group row">
+                 <label for="id" class="col-sm-3 col-form-label">ID</label>
+                 <div class="col-sm-9">
+                   <input type="text" class="form-control" name="id" th:value="${vo.id}" readonly>
+                 </div>
+               </div>                  
+               <div class="form-group row">
+                 <label for="name" class="col-sm-3 col-form-label">이름</label>
+                 <div class="col-sm-9">
+                   <input type="text" class="form-control" name="name" th:value="${vo.name}">
+                 </div>
+               </div>
+               <div class="form-group row">
+                 <label for="pwd" class="col-sm-3 col-form-label">비밀번호</label>
+                 <div class="col-sm-9">
+                   <input type="password" class="form-control" name="pwd" th:value="${vo.pwd}">
+                 </div>
+               </div>
+               <div class="form-group row">
+                 <label for="c_pwd" class="col-sm-3 col-form-label">비밀번호 확인</label>
+                 <div class="col-sm-9">
+                   <input type="password" class="form-control" name="c_pwd" th:value="${vo.pwd}">
+                 </div>
+               </div>
+               <div class="form-group row">
+                 <label for="email" class="col-sm-3 col-form-label">Email</label>
+				 <div class="col-sm-9">
+                   <input type="text" class="form-control" name="email" th:value="${vo.email}">
+ 				 </div>
+               </div>
+               <div class="form-group row">
+                 <label for="address" class="col-sm-3 col-form-label">주소</label>
+                 <div class="col-sm-9">
+                   <input type="text" class="form-control" name="address" th:value="${vo.address}">
+                 </div>
+               </div>
+               <div class="form-group row">
+                 <label for="phone" class="col-sm-3 col-form-label">연락처</label>
+                 <div class="col-sm-9">
+                   <input type="text" class="form-control" name="phone" th:value="${vo.phone}">
+                 </div>
+               </div>
+               <button type="submit" id="mod_btn" class="btn btn-primary mr-2">수정</button>
+               <a href="" th:href="@{ainfo(id=${vo.id})}" id="cle_btn" class="btn btn-light">취소</a>
+               
+             </form>
+           </div>
+           
+         </div>
+       </div>      
+    </div>
+  </div>
+ </div>
+</body>
+</html>

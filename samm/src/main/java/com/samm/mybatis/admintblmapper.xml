@@ -9,8 +9,10 @@
 		SELECT * FROM admintbl
 	</select>
 
-	<insert id="insert" parameterType="admintblVo">
-		INSERT INTO admintbl VALUES (#{id},#{pwd},#{name}
+	<insert id="insert" parameterType="AdmintblVo">
+		INSERT INTO admintbl VALUES (#{id}, #{pwd}, #{name}, #{email}, #{address}, #{phone})
+
+<!-- 		INSERT INTO admintbl VALUES (#{id},#{pwd},#{name}
 		<choose>
 			<when test="address == null or address.equals('')">,null</when>
 			<otherwise>
@@ -23,7 +25,7 @@
 				,#{phone}
 			</otherwise>
 		</choose>
-		)
+		) -->
 	</insert>
 	<update id="update" parameterType="admintblVo">
 		UPDATE admintbl
@@ -58,5 +60,29 @@
 	<delete id="delete" parameterType="String">
 		DELETE FROM admintbl WHERE id=#{id}
 	</delete>
+	
+	
+
+	<select id="idCheck" parameterType="String" resultType="java.lang.String">
+		SELECT id
+		FROM users WHERE id=#{id}
+	</select>
+	
+	<select id="selectlist" resultType="AdmintblVo" parameterType="map">
+		SELECT * FROM
+		( SELECT @rownum:=@rownum+1 as rn, A.* 
+  			FROM admintbl A, (SELECT @ROWNUM := 0) R
+  		) list
+		WHERE rn between (#{section}-1)*100 + (#{pageNum}-1)*10+1 
+		         and (#{section}-1)*100 + #{pageNum} * 10     
+	</select>
+		
+	<select id="getTotalNum" resultType="int">
+		select count(*) from admintbl  
+	</select>	
+	
+	<select id="asearch" resultType="AdmintblVo" parameterType="map">
+		SELECT * FROM admintbl WHERE ${select} LIKE CONCAT('%',#{txt},'%')
+	</select>
 
 </mapper>
