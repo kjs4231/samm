@@ -139,7 +139,13 @@ public class MainController {
 			e.printStackTrace();
 		}	
 	return "index";
-}
+	}
+	
+	@RequestMapping("/chatbot")
+	public String goChatBot(Model m) {
+		
+		return "chatbot";
+	}
 	
 	
 }
