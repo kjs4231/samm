@@ -11,6 +11,7 @@ $(document).ready(function() {
 	$('#chatbot-div').mouseenter(function() {
 		$('#chatbot').css('font-size', '3em');
 		$('#chatbot-text').removeClass('hidden');
+		$('#chatbot-text').css('color', '#fd7e14');
 	});
 	$('#chatbot-div').mouseleave(function() {
 		$('#chatbot').css('font-size', '2.7em');
@@ -24,7 +25,6 @@ $(document).ready(function() {
 
 	$("#chat").keydown(function(keyNum) {
 		if (keyNum.keyCode == 13) {
-
 			sendMessage();
 
 		}
@@ -58,9 +58,20 @@ function recevieMessage(data) {
 		'<span class="message__bubble" id="message'+mcnt+'">' + data[0] +'</span>' + 
 		'<span class="message__time">' + hours + ':' + minutes + '</span>' +
 		'</div></div></div>'
-	let urltext = '<br><br><a class="chatbotlink" href="'+data[1]+'" >축제로이동</a> '
+	let urltext = '<br><br><a class="chatbotlink" id="clink'+mcnt+'" href="#" >축제로이동</a> '
+	
+	$(document).ready(function(){
+		$('#clink'+mcnt).click(function(){
+		console.log("click!")
+		window.open(data[1], 'Search Festival');
+	});
+	})
+
 	$('.main-chat').append(text);
-	$('#message'+mcnt).append(urltext);
+	if(data[1] != null){
+		$('#message'+mcnt).append(urltext);
+	}
+	
 }
 
 
