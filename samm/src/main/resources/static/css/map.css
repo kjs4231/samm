@@ -17,7 +17,7 @@ body {
 	overflow: hidden;
 	background: #fff;
 	margin-top: 88.8px;
-	height: 88%;
+	height: calc(100vh - 88.8px);
 	width: 100%;
 	border: 1px solid black;
 	position: relative;
@@ -34,4 +34,9 @@ body {
 
 #map-searchpager .block-27 ul li a:not(:hover) {
 	background: white;
+}
+
+#map-kakao {
+	width: inherit;
+	height: inherit
 }
