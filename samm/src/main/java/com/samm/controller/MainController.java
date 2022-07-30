@@ -102,7 +102,7 @@ public class MainController {
 		UsersVo u = null;
 		
 		try {
-			if(id==ubiz.idCheck(id)) { //users 테이블에 아이디가 존재하는 경우
+			if(ubiz.idCheck(id).equals(id)) { //users 테이블에 아이디가 존재하는 경우
 				u = ubiz.get(id);
 				if (u != null) {
 					if (u.getPwd().equals(pwd)) {
