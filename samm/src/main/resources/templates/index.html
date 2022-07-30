@@ -60,6 +60,11 @@
 					<li class="nav-item active" th:unless="${session.loginuser == null}">
 					<a href="/users/mypage" class="nav-link"><span class="nav-item"></span>My page</a>
 					
+					<li class="nav-item active"> 
+					<a href="/mng/main" class="nav-link"><span class="nav-item"></span> Admin </a>					
+					
+					<!-- th:if="${session.loginadmin != null && session.loginuser == null}" -->
+					
 					<li class="nav-item active" th:unless="${session.loginuser == null}">
 					<a href="/logout" class="nav-link"><span th:text="${session.loginuser.name}"></span><span class="nav-item"></span>Sign Out</a>
 					

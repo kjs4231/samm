@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script>
+ 
+$(document).ready(function(){ 
+
+	function sendId(id){
+		$.ajax({
+			url:'/checkid',
+			data:{'id':id},
+			success:function(data){
+				if(data == '1'){
+					$('#idspan').text('이미 있는 ID입니다.');
+				}else if(data == '2'){
+					$('#idspan').text('필수 정보입니다.');	
+				}else if(data == '3'){
+					$('#idspan').text('ID는 알파벳과 숫자만 사용가능합니다.');
+				}else{
+					$('#idspan').text('사용 가능한 ID입니다.');
+				}
+			}
+		}); //ajax
+	}
+	
+	$('input[name="id"]').keyup(function(){
+		var id = $(this).val(); 		
+		sendId(id);
+	});	
+	
+ 	$('input[name="pwd"]').keyup(function(){
+		var pwd = $(this).val();
+		var c_pwd = $('input[name="c_pwd"]').val();		
+
+		if(!(c_pwd==null||c_pwd=='')){
+			if(pwd != c_pwd){
+				$('#c_pwdspan').text('비밀번호와 일치하지 않습니다.');
+			}else{
+				$('#c_pwdspan').text('비밀번호와 일치합니다.');
+			} 	
+		}				
+	}); 	
+		
+	$('input[name="c_pwd"]').keyup(function(){
+		var pwd = $('input[name="pwd"]').val();
+		var c_pwd = $(this).val();
+		
+		if(!(pwd==null||pwd=='')){
+			if(pwd != c_pwd){
+				$('#c_pwdspan').text('비밀번호와 일치하지 않습니다.');
+			}else{
+				$('#c_pwdspan').text('비밀번호와 일치합니다.');
+			} 	
+		}
+	});
+	
+	$('#reg_btn').click(function(){
+		var id = $('input[name="id"]').val(); 
+		var pwd = $('input[name="pwd"]').val();
+		var pwdc = $('input[name="c_pwd"]').val();	
+		
+		alert('regbtn2' + id + pwd + pwdc);
+
+		if(id==null||id==''){
+			alert('ID를 입력해주십시오.');
+		}
+		
+		if(c_pwd==null||c_pwd==''||c_pwd==null||c_pwd==''){
+			alert('비밀번호를 입력해주십시오.');
+		}
+		
+		$('#admin_form').attr({
+			'method':'post',
+			'action':'regimpl' 
+			});
+		$('#admin_form').submit();
+	
+	});//reg_btn
+ 
+});
+</script>
+
+</head>
+<body>
+
+<div class="row">
+	<div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">관리자 정보 등록</h4>
+            <p class="card-description"></p>
+            <form id="admin_form">
+            
+              <div class="form-group row">
+                <label for="id" class="col-sm-3 col-form-label">ID</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="id"><span id="idspan"></span>
+                </div>
+              </div>
+                                
+              <div class="form-group row">
+                <label for="name" class="col-sm-3 col-form-label">이름</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="name" value="이말순">
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label for="pwd" class="col-sm-3 col-form-label">비밀번호</label>
+                <div class="col-sm-9">
+                  <input type="password" class="form-control" name="pwd" value="a1"><span id="pwdspan"></span>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label for="c_pwd" class="col-sm-3 col-form-label">비밀번호 확인</label>
+                <div class="col-sm-9">
+                  <input type="password" class="form-control" name="c_pwd"  value="a1"><span id="c_pwdspan"></span>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label for="email" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="email" value="seoul@busan.kr">
+                </div>
+              </div>                    
+              
+              <div class="form-group row">
+                <label for="address" class="col-sm-3 col-form-label">주소</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="address" value="구미">
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label for="phone" class="col-sm-3 col-form-label">전화번호</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="phone" value="010-8989-5656">
+                </div>
+              </div>
+              
+              <button type="submit" id="reg_btn" class="btn btn-primary mr-2">등록</button>
+              <a href="" th:href="@{alist}" class="btn btn-light">취소</a>
+            </form>
+          </div>
+        </div>
+      </div>      
+</div>
+
+</body>
+</html>

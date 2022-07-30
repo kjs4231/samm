@@ -13,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.samm.biz.AdmintblBiz;
 import com.samm.biz.AreaBiz;
 import com.samm.biz.BoardBiz;
 import com.samm.biz.FestivalBiz;
 import com.samm.biz.UsersBiz;
+import com.samm.vo.AdmintblVo;
 import com.samm.vo.BoardVo;
 import com.samm.vo.FestivalVo;
 import com.samm.vo.UsersVo;
@@ -33,7 +35,8 @@ public class MainController {
 	@Autowired
 	BoardBiz bbiz;
 	
-	
+	@Autowired 
+	AdmintblBiz adminbiz;
 	
 	@RequestMapping("/")
 	public String main(Model m,String areacode,String eventstartdate, String eventenddate,HttpSession session ) {
@@ -84,6 +87,7 @@ public class MainController {
 		m.addAttribute("festival",list);
 		return "map";
 	}
+	
 	@RequestMapping("/login")
 	public String login(Model m) {
 		
@@ -93,9 +97,42 @@ public class MainController {
 	
 	@RequestMapping("/loginimpl")
 	public String loginimpl(Model m, String id, String pwd, HttpSession session) {
-	
+		
+		AdmintblVo admin = null;
 		UsersVo u = null;
-		try {;
+		
+		try {
+			if(id==ubiz.idCheck(id)) { //users 테이블에 아이디가 존재하는 경우
+				u = ubiz.get(id);
+				if (u != null) {
+					if (u.getPwd().equals(pwd)) {
+						session.setAttribute("loginuser", u);
+						m.addAttribute("loginuser", u);						
+					} else {
+						throw new Exception();					
+					}
+				} else {
+					throw new Exception();
+				}				
+			}else if(id==adminbiz.idCheck(id)||adminbiz.get(id).getPwd().equals(pwd)){ 
+				//users 테이블에 매개값으로 받아온 아이디가 없고, admintbl 테이블에 id, pwd가 있음 - 즉 관리자 계정으로 로그인하는 경우.  
+
+				session.setAttribute("loginadmin", admin);
+				m.addAttribute("loginadmin", admin);
+			}//if			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return login(m);
+		}
+		
+		m.addAttribute("center","/center");
+		return "redirect:/";
+		
+		/************************************************************/
+		
+		/*
+		UsersVo u = null;
+		try {
 			u = ubiz.get(id);
 			if (u != null) {
 				if (u.getPwd().equals(pwd)) {
@@ -103,19 +140,20 @@ public class MainController {
 					m.addAttribute("loginuser", u);
 					
 				} else {
-					throw new Exception();
-					
+					throw new Exception();					
 				}
 			} else {
 				throw new Exception();
 			}
-		} catch (Exception e) {
-			
+		} catch (Exception e) {			
 			e.printStackTrace();
 			return login(m);
 		}
 		m.addAttribute("center","/center");
 		return "redirect:/";
+		
+		*/
+		
 	}
 	
 	@RequestMapping("/logout") 
@@ -141,11 +179,20 @@ public class MainController {
 	return "index";
 	}
 	
+ 
+	
 	@RequestMapping("/chatbot")
 	public String goChatBot(Model m) {
-		
 		return "chatbot";
 	}
 	
+	@RequestMapping("/mng/main")
+	public String adminMain (Model m) {	
+		System.out.println("adminMain");
+		
+		m.addAttribute("center", "mng/center");		
+		return "/mng/main";
+	}
+ 
 	
 }
