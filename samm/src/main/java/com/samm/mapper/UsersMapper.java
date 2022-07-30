@@ -21,6 +21,7 @@ public interface UsersMapper {
 	public int getTotalNum() throws Exception; 
 	public List<UsersVo> selectlist(Map<String, Integer> m) throws Exception;
 	public List<UsersVo> msearch(Map<String, String> m) throws Exception;
- 
+	
+	public void kakaoLogin(UsersVo v) throws Exception;
 	
 }

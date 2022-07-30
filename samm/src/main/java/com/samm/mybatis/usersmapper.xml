@@ -14,6 +14,7 @@
 		INSERT INTO users VALUES (#{id},#{pwd},#{name},#{email},#{address},#{phone},#{gender})
 		
 	</insert>
+	
 	<update id="update" parameterType="UsersVo">
 		UPDATE users 
 		<trim prefix="SET" suffixOverrides=",">
@@ -83,5 +84,12 @@
 		WHERE rn between (#{section}-1)*100 + (#{pageNum}-1)*10+1 
 		         and (#{section}-1)*100 + #{pageNum} * 10     
 	</select>
+	
+	<insert id="kakaoLogin" parameterType="UsersVo">
+		INSERT INTO users (id,name,email,gender,profile_img)
+		VALUES (#{email},#{name},#{email},#{gender},#{profile_img})	
+		ON DUPLICATE KEY UPDATE name=#{name}, email=#{email},gender=#{gender},
+		profile_img=#{profile_img}
+	</insert>
 	
 </mapper>
