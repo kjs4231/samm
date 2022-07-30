@@ -1,9 +1,3 @@
-@charset "EUC-KR";
-
-
-
-
-
 html,
 body {
 	margin: 0;
@@ -17,7 +11,7 @@ body {
 	overflow: hidden;
 	background: #fff;
 	margin-top: 88.8px;
-	height: 88%;
+	height: calc(100vh - 88.8px);
 	width: 100%;
 	border: 1px solid black;
 	position: relative;
@@ -34,4 +28,65 @@ body {
 
 #map-searchpager .block-27 ul li a:not(:hover) {
 	background: white;
+}
+
+#map-kakao {
+	width: inherit;
+	height: inherit
+}
+
+.project-wrap.map-overlay .img {
+	width: 270px;
+	height: 0;
+}
+
+.project-wrap.map-overlay .p-4 {
+	width: 270px;
+	padding: 40px 1rem 1rem 1rem !important;
+	overflow: hidden;
+	margin-top:40px;
+	z-index: -1;
+}
+
+.project-wrap.map-overlay .img .price {
+	z-index: 99;
+}
+
+.project-wrap.map-overlay .text .days {
+	font-size: 12px;
+}
+
+.project-wrap.map-overlay .location {
+	margin-top: 0;
+	margin-bottom: 0.3rem;
+}
+
+.project-wrap.map-overlay .text h3 {
+	font-size: 23px;
+	margin-bottom: 0;
+}
+
+.project-wrap.map-overlay .text span {
+	margin-top: 0.15rem;
+	font-size: 12px;
+}
+
+.project-wrap.map-overlay .btn-map-gobtn {
+	display: block;
+	color: white;
+	font-weight: 600;
+	background-color: #f15d30;
+	text-align: center;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+.project-wrap.map-overlay .map-overlayclose {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: #888;
+	width: 17px;
+	height: 17px;
+	background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
 }
