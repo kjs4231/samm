@@ -23,6 +23,7 @@ $(document).ready(function() {
 			'top=10,left=10,height=300, status=no, menubar=no, toolbar=no, resizable=no')
 	});
 
+	// 채팅 메시지 전송
 	$("#chat").keydown(function(keyNum) {
 		if (keyNum.keyCode == 13) {
 			sendMessage();
@@ -58,6 +59,7 @@ function recevieMessage(data) {
 		'<span class="message__bubble" id="message'+mcnt+'">' + data[0] +'</span>' + 
 		'<span class="message__time">' + hours + ':' + minutes + '</span>' +
 		'</div></div></div>'
+		
 	let urltext = '<br><br><a class="chatbotlink" id="clink'+mcnt+'" href="#" >축제로이동</a> '
 	
 	$(document).ready(function(){
