@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script>
+$(document).ready(function(){ 
+	$('#del_btn').click(function(){
+		$('#ainfo-form').attr({
+			'method':'post',
+			'action':'delimpl' 
+		});
+		$('#ainfo-form').submit();
+	});	 
+	
+
+	$('#mod_btn').click(function(){
+		$('#ainfo-form').attr({
+			'method':'post',
+			'action':'aupdate' 
+		});
+		$('#ainfo-form').submit();
+	}); 
+	
+	/* 	$("#mod_btn").click(function(){
+	location.href="/admin/aupdate";
+})  */	
+
+//th:href="@{ainfo(id=${vo.id})}
+
+});
+
+</script>
+</head>
+<body>
+ 
+    <div class="row">
+ 		 <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+            
+              <div class="card-body">
+                <h4 class="card-title">관리자 상세정보</h4>
+                <p class="card-description"></p>
+                <div class="">                  
+                <form id="ainfo-form">
+
+                  <div class="form-group row">
+                    <label for="id" class="col-sm-2">ID</label> 
+                    <div class="col-sm-9">
+                    	<input type="text" class="form-control border-0" name="id" th:value="${vo.id}"> 
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="name" class="col-sm-2">이름</label> 
+                    <div class="col-sm-9">
+                    	<input type="text" class="form-control border-0" name="name" th:value="${vo.name}">  
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="email" class="col-sm-2">Email</label> 
+                    <div class="col-sm-9">
+                    	<input type="text" class="form-control border-0" name="email" th:value="${vo.email}">  
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="address" class="col-sm-2">주소</label> 
+                    <div class="col-sm-9">
+                    	<input type="text" class="form-control border-0" name="address" th:value="${vo.address}">  
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="phone" class="col-sm-2">휴대폰번호</label> 
+                    <div class="col-sm-9">
+                    	<input type="text" class="form-control border-0" name="phone" th:value="${vo.phone}"> 
+                    </div>
+                  </div>
+                  
+                  <!--  <a href="" th:href="@{aupdate(id=${vo.id})}" id="mod_btn" class="btn btn-primary mr-2">수정</a>
+                  <a href="" th:href="@{delimpl(id=${vo.id})}" id="del_btn" class="btn btn-primary mr-2">강퇴</a> -->
+  
+                  <button type="submit" id="mod_btn" class="btn btn-primary mr-2">수정</button>                  
+                  <button type="submit" id="del_btn" class="btn btn-primary mr-2">삭제</button>
+                </form>
+              </div>
+            </div>
+ 
+    </div>
+  </div>
+</div>
+</body>
+</html>

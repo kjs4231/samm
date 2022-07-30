@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script>
+
+$(document).ready(function(){ 
+	$('#btnSearch').click(function(){
+		$('#search_form').attr({
+			'method':'get',
+			'action':'asearch' 
+		});
+		$('#search_form').submit();
+	});
+});
+ 
+</script>
+</head>
+<body>
+
+
+
+<div class="col-lg-12 stretch-card">
+ <div class="card">
+  <div class="card-body">
+    <h4 class="card-title">관리자 목록</h4>
+	<!--  <p class="card-description"> Add class <code>.table-{color}</code> </p> -->
+       
+  <form id="search_form">  
+  <div class="input-group justify-content-end">
+    <div class="border border-primary">
+   		<select name="select" class="border-0 form-select" style="margin:15px 5px">
+  		 <option th:value="id" >ID</option>
+  		 <option th:value="name" selected>이름</option>  	  
+  		 <option th:value="email">Email</option>
+  		 <option th:value="address">주소</option>  
+  		 <option th:value="phone">전화번호</option>  
+  		</select>	
+    </div>
+    <input type="text" name="txt" class="form-control border border-primary col-md-2"  
+    		 aria-label="search" aria-describedby="search">
+    <div class="input-group-btn btn-primary">
+    	<button class="btn btn-primary" id="btnSearch" type="button"><i class="icon-search"></i></button>
+    </div>    
+  </div>
+ </form> 
+
+<br>  
+<div class="table-responsive pt-3" th:if="${volist}">
+	<table class="table table-hover col-md">
+		<thead>
+		  <tr>
+		    <th><b>ID</b></th> 
+		    <th><b>이름</b></th>
+		    <th><b>주소</b></th>
+		    <th><b>Email</b></th>
+		    <th><b>전화번호</b></th> 
+		  </tr>
+		</thead>
+		<tbody>	
+		  <tr th:each="vo : ${volist}">
+		    <td><a href="" th:text="${vo.id}" th:href="@{ainfo(id=${vo.id})}"></a></td>
+		    <td th:text="${vo.name}"></td>
+		    <td th:text="${vo.address}"></td>
+		    <td th:text="${vo.email}"></td>
+		    <td th:text="${vo.phone}"></td>
+		  </tr>
+		</tbody>
+	</table>
+
+	<div class="paging" th:if="${tot}">
+ 
+		<div th:if="${tot > 100}">
+		<ul class="pagination justify-content-center" style="margin:20px 0">
+			<div th:each=" seq : ${#numbers.sequence(1,10)}"> 
+				<div th:if="${section > 1 && seq == 1 }">
+					<li class="page-item"> 
+						<a class="page-link" th:href="@{alist(section=${section-1}, pageNum=${(section-1)*10})}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span></a>
+					</li>
+				</div>				
+				<li class="page-item">
+					<a class="page-link" th:href="@{alist(section=${section}, pageNum=${seq})}">
+						<p th:text="${(section-1)*10 + seq}"></p>
+					</a>
+				</li>				
+				<div th:if="${ seq == 10 }">
+					<li class="page-item">
+						<a class="page-link" th:href="@{alist(section = ${section + 1}, seq = ${ section*10 +1})}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span></a>
+					</li>
+				</div>						
+			</div>
+		</ul>
+		</div>
+				
+		<div th:if="${tot == 100}">
+		<ul class="pagination justify-content-center" style="margin:20px 0">
+			<div th:each=" seq : ${#numbers.sequence(1,10)} ">			
+				<li class="page-item"><a class="page-link" th:href="#"><span th:text="${seq}"></span></a></li>		
+			</div>
+		</ul>
+		</div>
+				
+		<div th:if="${tot < 100}"> 
+		<ul class="pagination justify-content-center" style="margin:20px 0">
+			<div th:each=" seq : ${#numbers.sequence(1, tot/10+1)}">				
+				<li class="page-item active" th:if="${ seq == pageNum }" aria-current="page">
+					<a class="page-link" th:href="@{alist(section=${section}, pageNum=${seq})}"><p th:text="${seq}"></p></a>
+				</li>
+				<li class="page-item " th:unless="${ seq == pageNum }">
+					<a class="page-link" th:href="@{alist(section=${section}, pageNum=${seq})}"><p th:text="${seq}"></p></a>
+				</li>			
+			</div>
+		</ul>	
+		</div>
+	  
+	</div> 
+	<div class="paging" th:unless="${tot}">
+		<p class="" th:text="${volistnull}"></p> 
+	</div>
+</div>   
+
+<div th:unless="${volist}"> 
+	<p class="" th:text="${volistnull}"></p> 
+</div>   
+
+	</div> <!-- card-body -->
+   </div>
+ </div>
+
+ 
+</body>
+</html>
