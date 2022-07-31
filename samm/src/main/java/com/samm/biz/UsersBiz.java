@@ -61,7 +61,10 @@ public class UsersBiz implements Biz<String,UsersVo> {
 	public List<UsersVo> msearch(Map<String, String> map) throws Exception {
 		return usersDao.msearch(map);
 	}
- 
+	
+	public void kakaoLogin(UsersVo v) throws Exception{
+		usersDao.kakaoLogin(v);
+	}
  
 	
 }

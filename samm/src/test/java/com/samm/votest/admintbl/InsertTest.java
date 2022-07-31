@@ -15,7 +15,7 @@ class InsertTest {
 
 	@Test
 	void contextLoads() {
-		AdmintblVo obj = new AdmintblVo("admin11","pwd11","이름","청담동","010-9999-9999");
+		AdmintblVo obj = new AdmintblVo("admin11","pwd11","이름","청담동","010-9999-9999",null);
 		try {
 			biz.register(obj);
 			System.out.println("test 완료");

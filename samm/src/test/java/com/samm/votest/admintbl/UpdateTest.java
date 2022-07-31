@@ -15,7 +15,7 @@ class UpdateTest {
 
 	@Test
 	void contextLoads() {
-		AdmintblVo obj = new AdmintblVo("admin11","p11","이름",null,null);
+		AdmintblVo obj = new AdmintblVo("admin11","p11","이름",null,null,null);
 		try {
 			biz.modify(obj);
 			System.out.println("update test 완료");
