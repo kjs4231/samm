@@ -79,16 +79,16 @@ function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, evente
 };
 
 
-function elm_overlay(contentid, firstimage, eventstartdate, eventenddate, title, addr1) {
+function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, infotext) {
 	var gen_imageheader = '<a class="img">';
 	var elm =
-		'<div class="project-wrap map-overlay">' +
+		'<div class="project-wrap map-overlay"' +'contentid="'+contentid+'">' +
 		gen_imageheader + '<span class="price">진행중</span>' + '</a>' +
-		'<div class="map-overlayclose" onclick="closeOverlay(' + contentid + ')" title="닫기"></div>' +
+		'<a href="#" class="map-overlayclose" onclick="closeOverlay()" title="닫기"></a>' +
 		'<div class="text p-4">' +
 		'<span class="days"><span>' + eventstartdate + '</span> ~ <span>' + eventenddate + '</span></span>' +
-		'<h3><a href="/detail?contentid=' + contentid + '"><input name="contentid" hidden value="' + contentid + '">' + title + '</a></h3>' +
-		'<span class="detail">Lorem Ipsum</span>' +
+		'<h3 class="animate"><a href="/detail?contentid=' + contentid + '"><input name="contentid" hidden value="' + contentid + '">' + title + '</a></h3>' +
+		'<span class="detail">' + infotext + '</span>' +
 		'<p class="location"><span class="fa fa-map-marker"></span> <span>' + addr1 + '</span></p>' +
 		'<a class="btn-map-gobtn" href="/detail?contentid=' + contentid + '">이 축제 가기</a>' +
 		'<div class="detail-icon">' +
@@ -115,7 +115,15 @@ function openOverlay(contentid, mapx, mapy, isPanTo) {
 	if (isPanTo == 1) {
 		map.panTo(position);
 	};
+	let setOverlay = $('.project-wrap.map-overlay[contentid='+contentid+']')
+	if (setOverlay.clientWidth < setOverlay.find('h3').clientWidth) {
+		setOverlay.find('h3').addClass("animate");
+	}
 };
+
+function closeOverlay(){
+	customOverlay.setMap(null);
+}
 
 // 지도 위에 표시되고 있는 마커를 모두 제거합니다
 function removeMarker() {
@@ -143,7 +151,7 @@ function searchmap(keyword, page, mapx, mapy) {
 			var result = '';
 			removeMarker();
 			if (JSON.stringify(json) === '{}' || JSON.stringify(json) === '[]') {
-				result = result.concat('<a class="l-card item container">없습니다</a>');
+				result = result.concat('<a class="l-card item l-card-none container"><div>없습니다</div></a>');
 			} else {
 				$.each(json, function (i, element) {
 					result = result.concat(elm_searchmap(element.contentid, element.mapx, element.mapy, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1));
@@ -153,7 +161,7 @@ function searchmap(keyword, page, mapx, mapy) {
 						position: locPosition,
 						clickable: true
 					});
-					var overlay = elm_overlay(element.contentid, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1)
+					var overlay = elm_overlay(element.contentid, element.eventstartdate, element.eventenddate, element.title, element.addr1, element.infotext)
 					marker.setMap(map);
 					markers.set(element.contentid, marker);
 					elm_overlays.set(element.contentid, overlay);
