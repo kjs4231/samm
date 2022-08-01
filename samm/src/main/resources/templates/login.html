@@ -1,16 +1,4 @@
-<script>
-$(document).ready(function(){
-	$('#signin_bt').click(function(){
-		$('#login_form').attr({
-			'method':'post',
-			'action':'/loginimpl'
-		});
-		$('#login_form').sumbit();
-	});
-	
-});
-
-</script>
+<script src="/js/login.js"></script>
 
 
 <meta charset="UTF-8">
@@ -45,6 +33,13 @@ $(document).ready(function(){
 							<button id="signin_bt" type="submit" class="btn btn-default">Sign In</button>
 							
 							<button id="signup_bt" type="button" class="btn btn-default" onclick="location.href='/users/add'">Sign Up</button>
+							<a id="custom-login-btn" href="javascript:kakaoLogin()">
+							  <img
+							    src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
+							    width="222"
+							    alt="카카오 로그인 버튼"
+							  />
+							</a>
 							 
 						</div>
 					</div>

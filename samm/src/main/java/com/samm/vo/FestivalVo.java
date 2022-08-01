@@ -26,5 +26,6 @@ public class FestivalVo {
     private Date createdtime;   // regdate date
     private String firstimage;
     private String firstimage2;
+    private String infotext;
     
 }

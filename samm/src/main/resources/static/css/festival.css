@@ -53,6 +53,18 @@
     float: right;
 }
 
+.fdrop{
+	top:75% !important;
+}
+
+.droplink{
+	text-align:left;
+	color:black !important;
+	font-size: 12px;
+}
+.droplink:hover{
+	color:#fd7e14 !important;
+}
 
 #chatbot-div{
 	cursor:pointer;
@@ -421,4 +433,8 @@
 	font-weight: 600;
 	float: right;
 	display: inline
+}
+
+.s003 .l-card-none{
+	height: 85.6px;
 }
