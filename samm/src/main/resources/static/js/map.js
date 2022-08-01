@@ -4,6 +4,8 @@ var markers = new Map();
 var elm_overlays = new Map();
 var customOverlay;
 
+var params;
+
 let geoloc_lat = 33.450701;
 let geoloc_lng = 126.570667;
 let currentKeyword = "";
@@ -14,6 +16,7 @@ let endPage;
 function checkNull(o) {
 	return (o == null || o.length <= 0 || o == undefined) ? true : false;
 };
+
 
 function paintingMap(lat, lng) {
 	container = document.getElementById('map-kakao'); //지도를 담을 영역의 DOM 레퍼런스
@@ -41,7 +44,6 @@ function getGeolocation() {
 		paintingMap(geoloc_lat, geoloc_lng);
 	};
 };
-
 
 function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, eventenddate, title, addr1) {
 	if (typeof firstimage == "undefined" || firstimage == null || firstimage == "") {
@@ -82,7 +84,7 @@ function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, evente
 function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, infotext) {
 	var gen_imageheader = '<a class="img">';
 	var elm =
-		'<div class="project-wrap map-overlay"' +'contentid="'+contentid+'">' +
+		'<div class="project-wrap map-overlay"' + 'contentid="' + contentid + '">' +
 		gen_imageheader + '<span class="price">진행중</span>' + '</a>' +
 		'<a href="#" class="map-overlayclose" onclick="closeOverlay()" title="닫기"></a>' +
 		'<div class="text p-4">' +
@@ -115,13 +117,13 @@ function openOverlay(contentid, mapx, mapy, isPanTo) {
 	if (isPanTo == 1) {
 		map.panTo(position);
 	};
-	let setOverlay = $('.project-wrap.map-overlay[contentid='+contentid+']')
+	let setOverlay = $('.project-wrap.map-overlay[contentid=' + contentid + ']')
 	if (setOverlay.clientWidth < setOverlay.find('h3').clientWidth) {
 		setOverlay.find('h3').addClass("animate");
 	}
 };
 
-function closeOverlay(){
+function closeOverlay() {
 	customOverlay.setMap(null);
 }
 
@@ -177,6 +179,9 @@ function searchmap(keyword, page, mapx, mapy) {
 	})
 };
 
+function searchcontentid(contentid) {
+}
+
 function elm_countsearchmap(count, page) {
 	maxPage = parseInt(count / 12) + 1;
 	startPage = parseInt((page - 1) / 5) * 5 + 1;
@@ -224,9 +229,15 @@ function countsearchmap(keyword, page) {
 };
 
 function searchmapinput() {
-	currentKeyword = $('#map-searchform input[name="search"]').val();
-	searchmap(currentKeyword, 1, geoloc_lng, geoloc_lat);
-	countsearchmap(currentKeyword, 1);
+	if (checkNull($('#map-searchform input[name="search"]').val())) {
+		var result = '<a class="l-card item l-card-none container"><div>검색어를 입력하십시오.</div></a>';
+		$('#map-searchlist').html(result);
+		$('#map-searchlist').removeAttr("style");
+	} else {
+		currentKeyword = $('#map-searchform input[name="search"]').val();
+		searchmap(currentKeyword, 1, geoloc_lng, geoloc_lat);
+		countsearchmap(currentKeyword, 1);
+	}
 };
 
 function pagemove(page) {
@@ -235,12 +246,29 @@ function pagemove(page) {
 };
 
 $(document).ready(function () {
+	params = $.deparam.querystring(true);
 	getGeolocation();
 	customOverlay = new kakao.maps.CustomOverlay({
 		position: new kakao.maps.LatLng(geoloc_lat, geoloc_lng),
 		content: '<div></div>'
 	});
 	customOverlay.setMap(null);
+	if (checkNull(params.keyword)){
+		return;
+	}
+	currentKeyword = params.keyword;
+	$('#map-searchform input[name="search"]').val(currentKeyword);
+	if (Number.isInteger(params.page)) {
+		var page = params.page;
+	} else {
+		var page = 1;
+	}
+	searchmap(currentKeyword, page, geoloc_lng, geoloc_lat);
+	pagemove(page);
+	if (checkNull(params.contentid)){
+		return;
+	}
+
 });
 
 $(document).on("click", ".btn-search", function () {
@@ -288,3 +316,21 @@ $(document).on("click", ".pager-next a", function () {
 // 		map.panTo(locPosition);
 // 	}
 // };
+
+$(function () {
+	// Values are coerced.
+	var params = $.deparam.querystring(true);
+
+	debug.log('coerced', params);
+	$('#deparam_coerced').text(JSON.stringify(params, null, 2));
+
+	// Highlight the current sample query string link
+	var qs = $.param.querystring();
+
+	$('li a').each(function () {
+		if ($(this).attr('href') === '?' + qs) {
+			$(this).addClass('current');
+		}
+	});
+
+});
