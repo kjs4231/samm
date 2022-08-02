@@ -117,10 +117,6 @@ function openOverlay(contentid, mapx, mapy, isPanTo) {
 	if (isPanTo == 1) {
 		map.panTo(position);
 	};
-	let setOverlay = $('.project-wrap.map-overlay[contentid=' + contentid + ']')
-	if (setOverlay.clientWidth < setOverlay.find('h3').clientWidth) {
-		setOverlay.find('h3').addClass("animate");
-	}
 };
 
 function closeOverlay() {
@@ -253,22 +249,39 @@ $(document).ready(function () {
 		content: '<div></div>'
 	});
 	customOverlay.setMap(null);
-	if (checkNull(params.keyword)){
-		return;
+	if (!checkNull(params.keyword)) {
+		currentKeyword = params.keyword;
+		$('#map-searchform input[name="search"]').val(currentKeyword);
+		if (Number.isInteger(params.page)) {
+			var page = params.page;
+		} else {
+			var page = 1;
+		}
+		searchmap(currentKeyword, page, geoloc_lng, geoloc_lat);
+		pagemove(page);
 	}
-	currentKeyword = params.keyword;
-	$('#map-searchform input[name="search"]').val(currentKeyword);
-	if (Number.isInteger(params.page)) {
-		var page = params.page;
-	} else {
-		var page = 1;
+	if (!checkNull(params.contentid)) {
+		$.ajax({
+			url: '/searchcontentid',
+			data: { "contentid": params.contentid },
+			method: 'get',
+			dataType: 'json',
+			success: function (element) {
+				removeMarker();
+				var locPosition = new kakao.maps.LatLng(element.mapy, element.mapx);
+				var marker = new kakao.maps.Marker({
+					position: locPosition,
+					clickable: true
+				});
+				var overlay = elm_overlay(element.contentid, element.eventstartdate, element.eventenddate, element.title, element.addr1, element.infotext)
+				marker.setMap(map);
+				markers.set(element.contentid, marker);
+				elm_overlays.set(element.contentid, overlay);
+				openOverlay(element.contentid, element.mapx, element.mapy);
+				map.setCenter(locPosition);
+			}
+		})
 	}
-	searchmap(currentKeyword, page, geoloc_lng, geoloc_lat);
-	pagemove(page);
-	if (checkNull(params.contentid)){
-		return;
-	}
-
 });
 
 $(document).on("click", ".btn-search", function () {
@@ -332,5 +345,4 @@ $(function () {
 			$(this).addClass('current');
 		}
 	});
-
 });
