@@ -22,8 +22,8 @@ body {
 	position: absolute;
 	left: 0;
 	top: 0;
-	z-index: 1;
 	align-items: center;
+	z-index: 1;
 }
 
 #map-searchpager .block-27 ul li a:not(:hover) {
@@ -35,21 +35,25 @@ body {
 	height: inherit
 }
 
+.project-wrap.map-overlay {
+	position: relative;
+}
+
 .project-wrap.map-overlay .img {
 	width: 270px;
 	height: 0;
+	z-index: 1
 }
 
 .project-wrap.map-overlay .p-4 {
 	width: 270px;
 	padding: 40px 1rem 1rem 1rem !important;
 	overflow: hidden;
-	margin-top:40px;
-	z-index: -1;
+	margin-top: 40px;
 }
 
 .project-wrap.map-overlay .img .price {
-	z-index: 99;
+	z-index: 3;
 }
 
 .project-wrap.map-overlay .text .days {
@@ -59,16 +63,32 @@ body {
 .project-wrap.map-overlay .location {
 	margin-top: 0;
 	margin-bottom: 0.3rem;
+	padding: 0;
 }
 
 .project-wrap.map-overlay .text h3 {
 	font-size: 23px;
 	margin-bottom: 0;
+	z-index: 3;
 }
 
 .project-wrap.map-overlay .text span {
 	margin-top: 0.15rem;
 	font-size: 12px;
+}
+
+.project-wrap.map-overlay .detail {
+	overflow: hidden;
+	white-space: normal;
+	word-wrap: break-word;
+	word-break: break-all;
+	line-height: 1rem;
+	display: inline-block;
+	padding: 0;
+}
+
+.project-wrap.map-overlay .detail::after {
+	content: '...'
 }
 
 .project-wrap.map-overlay .btn-map-gobtn {
@@ -79,6 +99,7 @@ body {
 	text-align: center;
 	padding: 5px;
 	margin-bottom: 5px;
+	z-index: 3;
 }
 
 .project-wrap.map-overlay .map-overlayclose {
@@ -88,5 +109,25 @@ body {
 	color: #888;
 	width: 17px;
 	height: 17px;
+	z-index: 3;
 	background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+}
+
+.animate {
+	position: relative;
+	animation: leftright 3s infinite alternate ease-in-out;
+}
+
+@keyframes leftright {
+	0%,
+	20% {
+		transform: translateX(0%);
+		left: 0%;
+	}
+
+	80%,
+	100% {
+		transform: translateX(-100%);
+		left: 100%;
+	}
 }
