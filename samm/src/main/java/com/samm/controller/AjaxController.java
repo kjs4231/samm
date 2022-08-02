@@ -49,6 +49,17 @@ public class AjaxController {
 		return list;
 	}
 
+	@RequestMapping("/searchcontentid")
+	public FestivalVo searchcontentid(Integer contentid) {
+		FestivalVo vo = null;
+		try {
+			vo = fbiz.get(contentid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vo;
+	}
+
 	@RequestMapping("/searchmap")
 	public List<FestivalVo> searchmap(String keyword, String page, String mapx, String mapy) {
 		Date date = new Date();
