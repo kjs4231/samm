@@ -109,7 +109,7 @@ public class MainController {
 						session.setAttribute("loginuser", u);
 						m.addAttribute("loginuser", u);						
 					} else {
-						throw new Exception();					
+						//throw new Exception();					
 					}
 				} else {
 					throw new Exception();
