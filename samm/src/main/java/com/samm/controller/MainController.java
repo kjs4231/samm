@@ -97,29 +97,32 @@ public class MainController {
 	
 	@RequestMapping("/loginimpl")
 	public String loginimpl(Model m, String id, String pwd, HttpSession session) {
-		
+
 		AdmintblVo admin = null;
 		UsersVo u = null;
 		
 		try {
-			if(ubiz.idCheck(id).equals(id)) { //users 테이블에 아이디가 존재하는 경우
-				u = ubiz.get(id);
-				if (u != null) {
-					if (u.getPwd().equals(pwd)) {
-						session.setAttribute("loginuser", u);
-						m.addAttribute("loginuser", u);						
-					} else {
-						throw new Exception();					
-					}
-				} else {
-					throw new Exception();
+			u = ubiz.get(id);
+			if (u != null) {
+				if (u.getPwd().equals(pwd)) {
+					session.setAttribute("loginuser", u);
+					m.addAttribute("loginuser", u);						
+				 }
+			}else if(u == null){			
+				admin = adminbiz.get(id);
+				if(admin != null) {
+					if(admin.getPwd().equals(pwd)) { 
+						session.setAttribute("loginadmin", admin);
+						m.addAttribute("loginadmin", admin);	
+					}else {
+						throw new Exception(); //	
+					}					
+				}else {
+					throw new Exception();			
 				}				
-			}else if(id==adminbiz.idCheck(id)||adminbiz.get(id).getPwd().equals(pwd)){ 
-				//users 테이블에 매개값으로 받아온 아이디가 없고, admintbl 테이블에 id, pwd가 있음 - 즉 관리자 계정으로 로그인하는 경우.  
-
-				session.setAttribute("loginadmin", admin);
-				m.addAttribute("loginadmin", admin);
-			}//if			
+			}else{
+				throw new Exception();
+			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return login(m);
@@ -127,32 +130,6 @@ public class MainController {
 		
 		m.addAttribute("center","/center");
 		return "redirect:/";
-		
-		/************************************************************/
-		
-		/*
-		UsersVo u = null;
-		try {
-			u = ubiz.get(id);
-			if (u != null) {
-				if (u.getPwd().equals(pwd)) {
-					session.setAttribute("loginuser", u);
-					m.addAttribute("loginuser", u);
-					
-				} else {
-					throw new Exception();					
-				}
-			} else {
-				throw new Exception();
-			}
-		} catch (Exception e) {			
-			e.printStackTrace();
-			return login(m);
-		}
-		m.addAttribute("center","/center");
-		return "redirect:/";
-		
-		*/
 		
 	}
 	
@@ -186,10 +163,12 @@ public class MainController {
 		return "chatbot";
 	}
 	
+	
+	
 	@RequestMapping("/mng/main")
-	public String adminMain (Model m) {	
-		System.out.println("adminMain");
-		
+	public String adminMain (Model m, HttpSession session) {	
+
+		session.setAttribute("loginadmin", session.getAttribute("loginadmin"));
 		m.addAttribute("center", "mng/center");		
 		return "/mng/main";
 	}
