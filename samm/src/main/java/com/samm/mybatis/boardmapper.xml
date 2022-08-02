@@ -22,6 +22,7 @@
 	<select id="select" parameterType="int" resultType="BoardVo">
         <include refid="selectFromBoard"/>
         WHERE bno = #{bno} and del_date is null
+        
     </select>
     <update id="increaseViewCnt" parameterType="int">
         UPDATE board
@@ -30,7 +31,10 @@
     </update>
     <select id="selectAll" resultType="BoardVo">
         SELECT bno, title, content, writer, view_cnt, comment_cnt, reg_date
-        FROM board where del_date is null
+        FROM board where del_date is null 
+     
+       
+
         
     </select>
     <update id="update" parameterType="BoardVo">
@@ -40,4 +44,16 @@
           , up_date = now()
         WHERE bno = #{bno}
     </update>
+    
+    <select id="selectPage" resultType="BoardVo">
+        SELECT bno, title, content, writer, view_cnt, comment_cnt, reg_date
+        FROM board where del_date is null
+        
+    </select>
+    
+    <select id="searchselectPage" resultType="BoardVo">
+        SELECT bno, title, content, writer, view_cnt, comment_cnt, reg_date
+        FROM board where del_date is null
+        
+    </select>
 </mapper>

@@ -1,5 +1,7 @@
 package com.samm.mapper;
 import java.util.List;
+
+
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -26,4 +28,5 @@ public interface BoardMapper {
 	 * public int searchResultCnt(SearchCondition sc) throws Exception; public
 	 * List<BoardVo> searchSelectPage(SearchCondition sc) throws Exception;
 	 */
+	
 }

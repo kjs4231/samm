@@ -15,7 +15,7 @@ class InsertTest {
 
 	@Test
 	void contextLoads() {
-		BoardVo obj = new BoardVo("title31","content3","id03");
+		BoardVo obj = new BoardVo("title331","content3");
 		try {
 			biz.write(obj);
 			System.out.println("test 완료");

@@ -1,18 +1,19 @@
-
+<meta charset="utf-8">
 <script>
 function goDetail(bno){
 
 	location.href='/board/detail?bno='+bno; 
 };
+
 </script>
 
 <style>
-.blog-list{
-	width:inherit;
+.blog-list {
+	width: inherit;
 }
 
-.contents-box{
-    word-break: break-all;
+.contents-box {
+	word-break: break-all;
 }
 </style>
 
@@ -36,48 +37,61 @@ function goDetail(bno){
 
 
 <section class="ftco-section">
-  <div class="container">
-    <div class="row d-flex" >
-      <div class="col-md-4 d-flex ftco-animate" th:each="b:${blist}">
-       <div class="blog-entry justify-content-end blog-list">
-        <a href="blog-single.html" class="block-20" style="background-image: url('images/image_1.jpg');">
-        </a>
-        <div class="text">
-         <div class="d-flex align-items-center mb-4 topp">
-          <div class="one" >
-           <span class="day" >11</span>
-         </div>
-         <div class="two">
-           <span class="yr">2020</span>
-           <span class="mos">September</span>
-         </div>
-       </div>
-       <div class="contents-box">
-       <h3 class="heading" th:text="${b.title}"><a href="#">title</a></h3>
-       <P th:utext="${b.content}">content</P>
-       <p><a href="#" class="btn btn-primary">Read more</a></p>
-       </div>
-     </div>
-   </div>
- </div>
-</div>
-</div>
+	<div class="container">
+		<div class="row d-flex">
+			<div class="col-md-4 d-flex ftco-animate" th:each="b:${blist}">
+				<div class="blog-entry justify-content-end blog-list">
+					<a class="block-20"
+						style="background-image: url('images/image_1.jpg');"> </a>
+					<div class="text">
+						<div class="d-flex align-items-center mb-4 topp">
+							<div class="one">
+								<span class="day">11</span>
+							</div>
+							<div class="two">
+								<span class="yr">2020</span> <span class="mos">September</span>
+							</div>
+						</div>
+						<div class="contents-box">
+							<h3 class="heading" th:text="${b.title}">
+								<a href="#">title</a>
+							</h3>
+							<P th:utext="${b.content}">content</P>
+							<p>
+								<a th:onclick="'goDetail(' + ${b.bno} + ');'"
+									class="btn btn-primary">Read more</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	<a class="btn dark write" id="writeBtn"onclick="location.href='/board/write'">글쓰기</a>
 
-<div class="row mt-5">
-  <div class="col text-center">
-    <div class="block-27">
-      <ul>
-        <li><a href="#">&lt;</a></li>
-        <li class="active"><span>1</span></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&gt;</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-</div>
-</section>	
+	
+	
+	 <div>   
+	<!-- <button id="writeBtn" type="submit" class="btn btn-default">write</button> -->
+	</div>
+	<div class="row mt-5">
+		<div class="col text-center">
+			<div class="block-27">
+				<ul>
+					<li><a href="#">&lt;</a></li>
+					<li class="active"><span>1</span></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#">&gt;</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	</div>
+</section>
 

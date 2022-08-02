@@ -1,7 +1,9 @@
-package com.samm.biz;
+   package com.samm.biz;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class BoardBiz implements Biz<Integer, BoardVo> {
     }
 
     public void write(BoardVo v) throws Exception {
+    	
        boardDao.insert(v);
     }
 
