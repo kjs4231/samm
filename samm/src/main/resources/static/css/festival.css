@@ -142,7 +142,7 @@
 	background-color:transparent;
 	width: 100%;
 	border:none;
-	border-bottom: 2px solid white;
+	border-bottom: 3px solid white;
 	color:#fff;
 	margin-bottom: 20px;
 }
@@ -153,9 +153,15 @@
 
 .login-btn{
 	color:#fff;
+	text-decoration: underline;
 }
 .login-btn:hover{
 	color:#f15d30 !important; 
+}
+
+
+.loginbtndiv{
+	margin-bottom: 15px;
 }
 
 .s003 {

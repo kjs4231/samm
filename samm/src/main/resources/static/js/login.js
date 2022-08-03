@@ -85,7 +85,7 @@ function kakaoLogout() {
 		return;
 	}
 	Kakao.Auth.logout(function(response) {
-		alert(response + ' logout');
+		console.log(response + ' logout');
 		window.location.href = '/logout'
 	});
 }
