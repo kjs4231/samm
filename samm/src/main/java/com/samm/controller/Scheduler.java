@@ -12,7 +12,7 @@ public class Scheduler {
 	@Autowired
 	TourFestivalAPI tour;
 
-	@Scheduled(cron = "0 0 9 ? * 1")
+	@Scheduled(cron = "0 2 9 * * *")
 	public void weeklyMonUpdate() {
 		System.out.println("----------- Scheduler Start ------------");
 		try {
