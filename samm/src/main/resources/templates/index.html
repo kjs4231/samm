@@ -57,8 +57,8 @@
 					<li class="nav-item active"><a href="/map" class="nav-link">Festival</a></li>
 					<li class="nav-item active"><a href="/board" class="nav-link">Board</a></li>
 					
-					<li class="nav-item active" th:if="${session.loginuser == null && session.loginadmin == null}">
-						<a href="/login" class="nav-link">Sign In</a>
+					<li class="nav-item active " th:if="${session.loginuser == null && session.loginadmin == null}">
+						<a href="/login"  class="nav-link">Sign In</a>
 					</li>
 
 					<!-- th:if="${session.loginadmin != null && session.loginuser == null}" -->
@@ -69,13 +69,14 @@
 							</span>
 						</a>	
 						<ul class="dropdown-menu fdrop">
-						  <li><a href="/logout" class="nav-link droplink">Sign Out</a></li>
+						  <li><a  class="nav-link droplink" id="signout">Sign Out</a></li>
 						  <li><a href="/users/mypage" class="nav-link droplink">My page</a></li>
 						</ul>
 					</li>  
 
+					<!-- admin  -->
 					<li class="nav-item active" th:if="${session.loginadmin != null && session.loginuser == null}"> 
-						<a href="/logout" class="nav-link">Sign Out</a>
+						<a href="/logout" class="nav-link" >Sign Out</a>
 					</li>
 					
 					<li class="nav-item active" th:if="${session.loginadmin != null && session.loginuser == null}"> 
@@ -107,7 +108,7 @@
 						<ul
 							class="ftco-footer-social list-unstyled float-md-left float-lft">
 							<li class="ftco-animate"><a href="https://github.com/kansg92/samm"><span
-									class="fa fa-github"></span></a></li>
+									class="fa fa-github" style="font-size: 40px !important;"></span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -126,7 +127,7 @@
 					<div class="ftco-footer-widget pt-md-5 mb-4">
 						<h2 class="ftco-heading-2">Programming Language</h2>
 						<ul class="list-unstyled">
-							<li><a href="#" class="py-2 d-block">Java(jdk8.01)</a></li>
+							<li><a href="#" class="py-2 d-block">Java</a></li>
 							<li><a href="#" class="py-2 d-block">HTML5 / CSS3</a></li>
 							<li><a href="#" class="py-2 d-block">JavaScript</a></li>
 							<li><a href="#" class="py-2 d-block">jQuery</a></li>

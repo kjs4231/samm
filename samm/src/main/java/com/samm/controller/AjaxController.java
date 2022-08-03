@@ -160,5 +160,29 @@ public class AjaxController {
 		System.out.println("user::"+user);
 
 	}
+	
+	@RequestMapping("/loginCheck")
+	public String loginCheck(String id, String pwd) {
+		UsersVo users = null;
+		String result = "";
+		System.out.println(pwd);
+		try {
+			users = ubiz.get(id);
+			if(users == null) {
+				result = "존재하지 않는 ID 입니다.";
+			}
+			if(users.getPwd() != pwd ) {
+				result = "비밀번호가 다릅니다.";
+			}
+			if(users.getPwd().equals(pwd) ) {
+				result ="true";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+		return result;
+	}
 
 }

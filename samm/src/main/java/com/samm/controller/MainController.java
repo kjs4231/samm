@@ -135,9 +135,8 @@ public class MainController {
 	public String logout(Model m, HttpSession session) {
 		if (session != null) {
 			session.invalidate();
-
 		}
-		return "index";
+		return "redirect:/";
 	}
 
 	@RequestMapping("/board")
