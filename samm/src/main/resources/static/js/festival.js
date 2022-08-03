@@ -12,6 +12,12 @@ let overview = $('.header--info').text();
 let images = $('#festivalimg').val();
 let url = window.location.href;
 
+let reviewStar = $('.reviewStar').text();
+
+function createReviewStars(){
+	
+}
+
 function next() {
 	$('#next').click(function() {
 		cnt++;
