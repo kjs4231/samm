@@ -126,5 +126,11 @@ public class FestivalBiz implements Biz<Integer, FestivalVo> {
 		return result;
 	}
 	
-
+	public void increaseViewCnt(int contentid) throws Exception{
+		festivalDao.increaseViewCnt(contentid);
+	}
+	
+	public FestivalVo selectOne(int k) throws Exception{
+		return festivalDao.selectOne(k);
+	}
 }

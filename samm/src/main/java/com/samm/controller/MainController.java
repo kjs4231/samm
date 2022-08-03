@@ -57,7 +57,7 @@ public class MainController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		m.addAttribute("area", area);
 		m.addAttribute("festival", list);
 		m.addAttribute("center", "center");

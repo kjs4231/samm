@@ -52,7 +52,8 @@ public class FestivalController {
 		List<FestivalImgVo> imglist = null;
 		int count = 0;
 		try {
-			festival = festbiz.get(contentid);
+			festbiz.increaseViewCnt(contentid);
+			festival = festbiz.selectOne(contentid);
 			intro = festbiz.getIntro(contentid);
 			info = festbiz.getInfo(contentid);
 			common = festbiz.getCommon(contentid);
@@ -63,6 +64,7 @@ public class FestivalController {
 			e.printStackTrace();
 		}
 		System.out.println("rlist::" + rlist);
+		System.out.println("rlist::" + festival);
 
 		m.addAttribute("today",today);
 		m.addAttribute("img", imglist);

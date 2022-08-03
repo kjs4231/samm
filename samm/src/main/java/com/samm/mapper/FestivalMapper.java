@@ -19,10 +19,14 @@ public interface FestivalMapper {
 	public List<FestivalVo> searchFestival(HashMap<String, String> hashmap) throws Exception;
 	public List<FestivalVo> searchMap(HashMap<String, String> hashmap) throws Exception;
 	public int countSearchMap(HashMap<String, String> hashmap) throws Exception;
-
+	public FestivalVo selectOne(int k) throws Exception;
+	
 	public void apiinsert (HashMap<String, String> hashmap) throws Exception;
 	public List<String> getContentId() throws Exception;
 	
 	public List<FestivalVo> searchKeyword(HashMap<String, String> hashmap) throws Exception;
 	public int searchKeywordCount(String keyword) throws Exception;
+	
+	public void increaseViewCnt(int contentid) throws Exception;
+	
 }
