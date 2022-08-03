@@ -25,7 +25,7 @@ import com.samm.vo.UsersVo;
 
 @Controller
 public class MainController {
-	
+
 	@Autowired
 	FestivalBiz fbiz;
 	@Autowired
@@ -34,15 +34,15 @@ public class MainController {
 	UsersBiz ubiz;
 	@Autowired
 	BoardBiz bbiz;
-	
-	@Autowired 
+
+	@Autowired
 	AdmintblBiz adminbiz;
-	
+
 	@RequestMapping("/")
-	public String main(Model m,String areacode,String eventstartdate, String eventenddate,HttpSession session ) {
+	public String main(Model m, String areacode, String eventstartdate, String eventenddate, HttpSession session) {
 		Date date = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
-		if(areacode == null || areacode.equals("")) {
+		if (areacode == null || areacode.equals("")) {
 			areacode = "1";
 		}
 		eventstartdate = today.format(date).toString();
@@ -57,20 +57,20 @@ public class MainController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		m.addAttribute("area",area);
-		m.addAttribute("festival",list);
-		m.addAttribute("center","center");
+
+		m.addAttribute("area", area);
+		m.addAttribute("festival", list);
+		m.addAttribute("center", "center");
 		return "index";
 	}
-	
+
 	@RequestMapping("/about")
 	public String about(Model m) {
-		
-		m.addAttribute("center","test");
+
+		m.addAttribute("center", "test");
 		return "index";
 	}
-	
+
 	@RequestMapping("/map")
 	public String map(Model m) {
 		Date date = new Date();
@@ -84,64 +84,62 @@ public class MainController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		m.addAttribute("festival",list);
+		m.addAttribute("festival", list);
 		return "map";
 	}
-	
+
 	@RequestMapping("/login")
 	public String login(Model m) {
-		
-		m.addAttribute("center","login");
+
+		m.addAttribute("center", "login");
 		return "index";
-	}	
-	
+	}
+
 	@RequestMapping("/loginimpl")
 	public String loginimpl(Model m, String id, String pwd, HttpSession session) {
 
 		AdmintblVo admin = null;
 		UsersVo u = null;
-		
+
 		try {
 			u = ubiz.get(id);
 			if (u != null) {
 				if (u.getPwd().equals(pwd)) {
 					session.setAttribute("loginuser", u);
-					m.addAttribute("loginuser", u);						
-				 }
-			}else if(u == null){			
+					m.addAttribute("loginuser", u);
+				}
+			} else if (u == null) {
 				admin = adminbiz.get(id);
-				if(admin != null) {
-					if(admin.getPwd().equals(pwd)) { 
+				if (admin != null) {
+					if (admin.getPwd().equals(pwd)) {
 						session.setAttribute("loginadmin", admin);
-						m.addAttribute("loginadmin", admin);	
-					}else {
-						throw new Exception(); //	
-					}					
-				}else {
-					throw new Exception();			
-				}				
-			}else{
-				throw new Exception();
-			} 
+						m.addAttribute("loginadmin", admin);
+					} else {
+						throw new Exception(); //
+					}
+				} else {
+					throw new Exception();
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return login(m);
 		}
-		
-		m.addAttribute("center","/center");
+
+		m.addAttribute("center", "/center");
 		return "redirect:/";
-		
+
 	}
-	
-	@RequestMapping("/logout") 
+
+	@RequestMapping("/logout")
 	public String logout(Model m, HttpSession session) {
-		if(session !=null) {
+		if (session != null) {
 			session.invalidate();
 
 		}
 		return "index";
 	}
-	
+
 	@RequestMapping("/board")
 	public String main(Model m) {
 		List<BoardVo> blist = null;
@@ -152,26 +150,21 @@ public class MainController {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
-	return "index";
+		}
+		return "index";
 	}
-	
- 
-	
+
 	@RequestMapping("/chatbot")
 	public String goChatBot(Model m) {
 		return "chatbot";
 	}
-	
-	
-	
+
 	@RequestMapping("/mng/main")
-	public String adminMain (Model m, HttpSession session) {	
+	public String adminMain(Model m, HttpSession session) {
 
 		session.setAttribute("loginadmin", session.getAttribute("loginadmin"));
-		m.addAttribute("center", "mng/center");		
+		m.addAttribute("center", "mng/center");
 		return "/mng/main";
 	}
- 
-	
+
 }

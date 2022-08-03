@@ -48,10 +48,6 @@ function kakaoLogout() {
 }
 
 
-function setTokken(ACCESS_TOKEN) {
-	Kakao.Auth.setAccessToken(ACCESS_TOKEN);
-}
-
 function submitkakao(kakao_account) {
 	const kakaojson = JSON.stringify(kakao_account)
 	const profile = JSON.stringify(kakao_account.profile)

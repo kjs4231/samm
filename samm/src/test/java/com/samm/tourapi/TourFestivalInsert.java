@@ -18,7 +18,9 @@ class TourFestivalInsert {
 	void contextLoads()  {
 			
 		try {
-			tour.insertFestivalApi();
+			if(tour.insertFestivalApi()) {
+				System.out.println("test");
+			};
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
