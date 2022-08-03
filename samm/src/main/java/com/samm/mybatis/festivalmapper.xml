@@ -32,6 +32,16 @@
 		order by contentid desc LIMIT #{key_offset}, 6
 	</select>
 	
+	<select id="searchFestival2" parameterType="Map" resultType="FestivalVo">
+		SELECT * FROM festival WHERE
+		areacode=#{areacode} AND
+		eventstartdate <![CDATA[ <= #{eventstartdate}]]> AND
+		eventenddate <![CDATA[ >= #{eventenddate}]]>
+		ORDER BY eventstartdate desc
+	</select>
+	
+	
+	
 	<select id="searchKeyword" parameterType="HashMap" resultType="FestivalVo">
 		SELECT * FROM festival WHERE title LIKE CONCAT('%',#{keyword},'%') LIMIT ${page}, 12
 	</select>

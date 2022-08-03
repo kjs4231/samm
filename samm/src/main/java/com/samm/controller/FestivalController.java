@@ -120,7 +120,7 @@ public class FestivalController {
 					eventstartdate = today;
 					eventenddate = today;
 				}
-				list = festbiz.searchFestival(areacode, eventstartdate, eventenddate);
+				list = festbiz.searchFestival2(areacode, eventstartdate, eventenddate);
 				int start = Integer.parseInt(eventstartdate);
 				int end = Integer.parseInt(eventenddate);
 				m.addAttribute("start", start);
