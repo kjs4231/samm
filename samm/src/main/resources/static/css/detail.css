@@ -220,3 +220,13 @@
 .control-opacity {
 	opacity: 0;
 }
+
+.viewicon{
+	float: right;
+}
+
+.cnttext{
+	font-size: 20px;
+	text-align: center;
+	padding-right: 15px;
+}

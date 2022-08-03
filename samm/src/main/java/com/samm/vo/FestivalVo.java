@@ -28,4 +28,8 @@ public class FestivalVo {
     private String firstimage2;
     private String infotext;
     
+    private int view_cnt;
+    
+    private double avgstar;
+    
 }

@@ -64,6 +64,7 @@
 }
 .droplink:hover{
 	color:#fd7e14 !important;
+	cursor: pointer;
 }
 
 #chatbot-div{
@@ -87,7 +88,75 @@
   }
 }
 
+.view_cnt{
+	padding-left : 7px;
+	color: #b3b3b3 !important;
+	font-size:16px !important;
+}
 
+.login--form{
+	width: 35%
+}
+
+.btn-div{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.loginpage{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-header{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: inherit;
+}
+
+.login-header-main{
+    color: #fff;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 1.2;
+    margin:0;
+}
+
+.login-header-sub{
+    font-size: 20px;
+    color: #f15d30;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 45px;
+    
+	
+}
+
+.login-input{
+	padding:0.45rem 0.75rem;
+	background-color:transparent;
+	width: 100%;
+	border:none;
+	border-bottom: 2px solid white;
+	color:#fff;
+	margin-bottom: 20px;
+}
+
+.login-input::placeholder{
+	color:#fff;
+}
+
+.login-btn{
+	color:#fff;
+}
+.login-btn:hover{
+	color:#f15d30 !important; 
+}
 
 .s003 {
 	display: -ms-flexbox;
