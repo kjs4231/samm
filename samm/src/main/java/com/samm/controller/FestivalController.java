@@ -154,7 +154,6 @@ public class FestivalController {
 		String imgname = fimg.getMf().getOriginalFilename();
 		fimg.setName(imgname);
 		System.out.println("fimg::" + fimg);
-
 		try {
 			fimgbiz.register(fimg);
 			Util.saveFile(fimg.getMf(), testdir);
