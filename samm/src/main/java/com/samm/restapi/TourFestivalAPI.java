@@ -3,6 +3,7 @@ package com.samm.restapi;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -19,6 +20,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.samm.biz.FestivalBiz;
@@ -43,15 +45,15 @@ public class TourFestivalAPI {
 	// tag값의 정보를 가져오는 함수
 	public static String getTagValue(String tag, Element eElement) {
 
-		// 결과를 저장할 result 변수 선언
 		String result = "";
-		if (eElement.getElementsByTagName(tag).item(0) == null) {
+
+		if (eElement.getElementsByTagName(tag).item(0) == null) { // --->해당 호출된 XML데이터가 없을때
 			result = null;
 		} else {
 			NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-			if (nlList.item(0) == null) {
+			if (nlList.item(0) == null) { // --> 호출된 XML 태그가 존재하지만 태그안 text가 없을때..
 				result = null;
-			} else {
+			} else { // --> 호출된 XML 태그안 text 꺼냄.
 				result = nlList.item(0).getTextContent();
 			}
 		}
@@ -60,7 +62,7 @@ public class TourFestivalAPI {
 
 	public boolean insertFestivalApi() throws IOException {
 		StringBuilder urlBuilder = new StringBuilder(
-				"http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchFestival"); /* 행사정보 URL */
+				"https://api.visitkorea.or.kr/openapi/service/rest/KorService/searchFestival"); /* 행사정보 URL */
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8")
 				+ "=tfve0pUOnMXCq5%2F%2Fm0wkmz%2BoE2%2BWsgFwlecdUgsklVSER1UoydTgZG1ZaUOK%2FtsetQnRNi1TuOiEjM%2BHncD9qw%3D%3D"); // servicekey
 		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
@@ -75,6 +77,8 @@ public class TourFestivalAPI {
 
 		urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "="
 				+ URLEncoder.encode("Y", "UTF-8")); /* listYN 목록구분(Y=목록,N=개수) */
+		urlBuilder.append("&" + URLEncoder.encode("eventStartDate", "UTF-8") + "="
+				+ URLEncoder.encode("20220101", "UTF-8")); /* listYN 목록구분(Y=목록,N=개수) */
 
 		URL url = new URL(urlBuilder.toString());
 		String strURL = urlBuilder.toString();
@@ -164,7 +168,7 @@ public class TourFestivalAPI {
 			System.out.println("apikey:: " + apikey);
 			System.out.println("count::" + cnt);
 			StringBuilder urlBuilder = new StringBuilder(
-					"http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo"); /* 반복정보 URL */
+					"https://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo"); /* 반복정보 URL */
 			urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + apikey); // servicekey
 			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
 					+ URLEncoder.encode("10", "UTF-8")); /* 한 페이지 결과수 */
@@ -174,15 +178,17 @@ public class TourFestivalAPI {
 					+ URLEncoder.encode("ETC", "UTF-8")); /* IOS (아이폰), AND (안드로이드), WIN (원도우폰), ETC */
 			urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "="
 					+ URLEncoder.encode("AppTest", "UTF-8")); /* 서비스명=어플명 */
-			urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "="
-					+ URLEncoder.encode("Y", "UTF-8")); /* listYN 목록구분(Y=목록,N=개수) */
+			/*
+			 * 220803 날짜로 삭제됨. urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8")
+			 * + "=" + URLEncoder.encode("Y", "UTF-8")); listYN 목록구분(Y=목록,N=개수)
+			 */
 			urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "="
 					+ URLEncoder.encode(contentId, "UTF-8")); /* contentID */
 			urlBuilder.append("&" + URLEncoder.encode("contentTypeId", "UTF-8") + "="
 					+ URLEncoder.encode("15", "UTF-8")); /* 축제 콘텐츠타입 = 15 */
 
 			URL url = new URL(urlBuilder.toString());
-			String strURL = urlBuilder.toString();
+			// String strURL = urlBuilder.toString();
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Content-type", "application/json");
@@ -200,12 +206,23 @@ public class TourFestivalAPI {
 				sb.append(line);
 			}
 
-			DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder;
+			/*
+			 * DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
+			 * DocumentBuilder dBuilder;
+			 */
+			Document doc;
 			try {
-				dBuilder = dbFactoty.newDocumentBuilder();
-				Document doc = dBuilder.parse(strURL);
-
+				if (sb.toString().indexOf("&#x1d") >= 0) {
+					sb.toString().replace("&#x1d", "");
+					String xmllist[] = sb.toString().split("&#x1d;");
+					StringBuilder sb2 = new StringBuilder();
+					for (String string : xmllist) {
+						sb2.append(string);
+					}
+					doc = convertStringToXMLDocument(sb2.toString());
+				} else {
+					doc = convertStringToXMLDocument(sb.toString());
+				}
 				doc.getDocumentElement().normalize();
 				NodeList nList = doc.getElementsByTagName("item");
 				NodeList resultMsg = doc.getElementsByTagName("header");
@@ -269,6 +286,7 @@ public class TourFestivalAPI {
 			int cnt = 0;
 			String apikey = "";
 			for (String contentId : festivalID) {
+				System.out.println("contentId::" + contentId);
 				cnt++;
 				if (cnt % 4 == 0) {
 					apikey = "tfve0pUOnMXCq5%2F%2Fm0wkmz%2BoE2%2BWsgFwlecdUgsklVSER1UoydTgZG1ZaUOK%2FtsetQnRNi1TuOiEjM%2BHncD9qw%3D%3D";
@@ -284,7 +302,7 @@ public class TourFestivalAPI {
 				System.out.println("count::" + cnt);
 
 				StringBuilder urlBuilder = new StringBuilder(
-						"http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon"); /* 공통정보 URL */
+						"https://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon"); /* 공통정보 URL */
 				urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + apikey); // servicekey
 				urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
 						+ URLEncoder.encode("10", "UTF-8")); /* 한 페이지 결과수 */
@@ -316,6 +334,7 @@ public class TourFestivalAPI {
 
 				URL url = new URL(urlBuilder.toString());
 				String strURL = urlBuilder.toString();
+				System.out.println("strURL::" + strURL);
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("GET");
 				conn.setRequestProperty("Content-type", "application/json");
@@ -331,13 +350,24 @@ public class TourFestivalAPI {
 				while ((line = rd.readLine()) != null) {
 					sb.append(line);
 				}
-
-				DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBuilder;
+				System.out.println("전체XML::" + sb.toString());
+				/*
+				 * DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
+				 * DocumentBuilder dBuilder;
+				 */
+				Document doc;
 				try {
-					dBuilder = dbFactoty.newDocumentBuilder();
-					Document doc = dBuilder.parse(strURL);
-
+					if (sb.toString().indexOf("&#x1d") >= 0) {
+						sb.toString().replace("&#x1d", "");
+						String xmllist[] = sb.toString().split("&#x1d;");
+						StringBuilder sb2 = new StringBuilder();
+						for (String string : xmllist) {
+							sb2.append(string);
+						}
+						doc = convertStringToXMLDocument(sb2.toString());
+					} else {
+						doc = convertStringToXMLDocument(sb.toString());
+					}
 					doc.getDocumentElement().normalize();
 					NodeList nList = doc.getElementsByTagName("item");
 					NodeList resultMsg = doc.getElementsByTagName("header");
@@ -381,6 +411,7 @@ public class TourFestivalAPI {
 							throw new Exception("!!!!!!!!!SQL ERROR!!!!!!!!!");
 						}
 					}
+
 				} catch (ParserConfigurationException e) {
 					e.printStackTrace();
 					throw new Exception("!!!!!!!!!ERROR!!!!!!!!!");
@@ -388,6 +419,7 @@ public class TourFestivalAPI {
 					e.printStackTrace();
 					throw new Exception("!!!!!!!!!ERROR!!!!!!!!!");
 				}
+
 				rd.close();
 				conn.disconnect();
 			}
@@ -425,7 +457,7 @@ public class TourFestivalAPI {
 				System.out.println("apikey:: " + apikey);
 				System.out.println("count::" + cnt);
 				StringBuilder urlBuilder = new StringBuilder(
-						"http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro"); /* 소개정보 URL */
+						"https://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro"); /* 소개정보 URL */
 				urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + apikey); // servicekey
 				urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
 						+ URLEncoder.encode("10", "UTF-8")); /* 한 페이지 결과수 */
@@ -435,15 +467,17 @@ public class TourFestivalAPI {
 						+ URLEncoder.encode("ETC", "UTF-8")); /* IOS (아이폰), AND (안드로이드), WIN (원도우폰), ETC */
 				urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "="
 						+ URLEncoder.encode("AppTest", "UTF-8")); /* 서비스명=어플명 */
-				urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "="
-						+ URLEncoder.encode("Y", "UTF-8")); /* listYN 목록구분(Y=목록,N=개수) */
+				/*
+				 * 220803 기준 해당 파라미터 삭제됨. urlBuilder.append("&" + URLEncoder.encode("listYN",
+				 * "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); listYN 목록구분(Y=목록,N=개수)
+				 */
 				urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "="
 						+ URLEncoder.encode(contentId, "UTF-8")); /* contentID */
 				urlBuilder.append("&" + URLEncoder.encode("contentTypeId", "UTF-8") + "="
 						+ URLEncoder.encode("15", "UTF-8")); /* 축제 콘텐츠타입 = 15 */
 
 				URL url = new URL(urlBuilder.toString());
-				String strURL = urlBuilder.toString();
+				// String strURL = urlBuilder.toString();
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("GET");
 				conn.setRequestProperty("Content-type", "application/json");
@@ -461,13 +495,23 @@ public class TourFestivalAPI {
 					sb.append(line);
 				}
 
-				DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBuilder;
+				/*
+				 * DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
+				 * DocumentBuilder dBuilder;
+				 */
+				Document doc;
 				try {
-					dBuilder = dbFactoty.newDocumentBuilder();
-					Document doc = dBuilder.parse(strURL);
-
-					doc.getDocumentElement().normalize();
+					if (sb.toString().indexOf("&#x1d") >= 0) {
+						sb.toString().replace("&#x1d", "");
+						String xmllist[] = sb.toString().split("&#x1d;");
+						StringBuilder sb2 = new StringBuilder();
+						for (String string : xmllist) {
+							sb2.append(string);
+						}
+						doc = convertStringToXMLDocument(sb2.toString());
+					} else {
+						doc = convertStringToXMLDocument(sb.toString());
+					}
 					NodeList nList = doc.getElementsByTagName("item");
 					NodeList resultMsg = doc.getElementsByTagName("header");
 					Node nNode3 = resultMsg.item(0);
@@ -527,6 +571,25 @@ public class TourFestivalAPI {
 			throw new Exception("!!!!!!!!!API전체에러!!!!!!!!!");
 		}
 		return true;
+	}
+
+	private static Document convertStringToXMLDocument(String xmlString) {
+		// Parser that produces DOM object trees from XML content
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+		// API to obtain DOM Document instance
+		DocumentBuilder builder = null;
+		try {
+			// Create DocumentBuilder with default configuration
+			builder = factory.newDocumentBuilder();
+
+			// Parse the content to Document object
+			Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
+			return doc;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
