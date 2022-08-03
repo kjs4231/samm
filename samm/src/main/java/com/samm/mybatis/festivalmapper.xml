@@ -33,11 +33,15 @@
 	</select>
 	
 	<select id="searchFestival2" parameterType="Map" resultType="FestivalVo">
-		SELECT * FROM festival WHERE
-		areacode=#{areacode} AND
-		eventstartdate <![CDATA[ <= #{eventstartdate}]]> AND
-		eventenddate <![CDATA[ >= #{eventenddate}]]>
-		ORDER BY eventstartdate desc
+		SELECT a.*, IFNULL(AVG(b.star),0) AS avgstar
+		FROM festival a
+		left join review b on a.contentid = b.fid		
+ 		WHERE
+		a.areacode=#{areacode} AND
+		a.eventstartdate <![CDATA[ <= #{eventstartdate}]]> AND
+		a.eventenddate <![CDATA[ >= #{eventenddate}]]>
+		GROUP BY a.contentid
+		ORDER BY a.eventstartdate desc
 	</select>
 	
 	
