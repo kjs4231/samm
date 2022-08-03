@@ -122,10 +122,11 @@ public class AjaxController {
 	}// checkid
 
 	@RequestMapping("/submitkakao")
-	public String submitkakao(String kakao,String profile,HttpSession session,Model m) throws Exception {
+	public void submitkakao(String kakao,String profile,HttpSession session,Model m) throws Exception {
 		System.out.println(kakao);
 		System.out.println(profile);
 		UsersVo user = new UsersVo();
+		UsersVo users = null;
 		JSONParser jsonParser = new JSONParser();
 		try {
 			JSONObject jo = (JSONObject) jsonParser.parse(kakao);
@@ -140,7 +141,12 @@ public class AjaxController {
 			user.setProfile_img(profile_img);
 			user.setGender(gender);
 			try {
-				ubiz.kakaoLogin(user);
+				users = ubiz.get(email);
+				if(users.getId().equals(email)) {
+					user = ubiz.get(email);
+				}else {
+					ubiz.kakaoLogin(user);
+				}
 				System.out.println("user::"+user);
 				session.setAttribute("loginuser", user);
 			} catch (Exception e) {
@@ -153,11 +159,6 @@ public class AjaxController {
 		}
 		System.out.println("user::"+user);
 
-		
-		
-		
-
-		return "success";
 	}
 
 }
