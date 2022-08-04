@@ -197,7 +197,7 @@ function searchmap(keyword, page, mapx, mapy) {
 				map.setBounds(bounds);
 			};
 			$('#map-searchlist').html(result);
-			$('#map-searchlist').removeAttr("style");
+			$('#map-searchlist').show();
 		}
 	})
 };
@@ -280,6 +280,8 @@ $(document).ready(function () {
 	if (!checkNull(keyword)) {
 		currentKeyword = keyword;
 		$('#map-searchform input[name="search"]').val(currentKeyword);
+		$('#map-keyword').removeClass('keyword-empty');
+		$('#map-clearbtn').show();
 		if (Number.isInteger(page)) {
 			var page = page;
 		} else {
@@ -317,6 +319,13 @@ $(document).on("click", ".btn-search", function () {
 });
 
 $('#map-searchform input[name="search"]').keyup(function (e) {
+	if (checkNull($('#map-searchform input[name="search"]').val())) {
+		$('#map-keyword').addClass('keyword-empty');
+		$('#map-clearbtn').hide();
+	} else {
+		$('#map-keyword').removeClass('keyword-empty');
+		$('#map-clearbtn').show();
+	}
 	if (e.keyCode == 13) {
 		searchmapinput();
 	}
@@ -339,6 +348,32 @@ $(document).on("click", ".pager-next a", function () {
 		countsearchmap(currentKeyword, startPage + 5);
 	}
 });
+
+function clearsearch(){
+	$('#map-searchform input[name="search"]').val(null);
+	$('#map-keyword').addClass('keyword-empty');
+	$('#map-clearbtn').hide();
+	$('#map-searchlist').html("");
+	$('#map-searchlist').hide();
+	$('#map-searchpager').html("");
+	$('#map-searchpager').hide(); 
+}
+
+function opensearchcal() {
+	$('#map-opencalbtn').hide();
+	$('#map-closecalbtn').show();
+	$('#map-calendarform').show();
+	$('#map-keyword').addClass('cal-open');
+	$('#map-searchbtn').appendTo($('#map-calendarform'));
+}
+
+function closesearchcal() {
+	$('#map-opencalbtn').show();
+	$('#map-closecalbtn').hide();
+	$('#map-calendarform').hide();
+	$('#map-keyword').removeClass('cal-open');
+	$('#map-searchbtn').appendTo($('#map-keywordform'));
+}
 
 // function openInfowindow(contentid, mapx, mapy) {
 // 	markers.forEach((value, key) => {
