@@ -3,6 +3,7 @@ package com.samm.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import com.samm.biz.UsersBiz;
 import com.samm.vo.AdmintblVo;
 import com.samm.vo.BoardVo;
 import com.samm.vo.FestivalVo;
+import com.samm.vo.PageHadller;
 import com.samm.vo.UsersVo;
 
 @Controller
@@ -166,16 +168,42 @@ public class MainController {
 	}
 	
 	@RequestMapping("/board")
-	public String main(Model m) {
+	public String main(Model m, Integer page, Integer pageSize) {
 		List<BoardVo> blist = null;
 		try {
-			blist = bbiz.getList();
-			m.addAttribute("blist", blist);
-			m.addAttribute("center", "board");
+			/*
+			 * blist = bbiz.getList(); 
+			 * m.addAttribute("blist", blist);
+			 * m.addAttribute("center", "board");
+			 */
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
+		if(page==null) page=1;
+		if(pageSize==null) pageSize=12;
+		
+		
+		try {
+			int totalCnt = bbiz.getCount();
+			PageHadller pageHandller = new PageHadller(totalCnt, page, pageSize);
+			
+			
+			Map map = new HashMap();
+			map.put("offset", (page-1)*pageSize);
+			map.put("pageSize", pageSize);
+		
+			blist = bbiz.getPage(map);
+			m.addAttribute("blist", blist);
+			m.addAttribute("center", "board");
+			m.addAttribute("ph",pageHandller);
+
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	return "index";
 	}
 	

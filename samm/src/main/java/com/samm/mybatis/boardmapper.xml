@@ -45,9 +45,11 @@
         WHERE bno = #{bno}
     </update>
     
-    <select id="selectPage" resultType="BoardVo">
+    <select id="selectPage" parameterType="map" resultType="BoardVo">
         SELECT bno, title, content, writer, view_cnt, comment_cnt, reg_date
         FROM board where del_date is null
+        order by reg_date DESC, bno DESC
+        limit #{offset}, #{pageSize}
         
     </select>
     

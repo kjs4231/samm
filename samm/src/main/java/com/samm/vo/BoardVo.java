@@ -25,22 +25,8 @@ public class BoardVo {
 	private Date up_date;
 	private Date del_date;
 	private String img;
-	
-	private int currentPageNo;
-	private int recordsPerPage;
-	private int pageSize;
-	private String searchKeyword;
-	private String searchType;
-	
-	public void Criteria() {
-		this.currentPageNo = 1;
-		this.recordsPerPage = 10;
-		this.pageSize = 10;
-	}
 
-	public int getStartPage() {
-		return (currentPageNo - 1) * recordsPerPage;
-	}
+
 
 	
 	  @Override public int hashCode() { return Objects.hash(bno, comment_cnt,

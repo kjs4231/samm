@@ -41,8 +41,9 @@
 
 <form id="post">
 	<div class="form-group">
-		제목: <span id="title"></span><input type="text"
-			class="form-control form-control-user" name="title">
+		
+		제목: <span id="title" ></span><input type="text"
+			class="form-control form-control-user" name="title" >
 
 	
 	<textarea id="summernote" name="content"></textarea>
@@ -70,6 +71,7 @@
 				}
 
 			$('#post').attr({
+				
 				'method' : 'post',
 			    'action' : '/board/reviseimpl'
 			});

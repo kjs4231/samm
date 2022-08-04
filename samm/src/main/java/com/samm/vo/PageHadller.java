@@ -18,7 +18,7 @@ public class PageHadller {
     private boolean showNext;
     
     public PageHadller(int totalCnt, int page) {
-    	this(totalCnt, page, 10);
+    	this(totalCnt, page, 12);
     }
     
     public PageHadller(int totalCnt, int page, int pageSize) {
@@ -26,7 +26,7 @@ public class PageHadller {
     	this.page = page;
     	this.pageSize = pageSize;
     	
-    	totalPage = (int) Math.ceil(totalCnt / pageSize);
+    	totalPage = (int) Math.ceil(totalCnt / (double)pageSize);
     	beginPage = page / naviSize * naviSize + 1;
     	endPage = Math.min(beginPage + naviSize-1, totalPage);
     	showPrev = beginPage != 1;

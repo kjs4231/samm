@@ -10,7 +10,7 @@ public class PageHandellerTest {
 
 	@Test
 	public void test() {
-		PageHadller ph = new PageHadller(250, 1);
+		PageHadller ph = new PageHadller(255, 10);
 		ph.print();
 		System.out.println("ph = "+ph);
 		assertTrue(ph.getBeginPage()==11);

@@ -43,7 +43,7 @@ public class BoardController {
 	
 	@RequestMapping("/board/detail")
 	public String detail(Model m, int bno, HttpSession session) {
-		
+
 		BoardVo obj = null;
 		
 			try {
@@ -53,42 +53,53 @@ public class BoardController {
 			}
 			m.addAttribute("dp", obj);
 			
-			
 
 		m.addAttribute("center", "/board/detail");
 		return "index";
 	}
 	
-	@RequestMapping("/board/remove")
-	public String remove(Model m, Integer bno,HttpSession session) {
-		System.out.println("bno :" +bno);
-		try {
-			bbiz.remove(bno);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		m.addAttribute("center", "/board");
-		return "board";
-	}
+	
 	
 	@RequestMapping("/board/revise")
-	public String revise(Model m) {
+	public String revise(Model m, int bno) {
+		System.out.println("revisebno "+bno);
 		m.addAttribute("center", "/board/revise");
 		return "index";
 	}
 	
 
 	@RequestMapping("/board/reviseimpl")
-	public String reviseimpl(Model m, BoardVo u, int bno) {
-		
+	public String reviseimpl(Model m, BoardVo u,int bno) {
+		System.out.println("reviseimplbno "+bno);
+		System.out.println("boardvo "+u);
 		try {
 			bbiz.modify(u);
+	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("bno :" +bno);
+		
 		m.addAttribute("center", "/board");
 		return "redirect:/board";
 	}
+	
+	@RequestMapping("/board/remove")
+	public String remove(Model m, int bno) {
+		System.out.println("removebno : "+ bno);
+		
+		try {
+			bbiz.remove(bno);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		m.addAttribute("center", "/board");
+		return "redirect:/board";
+	}
+	
+	
 }
+
+

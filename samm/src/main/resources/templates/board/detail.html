@@ -39,14 +39,14 @@
 					alert("권한이 없습니다.");
 					return false;
 				}
-
 				if (confirm("삭제하시겠습니까?"))
-					$('#titleform').attr("action", "/board/remove");
-				$('#titleform').attr("method", "post");
-				$('#titleform').submit();
+				var bno= $('#bno').val()
+				alert(bno)
+				location.href='/board/remove?bno='+bno; 
 
 			});
-			$('#reviseBtn').click(function() {
+			
+			$('#reviseBtn').on("click", function(e) {
 
 				if ($('#writerid').val() != $('#contentid').text()) {
 					alert("권한이 없습니다.");
@@ -54,9 +54,16 @@
 				}
 
 				if (confirm("수정하시겠습니까?"))
-					$('#titleform').attr("action", "/board/revise");
+					/*var bno= $('#bno').val()
+					alert(bno)
+					location.href='/board/reviseimpl?bno='+bno;  */ 
+					 
+					  e.preventDefault();
+						
+					 $('#titleform').attr("action", "/board/revise");
+					 
 				$('#titleform').attr("method", "post");
-				$('#titleform').submit();
+				$('#titleform').submit();  
 
 			});
 
@@ -94,16 +101,17 @@
 						th:value="${session.loginuser.id}" hidden id="writerid">
 					<form id="titleform"
 						class="tag-widget post-tag-container mb-5 mt-5">
-						<input th:value="${dp.bno}" hidden name="bno"> 
+						
+						<input th:value="${dp.bno}"  name="bno" hidden id="bno"> 
 						글번호:<a th:text="${dp.bno}"></a> 아이디:<a id="contentid" th:text="${dp.writer}">아이디</a> 조회수:<a th:text="${dp.view_cnt}">내용</a>
-						작성일:<a th:text="${dp.reg_date}">내용</a> 수정일:<a 	th:text="${dp.up_date}">내용</a> <div class="tagcloud">
+						작성일:<a th:text="${dp.reg_date}">내용</a> 수정일:<a th:text="${dp.up_date}">내용</a> <div class="tagcloud">
 
 							<!-- <b class="btn btn-default" onclick="location.href='/board/write'">글쓰기</a> -->
 
-							<button id="reviseBtn" type="submit" class="btn btn-default"
-								onclick="location.href='/board/revise'">revise</button>
-							<button id="deleteBtn" type="submit" class="btn btn-default"
-								onclick="location.href='/board/remove'">delete</button>
+							<button id="reviseBtn"  class="btn btn-default"
+								>revise</button>
+							<button id="deleteBtn" class="btn btn-default"
+								>delete</button>
 
 						</div>
 					</form>
