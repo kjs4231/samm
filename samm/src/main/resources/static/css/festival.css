@@ -182,11 +182,12 @@
 	margin-bottom: 15px;
 }
 
-#completeMsg{
+#completeMsg {
 	color : #f15d30;
 	font-size: 20px !important;
 	font-family: 'Nanum Gothic', sans-serif;
 	font-weight: 600;
+}
 
 .s003 {
 	display: -ms-flexbox;
