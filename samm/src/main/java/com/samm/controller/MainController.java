@@ -50,14 +50,14 @@ public class MainController {
 		List<FestivalVo> list = null;
 		List<Map<String, String>> area = null;
 		try {
-			list = fbiz.searchFestival(areacode, eventstartdate, eventenddate);
+			list = fbiz.searchFestival2(areacode, eventstartdate, eventenddate);
 			area = abiz.get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		m.addAttribute("area", area);
 		m.addAttribute("festival", list);
 		m.addAttribute("center", "center");
@@ -135,9 +135,8 @@ public class MainController {
 	public String logout(Model m, HttpSession session) {
 		if (session != null) {
 			session.invalidate();
-
 		}
-		return "index";
+		return "redirect:/";
 	}
 
 	@RequestMapping("/board")

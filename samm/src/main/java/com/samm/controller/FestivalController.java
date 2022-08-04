@@ -52,7 +52,8 @@ public class FestivalController {
 		List<FestivalImgVo> imglist = null;
 		int count = 0;
 		try {
-			festival = festbiz.get(contentid);
+			festbiz.increaseViewCnt(contentid);
+			festival = festbiz.selectOne(contentid);
 			intro = festbiz.getIntro(contentid);
 			info = festbiz.getInfo(contentid);
 			common = festbiz.getCommon(contentid);
@@ -63,6 +64,7 @@ public class FestivalController {
 			e.printStackTrace();
 		}
 		System.out.println("rlist::" + rlist);
+		System.out.println("rlist::" + festival);
 
 		m.addAttribute("today",today);
 		m.addAttribute("img", imglist);
@@ -118,7 +120,7 @@ public class FestivalController {
 					eventstartdate = today;
 					eventenddate = today;
 				}
-				list = festbiz.searchFestival(areacode, eventstartdate, eventenddate);
+				list = festbiz.searchFestival2(areacode, eventstartdate, eventenddate);
 				int start = Integer.parseInt(eventstartdate);
 				int end = Integer.parseInt(eventenddate);
 				m.addAttribute("start", start);
@@ -152,7 +154,6 @@ public class FestivalController {
 		String imgname = fimg.getMf().getOriginalFilename();
 		fimg.setName(imgname);
 		System.out.println("fimg::" + fimg);
-
 		try {
 			fimgbiz.register(fimg);
 			Util.saveFile(fimg.getMf(), testdir);

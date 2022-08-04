@@ -4,7 +4,7 @@
 <mapper namespace="com.samm.mapper.FestivalImgMapper">
 
 	<insert id="insert" parameterType="Map">
-		INSERT INTO festivalimg VALUES (NULL,#{name},default,#{fid})
+		INSERT INTO festivalimg VALUES (NULL,#{name},default,#{fid},#{uid})
 	</insert>	
 	
 	<select id="selectAll" resultType="FestivalImgVo">
