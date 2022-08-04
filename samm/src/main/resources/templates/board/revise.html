@@ -1,4 +1,38 @@
 <meta charset="utf-8">
+
+<script th:inline="javascript">
+
+
+$(document).ready(function() {
+	let content = [[${boardvo.content}]];
+	$('.note-editable').html(content);
+	$('#register').click(function(){
+		 if($('input[name="title"]').val()==""){
+			alert("제목 입력해주세요.");
+			$("#title").focus();
+			return false;
+		}
+		 if($('textarea[name="content"]').val()==""){
+				alert("내용 입력해주세요.");
+				$("#content").focus();
+				return false;
+			}
+
+		$('#post').attr({
+			'method' : 'post',
+		    'action' : '/board/reviseimpl'
+		});
+		$('#post').submit(); 
+	});
+	
+});
+
+
+
+	
+	
+</script>
+
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -20,7 +54,7 @@
 
 
 <section class="hero-wrap hero-wrap-2 js-fullheight"
-	style="background-image: url('images/festival6.jpg');">
+	style="background-image: url('/images/festival6.jpg');">
 	<div class="overlay"></div>
 	<div class="container">
 		<div
@@ -41,58 +75,35 @@
 
 <form id="post">
 	<div class="form-group">
-		
-		제목: <span id="title" ></span><input type="text"
-			class="form-control form-control-user" name="title" >
 
-	
-	<textarea id="summernote" name="content"></textarea>
-	<input th:if="${session.loginuser} != null"  name="writerid" th:value = "${session.loginuser.id}" hidden id="writerid">
-</div>
+		제목: <span id="title"></span><input type="text"
+			class="form-control form-control-user" name="title"
+			th:value="${boardvo.title}">
+
+
+		<textarea id="summernote" name="content" th:value="${boardvo.content}"></textarea>
+		<input th:if="${session.loginuser} != null" name="writerid"
+			th:value="${session.loginuser.id}" hidden id="writerid">
+		<input th:value="${boardvo.bno}" hidden name="bno"> 
+	</div>
 </form>
 
 <a id="register" href="#" class="btn btn-primary btn-user btn-block">REGISTER</a>
-
 <script>
-	$(document).ready(function() {
-	
-		$('#register').click(function(){
-			
-		
-			 if($('input[name="title"]').val()==""){
-				alert("제목 입력해주세요.");
-				$("#title").focus();
-				return false;
-			}
-			 if($('textarea[name="content"]').val()==""){
-					alert("내용 입력해주세요.");
-					$("#content").focus();
-					return false;
-				}
+//서머노트에 text 쓰기
+$('#summernote').summernote('insertText');
 
-			$('#post').attr({
-				
-				'method' : 'post',
-			    'action' : '/board/reviseimpl'
-			});
-			$('#post').submit(); 
-		});
-		
-	});
-	//서머노트에 text 쓰기
-	$('#summernote').summernote('insertText');
+// 서머노트 쓰기 비활성화
+$('#summernote').summernote('disable');
 
-	// 서머노트 쓰기 비활성화
-	$('#summernote').summernote('disable');
+// 서머노트 쓰기 활성화
+$('#summernote').summernote('enable');
 
-	// 서머노트 쓰기 활성화
-	$('#summernote').summernote('enable');
+// 서머노트 리셋
+$('#summernote').summernote('reset');
 
-	// 서머노트 리셋
-	$('#summernote').summernote('reset');
-
-	// 마지막으로 한 행동 취소 ( 뒤로가기 )
-	$('#summernote').summernote('undo');
-	// 앞으로가기
-	$('#summernote').summernote('redo');
+// 마지막으로 한 행동 취소 ( 뒤로가기 )
+$('#summernote').summernote('undo');
+// 앞으로가기
+$('#summernote').summernote('redo');
 </script>

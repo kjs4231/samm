@@ -1,7 +1,5 @@
 package com.samm.controller;
 
-import java.lang.ProcessBuilder.Redirect;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +61,15 @@ public class BoardController {
 	@RequestMapping("/board/revise")
 	public String revise(Model m, int bno) {
 		System.out.println("revisebno "+bno);
+		BoardVo board = null;
+		try {
+			board = bbiz.get(bno);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(board);
+		m.addAttribute("boardvo",board);
 		m.addAttribute("center", "/board/revise");
 		return "index";
 	}

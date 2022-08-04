@@ -54,16 +54,16 @@
 				}
 
 				if (confirm("수정하시겠습니까?"))
-					/*var bno= $('#bno').val()
+					var bno= $('#bno').val()
 					alert(bno)
-					location.href='/board/reviseimpl?bno='+bno;  */ 
+					location.href='/board/revise?bno='+bno; 
 					 
 					  e.preventDefault();
-						
+/* 						
 					 $('#titleform').attr("action", "/board/revise");
 					 
 				$('#titleform').attr("method", "post");
-				$('#titleform').submit();  
+				$('#titleform').submit();   */
 
 			});
 
@@ -117,7 +117,7 @@
 					</form>
 					<h2 class="mb-3" th:text="${dp.title}">It is a long
 						established fact a reader be distracted</h2>
-					<p th:text="${dp.content}">Lorem ipsum dolor sit amet,
+					<p th:utext="${dp.content}">Lorem ipsum dolor sit amet,
 						consectetur adipisicing elit. Reiciendis, eius mollitia suscipit,
 						quisquam doloremque distinctio perferendis et doloribus unde
 						architecto optio laboriosam porro adipisci sapiente officiis nemo

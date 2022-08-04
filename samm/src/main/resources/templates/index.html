@@ -54,27 +54,34 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
 					<li class="nav-item active"><a href="/about" class="nav-link">About</a></li>
-					<li class="nav-item active"><a href="/map"
-						class="nav-link">Festival</a></li>
+					<li class="nav-item active"><a href="/map" class="nav-link">Festival</a></li>
 					<li class="nav-item active"><a href="/board" class="nav-link">Board</a></li>
 					
-					<li class="nav-item active" th:if="${session.loginuser == null}"><a href="/login" class="nav-link">Sign In</a></li>
+					<li class="nav-item active " th:if="${session.loginuser == null && session.loginadmin == null}">
+						<a href="/login"  class="nav-link">Sign In</a>
+					</li>
 
 					<!-- th:if="${session.loginadmin != null && session.loginuser == null}" -->
 					
-					<li class="nav-item active dropdown" th:unless="${session.loginuser == null}">
+					<li class="nav-item active dropdown" th:if="${session.loginuser != null && session.loginadmin == null}">
 						<a class="nav-link dropdown-toggle"  data-toggle="dropdown">
 							<span th:text="${session.loginuser.name}">
 							</span>
 						</a>	
 						<ul class="dropdown-menu fdrop">
-						  <li><a href="/logout" class="nav-link droplink">Sign Out</a></li>
+						  <li><a  class="nav-link droplink" id="signout">Sign Out</a></li>
 						  <li><a href="/users/mypage" class="nav-link droplink">My page</a></li>
 						</ul>
 					</li>  
+
+					<!-- admin  -->
+					<li class="nav-item active" th:if="${session.loginadmin != null && session.loginuser == null}"> 
+						<a href="/logout" class="nav-link" >Sign Out</a>
+					</li>
 					
-					<li class="nav-item active" th:if="${loginadmin} != null"> 
-					<a href="/mng/main" class="nav-link"><span class="nav-item"></span> Admin </a>	
+					<li class="nav-item active" th:if="${session.loginadmin != null && session.loginuser == null}"> 
+						<a href="/mng/main" class="nav-link"> Admin </a>
+					</li>	
 					
 				</ul>
 			</div>
@@ -97,58 +104,47 @@
 				<div class="col-md pt-5">
 					<div class="ftco-footer-widget pt-md-5 mb-4">
 						<h2 class="ftco-heading-2">About</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries Vokalia and Consonantia, there live the blind texts.</p>
+						<p>멀티캠퍼스 AI플랫폼을 활용한 웹서비스 개발 14회차 3조 파이널 프로젝트 입니다 <br> 자세한 코드는 깃을 통해 보실 수 있습니다.</p>
 						<ul
 							class="ftco-footer-social list-unstyled float-md-left float-lft">
-							<li class="ftco-animate"><a href="#"><span
-									class="fa fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="fa fa-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="fa fa-instagram"></span></a></li>
+							<li class="ftco-animate"><a href="https://github.com/kansg92/samm"><span
+									class="fa fa-github" style="font-size: 40px !important;"></span></a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-md pt-5 border-left">
 					<div class="ftco-footer-widget pt-md-5 mb-4 ml-md-5">
-						<h2 class="ftco-heading-2">Infromation</h2>
+						<h2 class="ftco-heading-2">Development Environment</h2>
 						<ul class="list-unstyled">
-							<li><a href="#" class="py-2 d-block">Online Enquiry</a></li>
-							<li><a href="#" class="py-2 d-block">General Enquiries</a></li>
-							<li><a href="#" class="py-2 d-block">Booking Conditions</a></li>
-							<li><a href="#" class="py-2 d-block">Privacy and Policy</a></li>
-							<li><a href="#" class="py-2 d-block">Refund Policy</a></li>
-							<li><a href="#" class="py-2 d-block">Call Us</a></li>
+							<li><a href="#" class="py-2 d-block">Eclipse</a></li>
+							<li><a href="#" class="py-2 d-block">Spring Boot</a></li>
+							<li><a href="#" class="py-2 d-block">Bootstrap</a></li>
+							<li><a href="#" class="py-2 d-block">Mybatis</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-md pt-5 border-left">
 					<div class="ftco-footer-widget pt-md-5 mb-4">
-						<h2 class="ftco-heading-2">Experience</h2>
+						<h2 class="ftco-heading-2">Programming Language</h2>
 						<ul class="list-unstyled">
-							<li><a href="#" class="py-2 d-block">Adventure</a></li>
-							<li><a href="#" class="py-2 d-block">Hotel and
-									Restaurant</a></li>
-							<li><a href="#" class="py-2 d-block">Beach</a></li>
-							<li><a href="#" class="py-2 d-block">Nature</a></li>
-							<li><a href="#" class="py-2 d-block">Camping</a></li>
-							<li><a href="#" class="py-2 d-block">Party</a></li>
+							<li><a href="#" class="py-2 d-block">Java</a></li>
+							<li><a href="#" class="py-2 d-block">HTML5 / CSS3</a></li>
+							<li><a href="#" class="py-2 d-block">JavaScript</a></li>
+							<li><a href="#" class="py-2 d-block">jQuery</a></li>
+							<li><a href="#" class="py-2 d-block">Thymeleaf</a></li>
+							<li><a href="#" class="py-2 d-block">Ajax</a></li>
+							
 						</ul>
 					</div>
 				</div>
 				<div class="col-md pt-5 border-left">
 					<div class="ftco-footer-widget pt-md-5 mb-4">
-						<h2 class="ftco-heading-2">Have a Questions?</h2>
+						<h2 class="ftco-heading-2">Using API</h2>
 						<div class="block-23 mb-3">
 							<ul>
-								<li><span class="icon fa fa-map-marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
-								<li><a href="#"><span class="icon fa fa-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
-								<li><a href="#"><span class="icon fa fa-paper-plane"></span><span
-										class="text">info@yourdomain.com</span></a></li>
+							<li><a href="https://api.visitkorea.or.kr/" class="py-2 d-block">한국관광공사 tour API 4.0</a></li>
+							<li><a href="#" class="py-2 d-block">Kakao API</a></li>
+							<li><a href="#" class="py-2 d-block">Naver Chatbot</a></li>
 							</ul>
 						</div>
 					</div>

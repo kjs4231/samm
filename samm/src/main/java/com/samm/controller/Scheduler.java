@@ -8,16 +8,20 @@ import com.samm.restapi.TourFestivalAPI;
 
 @Component
 public class Scheduler {
-
+/*
 	@Autowired
 	TourFestivalAPI tour;
 
-	@Scheduled(cron = "0 0 9 ? * 1")
+	@Scheduled(cron = "0 0 9 * * *")
 	public void weeklyMonUpdate() {
 		System.out.println("----------- Scheduler Start ------------");
 		try {
+			System.out.println("Festivalinsertstart.........................................");
 			if (tour.insertFestivalApi()) {
+				Thread.sleep(5000);
+				System.out.println("commonstart.........................................");
 				if (tour.DetailCommonInsert()) {
+					Thread.sleep(5000);
 					if (tour.DetailInfoInsert()) {
 						tour.DetailIntroInsert();
 					}
@@ -26,7 +30,7 @@ public class Scheduler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("----------- Scheduler Start ------------");
+		System.out.println("----------- Scheduler End ------------");
 	}
-
+*/
 }

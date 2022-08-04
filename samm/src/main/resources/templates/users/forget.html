@@ -1,6 +1,5 @@
-
-
 <meta charset="UTF-8">
+<script src="/js/forget.js"></script>
 <section class="hero-wrap hero-wrap-2 js-fullheight"
 	style="background-image: url(/images/festival5.jpg);">
 	<div class="overlay"></div>
@@ -11,7 +10,7 @@
 				<h4 class="login-header-sub">SEARCH FESTIVAL</h4>
 			</div>
 			<div class="login--form">
-				<form id="login_form">
+				<form id="forget_form">
 					<div>
 						<div>
 							<input type="text" class="login-input" id="id" placeholder="Please Write Your ID"
@@ -20,27 +19,18 @@
 					</div>
 					<div>
 						<div>
-							<input type="password" class="login-input" id="pwd"
-								placeholder="Please Write Your Password" name="pwd">
+							<input type="text" class="login-input" id="name"
+								placeholder="Please Write Your Name" name="name">
 						</div>
 					</div>
 				</form>
 				<div class="btn-div">
 					<div class="loginbtndiv">
-						<button id="signin_bt" class="btn btn-default login-btn">Sign
-							In</button>
-						<button id="signup_bt" class="btn btn-default login-btn"
-							onclick="location.href='/users/add'">Sign Up</button>
+						<button id="find_bt" class="btn btn-default login-btn">Find</button>
 					</div>
+
 					<div class="loginbtndiv">
-						<a id="custom-login-btn" href="javascript:kakaoLogin()"> <img
-							src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-							width="180" alt="카카오 로그인 버튼" />
-						</a>
-					</div>
-					<div class="loginbtndiv">
-						<a id="idsearch_bt" class="btn btn-default login-btn" href="/users/forget">
-							Forget your password?</a>
+						<span id="completeMsg"></span>
 					</div>
 
 				</div>

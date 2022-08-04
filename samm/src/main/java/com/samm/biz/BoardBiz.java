@@ -65,7 +65,7 @@ public class BoardBiz implements Biz<Integer, BoardVo> {
 	@Override
 	public BoardVo get(Integer k) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return boardDao.select(k);
 	}
 
 	@Override

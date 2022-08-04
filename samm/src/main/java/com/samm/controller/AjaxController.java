@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.samm.biz.AdmintblBiz;
+import com.samm.biz.EmailBiz;
 import com.samm.biz.FestivalBiz;
 import com.samm.biz.UsersBiz;
 import com.samm.restapi.TourFestivalAPI;
@@ -34,6 +35,8 @@ public class AjaxController {
 	TourFestivalAPI tour;
 	@Autowired
 	UsersBiz ubiz;
+	@Autowired
+	EmailBiz ebiz;
 
 	@RequestMapping("/callArea")
 	public List<FestivalVo> getAreaCode(String code) {
@@ -47,6 +50,17 @@ public class AjaxController {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@RequestMapping("/searchcontentid")
+	public FestivalVo searchcontentid(Integer contentid) {
+		FestivalVo vo = null;
+		try {
+			vo = fbiz.get(contentid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vo;
 	}
 
 	@RequestMapping("/searchmap")
@@ -111,10 +125,11 @@ public class AjaxController {
 	}// checkid
 
 	@RequestMapping("/submitkakao")
-	public String submitkakao(String kakao,String profile,HttpSession session,Model m) throws Exception {
+	public void submitkakao(String kakao,String profile,HttpSession session,Model m) throws Exception {
 		System.out.println(kakao);
 		System.out.println(profile);
 		UsersVo user = new UsersVo();
+		UsersVo users = null;
 		JSONParser jsonParser = new JSONParser();
 		try {
 			JSONObject jo = (JSONObject) jsonParser.parse(kakao);
@@ -129,7 +144,12 @@ public class AjaxController {
 			user.setProfile_img(profile_img);
 			user.setGender(gender);
 			try {
-				ubiz.kakaoLogin(user);
+				users = ubiz.get(email);
+				if(users.getId().equals(email)) {
+					user = ubiz.get(email);
+				}else {
+					ubiz.kakaoLogin(user);
+				}
 				System.out.println("user::"+user);
 				session.setAttribute("loginuser", user);
 			} catch (Exception e) {
@@ -142,11 +162,68 @@ public class AjaxController {
 		}
 		System.out.println("user::"+user);
 
-		
-		
-		
+	}
+	
+	@RequestMapping("/loginCheck")
+	public String loginCheck(String id, String pwd) {
+		UsersVo users = null;
+		AdmintblVo admin = null;
+		String result = "";
+		try {
+			users = ubiz.get(id);
+			admin = adminbiz.get(id);
+			if(users == null && admin == null) {
+				result = "존재하지 않는 ID 입니다.";
+			}
+			if(users != null ) {
+				if(users.getPwd() != pwd ) {
+					result = "비밀번호가 다릅니다.";
+				}
+				if(users.getPwd().equals(pwd)) {
+					result ="true";
+				}
+			}
+			if(admin != null) {
+				if(admin.getPwd() != pwd ) {
+					result = "비밀번호가 다릅니다.";
+				}
+				if(admin.getPwd().equals(pwd)) {
+					result ="true";
+				}
+			}
 
-		return "success";
+		} catch (Exception e) {
+			return result;
+		}
+
+		
+		return result;
 	}
 
+	@RequestMapping("/forgetCheck")
+	public String forgetCheck(String id, String name) {
+		String result = "";
+		UsersVo users = null;
+		
+		try {
+			users = ubiz.get(id);
+			if(users == null) {
+				result = "존재하지않는 ID 입니다.";
+			}
+			if(users.getName() != name ) {
+				result = "ID와 이름이 일치하지 않습니다.";
+			}
+			if(users.getName().equals(name)) {
+				ebiz.sendmail(users);
+				result = "true";
+			}
+		} catch (Exception e) {
+			return result;
+		}
+		
+		
+		
+		return result;
+	}
+	
 }

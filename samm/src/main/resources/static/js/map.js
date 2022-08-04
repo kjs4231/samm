@@ -4,6 +4,8 @@ var markers = new Map();
 var elm_overlays = new Map();
 var customOverlay;
 
+var params;
+
 let geoloc_lat = 33.450701;
 let geoloc_lng = 126.570667;
 let currentKeyword = "";
@@ -14,6 +16,7 @@ let endPage;
 function checkNull(o) {
 	return (o == null || o.length <= 0 || o == undefined) ? true : false;
 };
+
 
 function paintingMap(lat, lng) {
 	container = document.getElementById('map-kakao'); //지도를 담을 영역의 DOM 레퍼런스
@@ -41,7 +44,6 @@ function getGeolocation() {
 		paintingMap(geoloc_lat, geoloc_lng);
 	};
 };
-
 
 function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, eventenddate, title, addr1) {
 	if (typeof firstimage == "undefined" || firstimage == null || firstimage == "") {
@@ -79,16 +81,16 @@ function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, evente
 };
 
 
-function elm_overlay(contentid, firstimage, eventstartdate, eventenddate, title, addr1) {
+function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, infotext) {
 	var gen_imageheader = '<a class="img">';
 	var elm =
-		'<div class="project-wrap map-overlay">' +
+		'<div class="project-wrap map-overlay"' + 'contentid="' + contentid + '">' +
 		gen_imageheader + '<span class="price">진행중</span>' + '</a>' +
-		'<div class="map-overlayclose" onclick="closeOverlay(' + contentid + ')" title="닫기"></div>' +
+		'<a href="#" class="map-overlayclose" onclick="closeOverlay()" title="닫기"></a>' +
 		'<div class="text p-4">' +
 		'<span class="days"><span>' + eventstartdate + '</span> ~ <span>' + eventenddate + '</span></span>' +
-		'<h3><a href="/detail?contentid=' + contentid + '"><input name="contentid" hidden value="' + contentid + '">' + title + '</a></h3>' +
-		'<span class="detail">Lorem Ipsum</span>' +
+		'<h3 class="animate"><a href="/detail?contentid=' + contentid + '"><input name="contentid" hidden value="' + contentid + '">' + title + '</a></h3>' +
+		'<span class="detail">' + infotext + '</span>' +
 		'<p class="location"><span class="fa fa-map-marker"></span> <span>' + addr1 + '</span></p>' +
 		'<a class="btn-map-gobtn" href="/detail?contentid=' + contentid + '">이 축제 가기</a>' +
 		'<div class="detail-icon">' +
@@ -117,6 +119,10 @@ function openOverlay(contentid, mapx, mapy, isPanTo) {
 	};
 };
 
+function closeOverlay() {
+	customOverlay.setMap(null);
+}
+
 // 지도 위에 표시되고 있는 마커를 모두 제거합니다
 function removeMarker() {
 	markers.forEach((value) => {
@@ -143,7 +149,7 @@ function searchmap(keyword, page, mapx, mapy) {
 			var result = '';
 			removeMarker();
 			if (JSON.stringify(json) === '{}' || JSON.stringify(json) === '[]') {
-				result = result.concat('<a class="l-card item container">없습니다</a>');
+				result = result.concat('<a class="l-card item l-card-none container"><div>없습니다</div></a>');
 			} else {
 				$.each(json, function (i, element) {
 					result = result.concat(elm_searchmap(element.contentid, element.mapx, element.mapy, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1));
@@ -153,7 +159,7 @@ function searchmap(keyword, page, mapx, mapy) {
 						position: locPosition,
 						clickable: true
 					});
-					var overlay = elm_overlay(element.contentid, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1)
+					var overlay = elm_overlay(element.contentid, element.eventstartdate, element.eventenddate, element.title, element.addr1, element.infotext)
 					marker.setMap(map);
 					markers.set(element.contentid, marker);
 					elm_overlays.set(element.contentid, overlay);
@@ -168,6 +174,9 @@ function searchmap(keyword, page, mapx, mapy) {
 		}
 	})
 };
+
+function searchcontentid(contentid) {
+}
 
 function elm_countsearchmap(count, page) {
 	maxPage = parseInt(count / 12) + 1;
@@ -216,9 +225,15 @@ function countsearchmap(keyword, page) {
 };
 
 function searchmapinput() {
-	currentKeyword = $('#map-searchform input[name="search"]').val();
-	searchmap(currentKeyword, 1, geoloc_lng, geoloc_lat);
-	countsearchmap(currentKeyword, 1);
+	if (checkNull($('#map-searchform input[name="search"]').val())) {
+		var result = '<a class="l-card item l-card-none container"><div>검색어를 입력하십시오.</div></a>';
+		$('#map-searchlist').html(result);
+		$('#map-searchlist').removeAttr("style");
+	} else {
+		currentKeyword = $('#map-searchform input[name="search"]').val();
+		searchmap(currentKeyword, 1, geoloc_lng, geoloc_lat);
+		countsearchmap(currentKeyword, 1);
+	}
 };
 
 function pagemove(page) {
@@ -227,12 +242,46 @@ function pagemove(page) {
 };
 
 $(document).ready(function () {
+	params = $.deparam.querystring(true);
 	getGeolocation();
 	customOverlay = new kakao.maps.CustomOverlay({
 		position: new kakao.maps.LatLng(geoloc_lat, geoloc_lng),
 		content: '<div></div>'
 	});
 	customOverlay.setMap(null);
+	if (!checkNull(params.keyword)) {
+		currentKeyword = params.keyword;
+		$('#map-searchform input[name="search"]').val(currentKeyword);
+		if (Number.isInteger(params.page)) {
+			var page = params.page;
+		} else {
+			var page = 1;
+		}
+		searchmap(currentKeyword, page, geoloc_lng, geoloc_lat);
+		pagemove(page);
+	}
+	if (!checkNull(params.contentid)) {
+		$.ajax({
+			url: '/searchcontentid',
+			data: { "contentid": params.contentid },
+			method: 'get',
+			dataType: 'json',
+			success: function (element) {
+				removeMarker();
+				var locPosition = new kakao.maps.LatLng(element.mapy, element.mapx);
+				var marker = new kakao.maps.Marker({
+					position: locPosition,
+					clickable: true
+				});
+				var overlay = elm_overlay(element.contentid, element.eventstartdate, element.eventenddate, element.title, element.addr1, element.infotext)
+				marker.setMap(map);
+				markers.set(element.contentid, marker);
+				elm_overlays.set(element.contentid, overlay);
+				openOverlay(element.contentid, element.mapx, element.mapy);
+				map.setCenter(locPosition);
+			}
+		})
+	}
 });
 
 $(document).on("click", ".btn-search", function () {
@@ -280,3 +329,20 @@ $(document).on("click", ".pager-next a", function () {
 // 		map.panTo(locPosition);
 // 	}
 // };
+
+$(function () {
+	// Values are coerced.
+	var params = $.deparam.querystring(true);
+
+	debug.log('coerced', params);
+	$('#deparam_coerced').text(JSON.stringify(params, null, 2));
+
+	// Highlight the current sample query string link
+	var qs = $.param.querystring();
+
+	$('li a').each(function () {
+		if ($(this).attr('href') === '?' + qs) {
+			$(this).addClass('current');
+		}
+	});
+});
