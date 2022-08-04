@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Koulen&family=Nanum+Gothic:wght@400;700;800&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
 .hidden{
 	display: none;
 }
@@ -5,6 +7,8 @@
 .festival--subject {
 	margin-top: 70px;
 	text-align: center;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: 600;
 }
 
 .areacode {
@@ -24,6 +28,7 @@
 
 .area--li {
 	padding: 3px;
+	font-family: 'Nanum Gothic', sans-serif;
 }
 
 .nosearchtxt {
@@ -55,6 +60,12 @@
 
 .fdrop{
 	top:75% !important;
+}
+
+.festival-name{
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: 600;
+	font-size: 22px;
 }
 
 .droplink{
@@ -100,7 +111,7 @@
 }
 
 .login--form{
-	width: 35%
+	width: 40%
 }
 
 .btn-div{
@@ -167,6 +178,13 @@
 
 .loginbtndiv{
 	margin-bottom: 15px;
+}
+
+#completeMsg{
+	color : #f15d30;
+	font-size: 20px !important;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: 600;
 }
 
 .s003 {

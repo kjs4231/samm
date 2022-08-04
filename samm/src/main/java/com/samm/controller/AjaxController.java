@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.samm.biz.AdmintblBiz;
+import com.samm.biz.EmailBiz;
 import com.samm.biz.FestivalBiz;
 import com.samm.biz.UsersBiz;
 import com.samm.restapi.TourFestivalAPI;
@@ -34,6 +35,8 @@ public class AjaxController {
 	TourFestivalAPI tour;
 	@Autowired
 	UsersBiz ubiz;
+	@Autowired
+	EmailBiz ebiz;
 
 	@RequestMapping("/callArea")
 	public List<FestivalVo> getAreaCode(String code) {
@@ -165,7 +168,6 @@ public class AjaxController {
 	public String loginCheck(String id, String pwd) {
 		UsersVo users = null;
 		String result = "";
-		System.out.println(pwd);
 		try {
 			users = ubiz.get(id);
 			if(users == null) {
@@ -185,4 +187,30 @@ public class AjaxController {
 		return result;
 	}
 
+	@RequestMapping("/forgetCheck")
+	public String forgetCheck(String id, String name) {
+		String result = "";
+		UsersVo users = null;
+		
+		try {
+			users = ubiz.get(id);
+			if(users == null) {
+				result = "존재하지않는 ID 입니다.";
+			}
+			if(users.getName() != name ) {
+				result = "ID와 이름이 일치하지 않습니다.";
+			}
+			if(users.getName().equals(name)) {
+				ebiz.sendmail(users);
+				result = "true";
+			}
+		} catch (Exception e) {
+			return result;
+		}
+		
+		
+		
+		return result;
+	}
+	
 }
