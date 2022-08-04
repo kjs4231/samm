@@ -5,7 +5,7 @@
 		SELECT * FROM review where pnum=#{pnum}
 	</select>
 	<select id="getfestivalreview" parameterType="int" resultType="ReviewVo">
-		SELECT r.pnum,r.contents,r.star,r.regdate,r.uid,r.fid,u.name as username FROM review r
+		SELECT r.pnum,r.contents,r.star,r.regdate,r.uid,r.fid,u.name as username,u.profile_img as profile_img FROM review r
 		INNER JOIN users u ON r.uid = u.id
 		where fid = #{fid}
 	</select>

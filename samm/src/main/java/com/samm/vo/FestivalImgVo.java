@@ -18,6 +18,7 @@ public class FestivalImgVo {
 	private int id;
 	private String name;
 	private int fid;
+	private String uid;
 	
 	private String allowYN;
 	private MultipartFile mf;
@@ -28,6 +29,14 @@ public class FestivalImgVo {
 		this.fid = fid;
 	}
 
+
+	public FestivalImgVo(String name, int fid, String uid) {
+		this.name = name;
+		this.fid = fid;
+		this.uid = uid;
+	}
+
+	
 
 	
 	

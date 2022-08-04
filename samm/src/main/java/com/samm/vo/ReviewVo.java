@@ -23,6 +23,7 @@ public class ReviewVo {
     private int fid;
     
     private String username;
+    private String profile_img;
 
     // 리뷰 삽입시
 	public ReviewVo(String contents, double star, Date regdate, String uid, int fid) {

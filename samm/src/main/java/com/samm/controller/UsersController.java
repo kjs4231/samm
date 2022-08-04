@@ -37,5 +37,13 @@ public class UsersController {
 		return "index";
 	}
 	
+	@RequestMapping("/users/forget")
+	public String forget(Model m, UsersVo u) {
+		
+		
+		m.addAttribute("center", "/users/forget");
+		return "index";
+	}
+	
 
 }
