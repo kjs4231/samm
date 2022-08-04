@@ -18,10 +18,10 @@ $(document).ready(function() {
 		$('#chatbot-text').addClass('hidden');
 	});
 
-	$('#chatbot').click(function() {
+/*	$('#chatbot').click(function() {
 		window.open('/chatbot', 'ChatBot',
 			'top=10,left=10,height=300, status=no, menubar=no, toolbar=no, resizable=no')
-	});
+	});*/
 
 	// 채팅 메시지 전송
 	$("#chat").keydown(function(keyNum) {
