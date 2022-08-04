@@ -4,9 +4,7 @@ $(document).ready(function() {
 	$('#signin_bt').click(function() {
 		let id = $('#id').val();
 		let pwd = $('#pwd').val();
-		console.log(id);
 		if (id == null || id == "") {
-			console.log("click!");
 			alert("id를 입력해주세요.")
 			return;
 		}
