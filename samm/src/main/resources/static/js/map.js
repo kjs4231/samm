@@ -1,10 +1,14 @@
 let container;
 let map;
+const doc_title = "!!!";
 var markers = new Map();
 var elm_overlays = new Map();
 var customOverlay;
 
 var params;
+var state;
+var path
+var fullhref;
 
 let geoloc_lat = 33.450701;
 let geoloc_lng = 126.570667;
@@ -17,6 +21,21 @@ function checkNull(o) {
 	return (o == null || o.length <= 0 || o == undefined) ? true : false;
 };
 
+function stateup() {
+	fullhref = path + "?";
+	Object.entries(params).forEach(([key, value]) => {
+		fullhref = fullhref + `${key}` + "=" + `${value}` + "&";
+	});
+	fullhref = fullhref.slice(0, - 1);
+	if (history.pushState) {
+		history.pushState(null, doc_title, fullhref);
+	} else {
+		window.history.replaceState(state, doc_title, fullhref);
+		// ** It seems that current browsers other than Safari don't support pushState
+		// title attribute. We can achieve the same thing by setting it in JS.
+		document.title = doc_title;
+	};
+};
 
 function paintingMap(lat, lng) {
 	container = document.getElementById('map-kakao'); //지도를 담을 영역의 DOM 레퍼런스
@@ -37,7 +56,6 @@ function getGeolocation() {
 			var locPosition = new kakao.maps.LatLng(geoloc_lat, geoloc_lng) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 			console.log(geoloc_lat, geoloc_lng)
 			console.log("locPosition::" + locPosition);
-
 			paintingMap(geoloc_lat, geoloc_lng)
 		});
 	} else {
@@ -80,7 +98,6 @@ function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, evente
 	return elm;
 };
 
-
 function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, infotext) {
 	var gen_imageheader = '<a class="img">';
 	var elm =
@@ -103,6 +120,8 @@ function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, info
 };
 
 function openOverlay(contentid, mapx, mapy, isPanTo) {
+	params['contentid'] = contentid;
+	stateup();
 	customOverlay.setMap(null);
 	var content = elm_overlays.get(contentid);
 	var position = new kakao.maps.LatLng(mapy, mapx);
@@ -139,6 +158,14 @@ function removeMarker() {
 // };
 
 function searchmap(keyword, page, mapx, mapy) {
+	params['keyword'] = keyword;
+	if (page == 1 || checkNull(page)) {
+		delete params['page'];
+	} else {
+		params['page'] = page;
+	}
+	delete params['contentid'];
+	stateup();
 	$.ajax({
 		url: '/searchmap',
 		data: { keyword: keyword, page: page, mapx: mapx, mapy: mapy },
@@ -170,13 +197,10 @@ function searchmap(keyword, page, mapx, mapy) {
 				map.setBounds(bounds);
 			};
 			$('#map-searchlist').html(result);
-			$('#map-searchlist').removeAttr("style");
+			$('#map-searchlist').show();
 		}
 	})
 };
-
-function searchcontentid(contentid) {
-}
 
 function elm_countsearchmap(count, page) {
 	maxPage = parseInt(count / 12) + 1;
@@ -242,28 +266,34 @@ function pagemove(page) {
 };
 
 $(document).ready(function () {
+	path = window.location.origin + window.location.pathname;
 	params = $.deparam.querystring(true);
+	keyword = params.keyword;
+	page = params.page;
+	contentid = params.contentid;
 	getGeolocation();
 	customOverlay = new kakao.maps.CustomOverlay({
 		position: new kakao.maps.LatLng(geoloc_lat, geoloc_lng),
 		content: '<div></div>'
 	});
 	customOverlay.setMap(null);
-	if (!checkNull(params.keyword)) {
-		currentKeyword = params.keyword;
+	if (!checkNull(keyword)) {
+		currentKeyword = keyword;
 		$('#map-searchform input[name="search"]').val(currentKeyword);
-		if (Number.isInteger(params.page)) {
-			var page = params.page;
+		$('#map-keyword').removeClass('keyword-empty');
+		$('#map-clearbtn').show();
+		if (Number.isInteger(page)) {
+			var page = page;
 		} else {
 			var page = 1;
 		}
 		searchmap(currentKeyword, page, geoloc_lng, geoloc_lat);
 		pagemove(page);
 	}
-	if (!checkNull(params.contentid)) {
+	if (!checkNull(contentid)) {
 		$.ajax({
 			url: '/searchcontentid',
-			data: { "contentid": params.contentid },
+			data: { "contentid": contentid },
 			method: 'get',
 			dataType: 'json',
 			success: function (element) {
@@ -278,7 +308,7 @@ $(document).ready(function () {
 				markers.set(element.contentid, marker);
 				elm_overlays.set(element.contentid, overlay);
 				openOverlay(element.contentid, element.mapx, element.mapy);
-				map.setCenter(locPosition);
+				map.panTo(locPosition);
 			}
 		})
 	}
@@ -289,6 +319,13 @@ $(document).on("click", ".btn-search", function () {
 });
 
 $('#map-searchform input[name="search"]').keyup(function (e) {
+	if (checkNull($('#map-searchform input[name="search"]').val())) {
+		$('#map-keyword').addClass('keyword-empty');
+		$('#map-clearbtn').hide();
+	} else {
+		$('#map-keyword').removeClass('keyword-empty');
+		$('#map-clearbtn').show();
+	}
 	if (e.keyCode == 13) {
 		searchmapinput();
 	}
@@ -312,6 +349,32 @@ $(document).on("click", ".pager-next a", function () {
 	}
 });
 
+function clearsearch(){
+	$('#map-searchform input[name="search"]').val(null);
+	$('#map-keyword').addClass('keyword-empty');
+	$('#map-clearbtn').hide();
+	$('#map-searchlist').html("");
+	$('#map-searchlist').hide();
+	$('#map-searchpager').html("");
+	$('#map-searchpager').hide(); 
+}
+
+function opensearchcal() {
+	$('#map-opencalbtn').hide();
+	$('#map-closecalbtn').show();
+	$('#map-calendarform').show();
+	$('#map-keyword').addClass('cal-open');
+	$('#map-searchbtn').appendTo($('#map-calendarform'));
+}
+
+function closesearchcal() {
+	$('#map-opencalbtn').show();
+	$('#map-closecalbtn').hide();
+	$('#map-calendarform').hide();
+	$('#map-keyword').removeClass('cal-open');
+	$('#map-searchbtn').appendTo($('#map-keywordform'));
+}
+
 // function openInfowindow(contentid, mapx, mapy) {
 // 	markers.forEach((value, key) => {
 // 		if (key == contentid) {
@@ -329,20 +392,3 @@ $(document).on("click", ".pager-next a", function () {
 // 		map.panTo(locPosition);
 // 	}
 // };
-
-$(function () {
-	// Values are coerced.
-	var params = $.deparam.querystring(true);
-
-	debug.log('coerced', params);
-	$('#deparam_coerced').text(JSON.stringify(params, null, 2));
-
-	// Highlight the current sample query string link
-	var qs = $.param.querystring();
-
-	$('li a').each(function () {
-		if ($(this).attr('href') === '?' + qs) {
-			$(this).addClass('current');
-		}
-	});
-});
