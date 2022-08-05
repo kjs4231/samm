@@ -1,8 +1,10 @@
 let today = new Date();
 let days = today.getDay();
-let hours = today.getHours();
-let minutes = today.getMinutes();
+let hours = String(today.getHours()).padStart(2,"0");
+let minutes = String(today.getMinutes()).padStart(2,"0");
 let year = today.getFullYear();
+let aaa = "String"
+let m = '5';
 
 $(document).ready(function() {
 	var day = getTodayLabel();
@@ -18,11 +20,11 @@ $(document).ready(function() {
 		$('#chatbot-text').addClass('hidden');
 	});
 
-/*	$('#chatbot').click(function() {
+	$('#chatbot').click(function() {
 		window.open('/chatbot', 'ChatBot',
 			'top=10,left=10,height=300, status=no, menubar=no, toolbar=no, resizable=no')
-	});*/
-
+	});
+	
 	// 채팅 메시지 전송
 	$("#chat").keydown(function(keyNum) {
 		if (keyNum.keyCode == 13) {
@@ -32,6 +34,7 @@ $(document).ready(function() {
 	})
 	$('.chat__timestamp').text(day + ', ' + month + ' ' + days + ', ' + year);
 	$('#mainTime').children().text(hours + ':' + minutes);
+	$('.message__time').text(hours + ':' + minutes);
 });
 
 function getTodayLabel() {
