@@ -46,8 +46,10 @@ function createPaging() {
 	for (i = 1; i <= 10; i++) {
 		$('ul').eq(1).children().eq(pnum + i).removeClass('hidden');
 	}
-	
+	console.log(page);
+
 	$('ul').eq(1).children().eq(page).addClass('active');
+	console.log($('ul').eq(1).children().eq(page).text())
 }
 
 function nextpage() {
