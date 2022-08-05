@@ -7,6 +7,7 @@
 
 
 <link rel="stylesheet" href="/css/detail.css">
+<input th:if="${session.loginuser} != null" th:value="${session.loginuser.id}" id="loginuser" hidden>
 <section class="hero-wrap hero-wrap-2 js-fullheight"
 	th:style="'background-image:url('+@{${festival.firstimage}}+');'">
 	<div class="overlay"></div>
@@ -51,12 +52,18 @@
 		<span class="header--info-text" th:utext="${info['infotext']}"></span>
 	</div>
 	<div class="detail-icon">
-		<a class="heart dicon" onClick="registerWish()"><i
-			class="bi bi-heart"></i></a> <span class="dicon" data-toggle="modal"
-			data-target="#myModal"><a class="share"><i
-				class="bi bi-share"></i></a></span> <span class="dicon share "><i
-			class="bi bi-eye "></i><span class="cnttext"
-			th:text="${festival.view_cnt}"></span></span>
+		<a class="heart dicon" onClick="registerWish()">
+			<i class="bi"></i>
+		</a> 
+		<span class="dicon" data-toggle="modal"data-target="#myModal">
+			<a class="share">
+				<i class="bi bi-share"></i>
+			</a>
+		</span> 
+		<span class="dicon share ">
+			<i class="bi bi-eye "></i>
+			<span class="cnttext" th:text="${festival.view_cnt}"></span>
+		</span>
 		<div class="viewicon"></div>
 	</div>
 	<!-- Modal -->

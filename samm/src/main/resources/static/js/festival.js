@@ -103,11 +103,65 @@ function filecheck() {
 
 };
 
+function getWish() {
+	let loginuser = $('#loginuser').val();
+	let fid = $('#fid').val();
+	if (loginuser != null) {
+		$.ajax({
+			url : "getWish",
+			data : { 
+				"loginuser": loginuser, 
+				"fid": fid 
+			 },
+			success : function(data) {
+				$('.heart').children().addClass(data);
+			},
+			fail : function(){
+				alert("error")
+			}
+		})
+	}else{
+		$('.heart').children().addClass("bi-heart");
+	}
+}
+
 
 function registerWish() {
-	$('.heart').children().toggleClass("bi-heart");
-	$('.heart').children().toggleClass("bi-heart-fill");
+	let loginuser = $('#loginuser').val();
+	let fid = $('#fid').val();
+	if (loginuser == null || loginuser == "") {
+		alert("login 후 이용 가능합니다");
+	} else {
+		if ($('.heart').children().hasClass("bi-heart")) {
+			$.ajax({
+				url: "registerWish",
+				data: {
+					"uid": loginuser,
+					"fid": fid
+				},
+				success: function(data) {
+					alert(data)
+				}
+			})
+			$('.heart').children().toggleClass("bi-heart");
+			$('.heart').children().toggleClass("bi-heart-fill");
+		} else {
+			console.log("bye")
+			$.ajax({
+				url: "deleteWish",
+				data: {
+					"uid": loginuser,
+					"fid": fid
+				},
+				success: function(data) {
+					alert(data)
+				}
+			})
+			$('.heart').children().toggleClass("bi-heart-fill");
+			$('.heart').children().toggleClass("bi-heart");
+		}
 
+	}
 }
 
 
@@ -180,9 +234,9 @@ function updateStarPaiting(num, index) {
 	for (j = 0; j <= num; j++) {
 		$('#comment' + index).children().eq(j).addClass("star");
 	}
-	var stars = document.getElementById('comment'+index).getElementsByClassName('star').length;
-	$('#review'+index).val(stars);
-	console.log($('#review'+index).val());
+	var stars = document.getElementById('comment' + index).getElementsByClassName('star').length;
+	$('#review' + index).val(stars);
+	console.log($('#review' + index).val());
 }
 
 function updateReview(pnum, index) {
@@ -207,10 +261,10 @@ function updateReview(pnum, index) {
 	commentStar.children().eq(4).click(function() {
 		updateStarPaiting(4, index);
 	})
-	
-	console.log("star::"+star);
+
+	console.log("star::" + star);
 	commentarea.keypress(function(e) {
-		let star = $('#review'+index).val();
+		let star = $('#review' + index).val();
 		let content = commentarea.val();
 		let uid = $('#uid').val();
 		let fid = $('#fid').val();
@@ -223,34 +277,35 @@ function updateReview(pnum, index) {
 			$.ajax({
 				url: "modifyReview",
 				data: {
-					"star" : star,
-					"contents" : content,
-					"pnum" : pnum,
-					"uid" : uid,
-					"fid" : fid
-					},
-				success: function(data){
+					"star": star,
+					"contents": content,
+					"pnum": pnum,
+					"uid": uid,
+					"fid": fid
+				},
+				success: function(data) {
 					alert(data);
-				}	
-				
+				}
+
 			})
 		}
 	});
 }
 
-function deleteReview(pnum){
+function deleteReview(pnum) {
 	$.ajax({
-		url : "deleteReview",
-		data : {"pnum" : pnum},
-		success: function(data){
+		url: "deleteReview",
+		data: { "pnum": pnum },
+		success: function(data) {
 			alert(data);
-			$('#reviewlist'+pnum).remove();
+			$('#reviewlist' + pnum).remove();
 		}
 	})
 }
 
 
 $(document).ready(function() {
+	getWish();
 	next();
 	prev();
 	finNav();

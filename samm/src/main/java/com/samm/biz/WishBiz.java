@@ -26,7 +26,7 @@ public class WishBiz implements Biz<Integer,WishVo> {
 
     @Override
     public void remove(Integer k) throws Exception {
-        wishDao.delete(k);
+        
     }
 
     @Override
@@ -49,5 +49,8 @@ public class WishBiz implements Biz<Integer,WishVo> {
     public List<WishVo> getById2(int id2) throws Exception {
         List<WishVo> result = wishDao.selectById2(id2);
         return result;
+    }
+    public void deleteWish(WishVo v) throws Exception {
+    	wishDao.delete(v);
     }
 }
