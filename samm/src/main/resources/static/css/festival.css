@@ -349,12 +349,12 @@
 	width: 16px;
 }
 
-#map-startdate {
+.map-date {
 	width: calc(50% - 30px);
 	border: 0;
 }
 
-#map-startdate input {
+.map-date input {
 	border: 0;
 	height: 100%;
 	background: transparent;
@@ -364,49 +364,24 @@
 	color: #555;
 }
 
-#map-startdate input.placeholder {
+.map-date input.placeholder {
 	color: #888;
 	font-size: 16px;
 }
 
-#map-startdate input:-moz-placeholder {
+.map-date input:-moz-placeholder {
 	color: #888;
 	font-size: 16px;
 }
 
-#map-startdate input::-webkit-input-placeholder {
+.map-date input::-webkit-input-placeholder {
 	color: #888;
 	font-size: 16px;
 }
 
-#map-enddate {
-	width: calc(50% - 30px);
-	border: 0;
-}
-
-#map-enddate input {
-	border: 0;
-	height: 100%;
-	background: transparent;
-	padding: 10px 0 10px 32px;
-	display: block;
-	font-size: 16px;
-	color: #555;
-}
-
-#map-enddate input.placeholder {
-	color: #888;
-	font-size: 16px;
-}
-
-#map-enddate input:-moz-placeholder {
-	color: #888;
-	font-size: 16px;
-}
-
-#map-enddate input::-webkit-input-placeholder {
-	color: #888;
-	font-size: 16px;
+.map-date svg {
+	width: 16px;
+	display: inline-block;
 }
 
 .s003 form .inner-form .input-field input:hover,
