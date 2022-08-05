@@ -72,8 +72,8 @@ function submitReview() {
 			alert("내용을 입력해주세요!")
 			return;
 		}
-
-		if ($('#uid').val() == null) {
+		
+		if ($('#uuid').val() == null || $('#uuid').val() == "") {
 			alert("login후 이용 가능합니다.")
 		} else {
 			$('#festival--review').attr({
