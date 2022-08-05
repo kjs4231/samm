@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.samm.biz.AdmintblBiz;
 import com.samm.biz.EmailBiz;
 import com.samm.biz.FestivalBiz;
+import com.samm.biz.ReviewBiz;
 import com.samm.biz.UsersBiz;
 import com.samm.restapi.TourFestivalAPI;
 import com.samm.vo.AdmintblVo;
 import com.samm.vo.FestivalVo;
+import com.samm.vo.ReviewVo;
 import com.samm.vo.UsersVo;
 
 @RestController
@@ -37,6 +39,8 @@ public class AjaxController {
 	UsersBiz ubiz;
 	@Autowired
 	EmailBiz ebiz;
+	@Autowired
+	ReviewBiz rbiz;
 
 	@RequestMapping("/callArea")
 	public List<FestivalVo> getAreaCode(String code) {
@@ -226,4 +230,27 @@ public class AjaxController {
 		return result;
 	}
 	
+	@RequestMapping("/modifyReview")
+	public String modifyReview(ReviewVo review) {
+		try {
+			rbiz.modify(review);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "success";
+	}
+	
+	@RequestMapping("/deleteReview")
+	public String deleteReview(int pnum) {
+		try {
+			rbiz.remove(pnum);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "삭제가 완료 되었습니다.";
+	}
 }

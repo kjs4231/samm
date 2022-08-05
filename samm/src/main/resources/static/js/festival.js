@@ -14,8 +14,8 @@ let url = window.location.href;
 
 let reviewStar = $('.reviewStar').text();
 
-function createReviewStars(){
-	
+function createReviewStars() {
+
 }
 
 function next() {
@@ -165,6 +165,90 @@ function finNav() {
 	}
 }
 
+function paintingCommentStar() {
+	const size = $('#size').val();
+	for (i = 0; i < size; i++) {
+		let star = $('#review' + i).val();
+		for (j = 0; j < star; j++) {
+			$('#comment' + i).children().eq(j).addClass("star");
+		}
+	}
+}
+
+function updateStarPaiting(num, index) {
+	$('#comment' + index).children().removeClass('star');
+	for (j = 0; j <= num; j++) {
+		$('#comment' + index).children().eq(j).addClass("star");
+	}
+	var stars = document.getElementById('comment'+index).getElementsByClassName('star').length;
+	$('#review'+index).val(stars);
+	console.log($('#review'+index).val());
+}
+
+function updateReview(pnum, index) {
+	const comment = $('#commnetText' + pnum)
+	const commentarea = $('#comment-textarea' + pnum)
+	let commentStar = $('#comment' + index);
+
+	comment.hide();
+	commentarea.removeClass("hidden");
+	commentStar.children().eq(0).click(function() {
+		updateStarPaiting(0, index);
+	})
+	commentStar.children().eq(1).click(function() {
+		updateStarPaiting(1, index);
+	})
+	commentStar.children().eq(2).click(function() {
+		updateStarPaiting(2, index);
+	})
+	commentStar.children().eq(3).click(function() {
+		updateStarPaiting(3, index);
+	})
+	commentStar.children().eq(4).click(function() {
+		updateStarPaiting(4, index);
+	})
+	
+	console.log("star::"+star);
+	commentarea.keypress(function(e) {
+		let star = $('#review'+index).val();
+		let content = commentarea.val();
+		let uid = $('#uid').val();
+		let fid = $('#fid').val();
+		if (e.keyCode === 13) {
+			e.preventDefault();
+			console.log("enter!")
+			comment.text($('#comment-textarea' + pnum).val());
+			comment.show();
+			commentarea.addClass("hidden");
+			$.ajax({
+				url: "modifyReview",
+				data: {
+					"star" : star,
+					"contents" : content,
+					"pnum" : pnum,
+					"uid" : uid,
+					"fid" : fid
+					},
+				success: function(data){
+					alert(data);
+				}	
+				
+			})
+		}
+	});
+}
+
+function deleteReview(pnum){
+	$.ajax({
+		url : "deleteReview",
+		data : {"pnum" : pnum},
+		success: function(data){
+			alert(data);
+			$('#reviewlist'+pnum).remove();
+		}
+	})
+}
+
 
 $(document).ready(function() {
 	next();
@@ -174,60 +258,66 @@ $(document).ready(function() {
 	$('#moreInfo').click(function() {
 		$('.infoDetail').toggleClass('hidden');
 	})
-	$('.fa-star').click(function(event) {
+	let CSTAR = ".cstar";
+	$(CSTAR).click(function(event) {
 		if (event.target.classList.contains('4')) {
-			if ($('.fa-star').hasClass('star')) {
-				$('.fa-star').removeClass("star");
-				$('.fa-star').addClass("star");
+			if ($(CSTAR).hasClass('star')) {
+				$(CSTAR).removeClass("star");
+				$(CSTAR).addClass("star");
 			} else {
-				$('.fa-star').addClass("star");
+				$(CSTAR).addClass("star");
 			}
 		} else if (event.target.classList.contains('3')) {
-			if ($('.fa-star').hasClass('star')) {
-				$('.fa-star').removeClass("star");
-				$('.fa-star').eq(0).toggleClass("star");
-				$('.fa-star').eq(1).toggleClass("star");
-				$('.fa-star').eq(2).toggleClass("star");
-				$('.fa-star').eq(3).toggleClass("star");
+			if ($(CSTAR).hasClass('star')) {
+				$(CSTAR).removeClass("star");
+				$(CSTAR).eq(0).toggleClass("star");
+				$(CSTAR).eq(1).toggleClass("star");
+				$(CSTAR).eq(2).toggleClass("star");
+				$(CSTAR).eq(3).toggleClass("star");
 			} else {
-				$('.fa-star').eq(0).toggleClass("star");
-				$('.fa-star').eq(1).toggleClass("star");
-				$('.fa-star').eq(2).toggleClass("star");
-				$('.fa-star').eq(3).toggleClass("star");
+				$(CSTAR).eq(0).toggleClass("star");
+				$(CSTAR).eq(1).toggleClass("star");
+				$(CSTAR).eq(2).toggleClass("star");
+				$(CSTAR).eq(3).toggleClass("star");
 			}
 		} else if (event.target.classList.contains('2')) {
-			if ($('.fa-star').hasClass('star')) {
-				$('.fa-star').removeClass("star");
-				$('.fa-star').eq(0).toggleClass("star");
-				$('.fa-star').eq(1).toggleClass("star");
-				$('.fa-star').eq(2).toggleClass("star");
+			if ($(CSTAR).hasClass('star')) {
+				$(CSTAR).removeClass("star");
+				$(CSTAR).eq(0).toggleClass("star");
+				$(CSTAR).eq(1).toggleClass("star");
+				$(CSTAR).eq(2).toggleClass("star");
 			} else {
-				$('.fa-star').eq(0).toggleClass("star");
-				$('.fa-star').eq(1).toggleClass("star");
-				$('.fa-star').eq(2).toggleClass("star");
+				$(CSTAR).eq(0).toggleClass("star");
+				$(CSTAR).eq(1).toggleClass("star");
+				$(CSTAR).eq(2).toggleClass("star");
 			}
 		} else if (event.target.classList.contains('1')) {
-			if ($('.fa-star').hasClass('star')) {
-				$('.fa-star').removeClass("star");
-				$('.fa-star').eq(0).toggleClass("star");
-				$('.fa-star').eq(1).toggleClass("star");
+			if ($(CSTAR).hasClass('star')) {
+				$(CSTAR).removeClass("star");
+				$(CSTAR).eq(0).toggleClass("star");
+				$(CSTAR).eq(1).toggleClass("star");
 			} else {
-				$('.fa-star').eq(0).toggleClass("star");
-				$('.fa-star').eq(1).toggleClass("star");
+				$(CSTAR).eq(0).toggleClass("star");
+				$(CSTAR).eq(1).toggleClass("star");
 			}
 		} else if (event.target.classList.contains('0')) {
-			if ($('.fa-star').hasClass('star')) {
-				$('.fa-star').removeClass("star");
-				$('.fa-star').eq(0).addClass("star");
+			if ($(CSTAR).hasClass('star')) {
+				$(CSTAR).removeClass("star");
+				$(CSTAR).eq(0).addClass("star");
 			} else {
-				$('.fa-star').eq(0).addClass("star");
+				$(CSTAR).eq(0).addClass("star");
 			}
 		}
-		var stars = document.getElementsByClassName('star').length;
+		var stars = document.getElementById("chooseStar").getElementsByClassName('star').length;
 		$('#star').val(stars)
 	})
 
 	submitReview();
-
+	paintingCommentStar();
 });
 
+
+function toggleStar() {
+
+
+}
