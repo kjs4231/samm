@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Koulen&family=Nanum+Gothic:wght@400;700;800&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
 .detail-navbar {
 	display: flex;
 	justify-content: space-around;
@@ -105,6 +107,7 @@
 
 .dicon {
 	margin-left: 20px;
+	text-align: center;
 }
 
 .header--info {
@@ -219,4 +222,123 @@
 
 .control-opacity {
 	opacity: 0;
+}
+
+.viewicon{
+	float: right;
+}
+
+.cnttext{
+	font-size: 17px;
+	text-align: center;
+	padding-left: 15px;
+}
+
+.detailInfo--header{
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: 700;
+	font-size : 36px;
+	border-bottom: 2px solid navy;
+}
+
+.overview{
+	margin-top: 30px;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+#moreInfo{
+	float: right;
+	font-family: 'Nanum Gothic', sans-serif;
+	color: black !important;
+}
+
+#moreInfo:hover{
+	cursor: pointer;
+	color:#fd7e14 !important;
+}
+
+.infoDetail{
+	margin-top: 20px;
+}
+
+
+.infoname{
+	margin-top: 20px;
+}
+
+.intro {
+	margin-top: 40px;
+}
+
+.intro ul {
+	list-style:none; 
+	padding:0; 
+	margin:0;
+	display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+	
+}
+
+.intro ul li {
+	padding:0; 
+	margin:0;
+}
+
+.intro ul li strong{
+	padding-right: 50px;
+	display: block;
+}
+
+.intro ul li strong{
+	display: block;
+}
+
+.textarea-comment{
+	height: 150px;
+}
+@media ( max-width : 600px) {
+/* 	.textarea-comment {
+		display: none;
+		Hide the carousel text when the screen is less than 600 pixels wide
+	} */
+}
+
+.commentbtn{
+	margin-top: 50px;
+}
+
+#festival--review{
+	padding: 20px !important;
+}
+
+.comment{
+	padding-bottom:5px;
+	border-bottom: 1px solid gray;
+}
+
+.comment-textarea{
+	width: 100%;
+	border: none;
+}
+
+.comment-textarea:focus{
+	/* border: none; */
+}
+
+.commentDate{
+	padding-left: 10px;
+}
+
+.commnetText{
+	margin-top: 30px;
+}
+  
+  
+.btn-body{
+	float: right;
+}  
+
+.btn-body a{
+	cursor: pointer;
 }

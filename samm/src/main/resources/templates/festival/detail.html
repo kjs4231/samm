@@ -7,6 +7,7 @@
 
 
 <link rel="stylesheet" href="/css/detail.css">
+<input th:if="${session.loginuser} != null" th:value="${session.loginuser.id}" id="loginuser" hidden>
 <section class="hero-wrap hero-wrap-2 js-fullheight"
 	th:style="'background-image:url('+@{${festival.firstimage}}+');'">
 	<div class="overlay"></div>
@@ -29,61 +30,76 @@
 <!-- 상세 header -->
 <section class="detail-header ftco-section2 container">
 	<div class="festival-status">
-	<!-- thif 구문 사용.... 현재 날짜 가져와서 축제 날짜와 비교.. -->
-		<span class="fsatus" th:if="${today} >= ${festival.eventstartdate} and ${today} <= ${festival.eventenddate}">진행중</span>
+		<!-- thif 구문 사용.... 현재 날짜 가져와서 축제 날짜와 비교.. -->
+		<span class="fsatus"
+			th:if="${today} >= ${festival.eventstartdate} and ${today} <= ${festival.eventenddate}">진행중</span>
 		<span class="fsatus" th:if="${today} < ${festival.eventstartdate}">진행예정</span>
 		<span class="fsatus" th:if="${today} > ${festival.eventenddate}">진행종료</span>
-		
+
 	</div>
 	<div class="detail-title">
 		<h1 th:utext="${festival.title}"></h1>
 	</div>
 	<div class="detail-basicInfo">
-		<span class="festival-addr1" th:text="${festival.addr1}"></span> 
-		<span class="festival-addr1" th:text="${#temporals.createDate(festival.eventstartdate,'yyyyMMdd') }+' ~ '+${#temporals.createDate(festival.eventenddate,'yyyyMMdd')}"></span>
+		<span class="festival-addr1" th:text="${festival.addr1}"></span> <span
+			class="festival-addr1"
+			th:text="${#temporals.createDate(festival.eventstartdate,'yyyyMMdd') }+' ~ '+${#temporals.createDate(festival.eventenddate,'yyyyMMdd')}"></span>
 	</div>
 
-	
-	
+
+
 	<div class="header--info">
 		<span class="header--info-text" th:utext="${info['infotext']}"></span>
 	</div>
 	<div class="detail-icon">
-		<a class="heart dicon" onClick="registerWish()"><i class="bi bi-heart"></i></a>
-		
-		<span class="dicon" data-toggle="modal" data-target="#myModal"><a class="share"  ><i class="bi bi-share" ></i></a></span>	
+		<a class="heart dicon" onClick="registerWish()">
+			<i class="bi"></i>
+		</a> 
+		<span class="dicon" data-toggle="modal"data-target="#myModal">
+			<a class="share">
+				<i class="bi bi-share"></i>
+			</a>
+		</span> 
+		<span class="dicon share ">
+			<i class="bi bi-eye "></i>
+			<span class="cnttext" th:text="${festival.view_cnt}"></span>
+		</span>
+		<div class="viewicon"></div>
 	</div>
 	<!-- Modal -->
 	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header  modal-title2">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Share Festival</h4>
-	      </div>
-	      <div class="modal-body mbody1">
-	        <a class="share-icon twitter" onClick="shareTwitter()"><i class="bi bi-twitter share-icon-i"></i>
-	        <span class="icon-text">Twitter</span></a>
-	        <a class="share-icon facebook" onClick="shareFacebook()"><i class="bi bi-facebook share-icon-i"></i>
-	        <span class="icon-text" >Facebook</span></a>
-	        <a class="share-icon kakao" onClick="shareKakao()">  
-		        <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-			    	 alt="카카오톡 공유 보내기 버튼" class="share-icon-i" style="width: 50px;"/><span class="icon-text" >Kakao</span>
-    	 	</a>	 	
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default modal-close" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	
-	  </div>
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header  modal-title2">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Share Festival</h4>
+				</div>
+				<div class="modal-body mbody1">
+					<a class="share-icon twitter" onClick="shareTwitter()"><i
+						class="bi bi-twitter share-icon-i"></i> <span class="icon-text">Twitter</span></a>
+					<a class="share-icon facebook" onClick="shareFacebook()"><i
+						class="bi bi-facebook share-icon-i"></i> <span class="icon-text">Facebook</span></a>
+					<a class="share-icon kakao" onClick="shareKakao()"> <img
+						src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+						alt="카카오톡 공유 보내기 버튼" class="share-icon-i" style="width: 50px;" /><span
+						class="icon-text">Kakao</span>
+					</a>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default modal-close"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
 	</div>
 	<!-- Modal End -->
 </section>
 <!-- 상세 NAV -->
-<section class="ftco-section2 container navbar navbar-expand-lg detail-navbar">
+<section
+	class="ftco-section2 container navbar navbar-expand-lg detail-navbar">
 	<span class="nav-item dnav"><a href="#menu1" class="nav-link">사진보기</a></span>
 	<span class="nav-item dnav"><a href="#menu2" class="nav-link">상세정보</a></span>
 	<span class="nav-item dnav"><a href="#menu3" class="nav-link">축제톡</a></span>
@@ -95,7 +111,8 @@
 		data-bs-ride="carousel">
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img th:src="${common['firstimage']}" class="d-block " alt="..." style="height: 100%;">
+				<img th:src="${common['firstimage']}" class="d-block " alt="..."
+					style="height: 100%;">
 			</div>
 			<div class="carousel-item" th:each="img:${img}">
 				<img th:src="@{'/images/festival/'+${img.name}}"
@@ -105,8 +122,8 @@
 		<button class="carousel-control-prev control-opacity" type="button"
 			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"
 			id="prev">
-			<span class="carousel-control-prev-icon " aria-hidden="true"></span> <span
-				class="visually-hidden">Previous</span>
+			<span class="carousel-control-prev-icon " aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
 		</button>
 		<button class="carousel-control-next control-opacity" type="button"
 			data-bs-target="#carouselExampleIndicators" data-bs-slide="next"
@@ -116,115 +133,131 @@
 		</button>
 	</div>
 	<form class="filebox" id="file-form">
-		<label for="file" id="label-file"><span class="file-span">직접 찍은 사진을 등록해주세요.</span><img src="https://cdn.visitkorea.or.kr/resources/images/sub/bg_pic_reg.jpg"></label>
-			<input type="file" id="file" name="mf" onchange="filecheck()"> 
-			<input name="fid" th:value="${common['contentid']}" hidden> 
-			<input id="festivalimg" th:value="${common['firstimage']}" hidden>
+		<label for="file" id="label-file"><span class="file-span">직접
+				찍은 사진을 등록해주세요.</span><img
+			src="https://cdn.visitkorea.or.kr/resources/images/sub/bg_pic_reg.jpg"></label>
+		<input type="file" id="file" name="mf" onchange="filecheck()">
+		<input name="fid" th:value="${common['contentid']}" hidden> <span
+			th:if="${session.loginuser} != null"> <input name="uid"
+			th:value="${session.loginuser.id}" hidden>
+		</span> <input id="festivalimg" th:value="${common['firstimage']}" hidden>
 	</form>
-	
+
 </section>
 
 <!-- 상세정보 개요, 지도, 행사정보.... -->
 
 <section class="ftco-section2 container" id="menu2">
-	<h1>상세정보</h1>
-	<div>
-		<span th:utext="${common['overview']}"></span>
-		<button id="moreInfo">더보기</button>
+	<h1 class="detailInfo--header">상세정보</h1>
+	<div class="overview">
+		<span th:utext="${common['overview']}"></span> <span id="moreInfo">내용
+			더보기<i class="bi bi-plus"></i>
+		</span>
 	</div>
 	<div class="infoDetail hidden">
-		<h3 th:utext="${info['infoname']}"></h3>
-		<span th:utext="${info[infotext]}"></span>
-		<h3 th:utext="${info['infoname2']}"></h3>
-		<span th:utext="${info[infotext2]}"></span>
+		<h3 class="infoname" th:utext="'['+${info['infoname']}+']'"></h3>
+		<span class="infotext" th:utext="${info[infotext]}"></span>
+		<h3 class="infoname" th:utext="'['+${info['infoname2']}+']'"></h3>
+		<span class="infotext" th:utext="${info[infotext2]}"></span>
 	</div>
 	<div id="dmap"></div>
 	<input hidden th:value="${festival.mapx}" id="lon"> <input
 		hidden th:value="${festival.mapy}" id="lat">
-	<div>
+	<div class="intro">
 		<ul>
-			<li><strong>시작일</strong> <span
-				th:utext="${#temporals.createDate(intro['eventstartdate'],'yyyyMMdd')}"></span>
-				<strong></strong></li>
-			<li><strong>종료일</strong><span
-				th:utext="${#temporals.createDate(intro['eventenddate'],'yyyyMMdd')}"></span></li>
-			<li><strong>전화번호</strong><span th:utext="${festival.tel}"></span></li>
-			<li><strong>홈페이지</strong><span th:utext="${common['homepage']}"></span></li>
-			<li><strong>주소</strong><span th:utext="${festival.addr1}"></span></li>
-			<li><strong>행사장소</strong><span th:utext="${intro['eventplace']}"></span></li>
-			<li><strong>주최</strong><span th:utext="${intro['sponsor1']}"></span></li>
-			<li><strong>주관</strong><span th:utext="${intro['sponsor2']}"></span></li>
-			<li><strong>행사기간</strong><span th:utext="${intro['playtime']}"></span></li>
-			<li><strong>행사요금</strong><span
-				th:utext="${intro['usetimefestival']}"></span></li>
+			<div>
+				<li><strong>시작일</strong> <span
+					th:utext="${#temporals.createDate(intro['eventstartdate'],'yyyyMMdd')}"></span></li>
+				<li><strong>종료일</strong><span
+					th:utext="${#temporals.createDate(intro['eventenddate'],'yyyyMMdd')}"></span></li>
+				<li><strong>전화번호</strong><span th:utext="${festival.tel}"></span></li>
+				<li><strong>홈페이지</strong><span th:utext="${common['homepage']}"></span></li>
+				<li><strong>주소</strong><span th:utext="${festival.addr1}"></span></li>
+			</div>
+			<div>
+				<li><strong>행사장소</strong><span
+					th:utext="${intro['eventplace']}"></span></li>
+				<li><strong>주최</strong><span th:utext="${intro['sponsor1']}"></span></li>
+				<li><strong>주관</strong><span th:utext="${intro['sponsor2']}"></span></li>
+				<li><strong>행사시간</strong><span th:utext="${intro['playtime']}"></span></li>
+				<li><strong>행사요금</strong><span
+					th:utext="${intro['usetimefestival']}"></span></li>
+			</div>
 		</ul>
 	</div>
 </section>
 <!-- 축제리뷰.. -->
 <section class="ftco-section2 container" id="menu3">
-
-	<div class="pt-5 mt-5">
+	<div class="comment-form-wrap pt-5">
 		<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">
 			<span th:text="${rcount}"></span> Comments
 		</h3>
+		<form id="festival--review" class="p-5 bg-light" name="review">
+			<div class="hidden-session">
+				<input th:if="${session.loginuser} != null" class="form-control"
+					name="uid" id="uid" th:value="${session.loginuser.id}" hidden>
+				<input class="form-control" name="fid" id="fid"
+					th:value="${festival.contentid}" hidden>
+			</div>
+			<div class="form-group">
+				<label for="star">Choose Star *</label> <input class="form-control"
+					type="text" id="star" name="star" hidden>
+				<div id="chooseStar">
+					<span class="fa fa-star cstar 0"></span> <span class="fa fa-star cstar 1"></span>
+					<span class="fa fa-star cstar 2"></span> <span class="fa fa-star cstar 3"></span>
+					<span class="fa fa-star cstar 4"></span> <span id="star-warnig"></span>
+				</div>
+			</div>
+
+			<div class="form-group textarea-comment">
+				<label for="contents">Message *(inner 1000words)</label>
+				<textarea name="contents" id="contents" cols="30" rows="10"
+					class="form-control" placeholder="로그인 후 소중한 댓글을 남겨주세요."></textarea>
+			</div>
+			<div class="form-group commentbtn">
+				<input type="button" id="sumbit-review" value="Post Comment"
+					class="btn py-3 px-4 btn-primary">
+			</div>
+
+		</form>
+	</div>
+	<div class="pt-5 mt-5">
+
 		<ul class="comment-list">
-			<li class="comment" th:each="review:${review}">
+			<li th:id="'reviewlist'+${review.pnum}" class="comment" th:each="review:${review}">
+			<input hidden th:value="${reviewStat.size}" id="size">	
 				<div class="vcard bio">
-					<img src="images/person_1.jpg" alt="Image placeholder">
+					<img th:if="${review.profile_img} == null" th:src="@{/images/noimagep.png}" alt="Image placeholder">		
+					<img th:unless="${review.profile_img} == null" th:src="${review.profile_img}" alt="Image placeholder">
 				</div>
 				<div class="comment-body">
-					<h3 th:text="${review.uid}+' | '+${review.username}">John Doe</h3>
-					<div class="meta" th:text="${review.regdate}">September 11,
-						2020 at 2:21pm</div>
-					<p th:text="${review.contents}">Lorem ipsum dolor sit amet,
-						consectetur adipisicing elit. Pariatur quidem laborum
-						necessitatibus, ipsam impedit vitae autem, eum officia, fugiat
-						saepe enim sapiente iste iure! Quam voluptas earum impedit
-						necessitatibus, nihil?</p>
-					<p>
-						<a href="" class="reply">Delete</a>
-					</p>
+					<div class="btn-body">
+						<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.uid}" th:onClick="'updateReview('+${review.pnum}+','+${reviewStat.index}+')'"> 수정</a> 
+						<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.uid}" th:onClick="'deleteReview('+${review.pnum}+')'"> 삭제</a>
+					</div>
+					<h3 th:text="${review.username}">John Doe</h3>
+					
+					<span th:id="'comment'+${reviewStat.index}"><span class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span></span>	
+					<span th:if="${review.udate} == null" class="commentDate" th:text="${#dates.format(review.regdate,'M월dd일 hh시mm분')}" style="display:inline"></span>
+					<span th:unless="${review.udate} == null" class="commentDate" th:text="${#dates.format(review.udate,'yyyy-MM-dd')}" style="display:inline"></span>
+					<form id="reiew-form">
+						<p class="commnetText" th:id="'commnetText'+${review.pnum}" th:text="${review.contents}"></p>
+						<textarea th:id="'comment-textarea'+${review.pnum}" class="comment-textarea hidden" name="contents" th:text="${review.contents}" ></textarea>
+						<input th:value="${review.pnum}" name="pnum" hidden>
+						<input th:id="'review'+${reviewStat.index}" th:value="${review.star}" name="star" hidden>
+						<input name="uid"  id="uid" th:value="${review.uid}" hidden>
+						<input name="fid"  id="fid" th:value="${review.fid}" hidden>
+					</form>
+<!-- 						<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.uid}" href="" class="reply">reply</a> -->
 				</div>
+	
 			</li>
 
 		</ul>
-
-		<div class="comment-form-wrap pt-5">
-			<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">Leave
-				a comment</h3>
-			<form id="festival--review" class="p-5 bg-light" name="review">
-				<div class="hidden-session">
-					<input th:if="${session.loginuser} != null" class="form-control"
-						name="uid" id="uid" th:value="${session.loginuser.id}" hidden>
-					<input class="form-control" name="fid" id="fid"
-						th:value="${festival.contentid}" hidden>
-				</div>
-				<div class="form-group">
-					<label for="star">Choose Star *</label> <input class="form-control"
-						type="text" id="star" name="star" hidden>
-					<div>
-						<span class="fa fa-star 0"></span> <span class="fa fa-star 1"></span>
-						<span class="fa fa-star 2"></span> <span class="fa fa-star 3"></span>
-						<span class="fa fa-star 4"></span> <span id="star-warnig"></span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="contents">Message *(inner 1000words)</label>
-					<textarea name="contents" id="contents" cols="30" rows="10"
-						class="form-control"></textarea>
-				</div>
-				<div class="form-group">
-					<input type="button" id="sumbit-review" value="Post Comment"
-						class="btn py-3 px-4 btn-primary">
-				</div>
-
-			</form>
-		</div>
 	</div>
 </section>
 
 
 
 
-<script src="/js/festival.js"></script>
+<script src="/js/festival.js" ></script>

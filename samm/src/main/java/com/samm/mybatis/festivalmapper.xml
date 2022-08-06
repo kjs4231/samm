@@ -10,6 +10,10 @@
 		SELECT * FROM festival
 	</select>
 
+	<select id="selectOne" resultType="FestivalVo" parameterType="int">
+		SELECT * FROM festival WHERE contentid=#{contentid}
+	</select>
+
 	<select id="getContentId" resultType="String">
 		SELECT contentid FROM festival 
 	</select>
@@ -28,6 +32,21 @@
 		order by contentid desc LIMIT #{key_offset}, 6
 	</select>
 	
+	<select id="searchFestival2" parameterType="Map" resultType="FestivalVo">
+		SELECT a.*, IFNULL(AVG(b.star),0) AS avgstar
+		FROM festival a
+		left join review b on a.contentid = b.fid		
+ 		WHERE
+		a.areacode=#{areacode} AND
+		a.eventstartdate <![CDATA[ <= #{eventstartdate}]]> AND
+		a.eventenddate <![CDATA[ >= #{eventenddate}]]> AND
+		b.del_date is null
+		GROUP BY a.contentid
+		ORDER BY a.eventstartdate desc
+	</select>
+	
+	
+	
 	<select id="searchKeyword" parameterType="HashMap" resultType="FestivalVo">
 		SELECT * FROM festival WHERE title LIKE CONCAT('%',#{keyword},'%') LIMIT ${page}, 12
 	</select>
@@ -35,12 +54,18 @@
 	<select id="searchKeywordCount" parameterType="String" resultType="int">
 		SELECT CEILING(count(*)/12) FROM festival WHERE title LIKE CONCAT('%',#{keyword},'%')
 	</select>
+	
+	<select id="getAvgStars" resultType="FestivalVo">
+		SELECT AVG(r.star) AS avgstar FROM festival f
+		INNER JOIN review r ON f.contentid = r.fid
+		GROUP BY f.contentid;
+	</select>
 
 	<select id="searchMap" parameterType="Map" resultType="FestivalVo">
 		<bind name="key_offset" value="(@java.lang.Integer@valueOf(page)-1)*12" />
 		<bind name="lat" value="@java.lang.Double@valueOf(mapy)" />
 		<bind name="lng" value="@java.lang.Double@valueOf(mapx)" />
-		SELECT f.contentid,f.title,f.areacode,f.eventstartdate,f.eventenddate,f.tel,f.addr1,f.mapx,f.mapy,f.createdtime,f.updatedate,f.firstimage,f.firstimage2,f.mappoint,left(d.infotext,100) as infotext FROM festival f 
+		SELECT f.contentid,f.title,f.areacode,f.eventstartdate,f.eventenddate,f.tel,f.addr1,f.mapx,f.mapy,f.createdtime,f.updatedate,f.firstimage,f.firstimage2,f.mappoint,f.view_cnt,left(d.infotext,100) as infotext FROM festival f 
 		left outer join detailinfo d on f.contentid = d.contentid
 		WHERE eventstartdate <![CDATA[ <= #{eventstartdate}]]> and eventenddate <![CDATA[ >= #{eventenddate}]]>
 		and addr1 not like '%온라인%' and mapx is not null
@@ -90,5 +115,11 @@
 		DELETE FROM festival WHERE
 		id=#{id}
 	</delete>
+	
+    <update id="increaseViewCnt" parameterType="int">
+        UPDATE festival
+        SET   view_cnt = view_cnt + 1
+        WHERE contentid = #{contentid}
+    </update>
 	
 </mapper>

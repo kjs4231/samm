@@ -5,9 +5,10 @@
 		SELECT * FROM review where pnum=#{pnum}
 	</select>
 	<select id="getfestivalreview" parameterType="int" resultType="ReviewVo">
-		SELECT r.pnum,r.contents,r.star,r.regdate,r.uid,r.fid,u.name as username FROM review r
+		SELECT r.pnum,r.contents,r.star,r.regdate,r.uid,r.fid,u.name as username,u.profile_img as profile_img FROM review r
 		INNER JOIN users u ON r.uid = u.id
-		where fid = #{fid}
+		where fid = #{fid} 
+		AND del_date is null
 	</select>
 	<select id="getCount" resultType="int">
 		SELECT count(*) From review where fid = #{fid}
@@ -20,7 +21,7 @@
 	</select>
 
 	<insert id="insert" parameterType="ReviewVo" useGeneratedKeys="true" keyProperty="pnum">
-			INSERT INTO review VALUES (NULL,#{contents},#{star},sysdate(),null,#{uid},#{fid})
+			INSERT INTO review VALUES (NULL,#{contents},#{star},sysdate(),null,null,#{uid},#{fid})
 	</insert>
 	<update id="update" parameterType="ReviewVo">
 		UPDATE review SET
@@ -40,11 +41,13 @@
 		WHERE pnum=#{pnum}
 	</update>
 
-	<delete id="delete" parameterType="int">
-		DELETE FROM review WHERE pnum=#{pnum}
-	</delete>
+	<update id="delete" parameterType="int">
+		UPDATE review SET 
+		del_date = SYSDATE()
+		WHERE pnum=#{pnum}
+	</update>
 	<select id="selectByUid" parameterType="String" resultType="ReviewVo">
-		SELECT * FROM review WHERE uid=#{uid}
+		SELECT * FROM review WHERE uid=#{uid} 
 	</select>
 
 	<select id="selectByContents" parameterType="String" resultType="ReviewVo">
