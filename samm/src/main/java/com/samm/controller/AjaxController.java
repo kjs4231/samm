@@ -18,11 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.samm.biz.AdmintblBiz;
 import com.samm.biz.EmailBiz;
 import com.samm.biz.FestivalBiz;
+import com.samm.biz.ReviewBiz;
 import com.samm.biz.UsersBiz;
+import com.samm.biz.WishBiz;
 import com.samm.restapi.TourFestivalAPI;
 import com.samm.vo.AdmintblVo;
 import com.samm.vo.FestivalVo;
+import com.samm.vo.ReviewVo;
 import com.samm.vo.UsersVo;
+import com.samm.vo.WishVo;
 
 @RestController
 public class AjaxController {
@@ -37,6 +41,10 @@ public class AjaxController {
 	UsersBiz ubiz;
 	@Autowired
 	EmailBiz ebiz;
+	@Autowired
+	ReviewBiz rbiz;
+	@Autowired
+	WishBiz wbiz;
 
 	@RequestMapping("/callArea")
 	public List<FestivalVo> getAreaCode(String code) {
@@ -226,4 +234,81 @@ public class AjaxController {
 		return result;
 	}
 	
+	@RequestMapping("/modifyReview")
+	public String modifyReview(ReviewVo review) {
+		try {
+			rbiz.modify(review);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "success";
+	}
+	
+	@RequestMapping("/deleteReview")
+	public String deleteReview(int pnum) {
+		try {
+			rbiz.remove(pnum);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "삭제가 완료 되었습니다.";
+	}
+	
+	@RequestMapping("/getWish")
+	public String getWish(String loginuser,int fid) {
+		System.out.println(loginuser);
+		List<WishVo> wishList = null;
+		String result = "bi-heart";
+		try {
+			wishList = wbiz.getByUid(loginuser);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("wishList::"+wishList);
+		// 로그인 안했을때
+		if(wishList == null || wishList.isEmpty() ) {
+			result = "bi-heart";
+		// 로그인 했을때 찜 했는지 안했는지 
+		}else {
+			for (WishVo wish : wishList) {
+				if(wish.getFid() == fid) {
+					result = "bi-heart-fill";
+				}
+			}
+		}
+		
+		return result;
+	}
+	@RequestMapping("/registerWish")
+	public String registerWish(WishVo wish) {
+		
+		try {
+			wbiz.register(wish);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return "찜완료!";
+	}
+	
+	@RequestMapping("/deleteWish")
+	public String deleteWish(WishVo wish) {
+		
+		try {
+			wbiz.deleteWish(wish);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return "찜제거!";
+	}
 }

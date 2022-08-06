@@ -275,7 +275,7 @@
 	padding:0; 
 	margin:0;
 	display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-evenly;
 	
 }
@@ -317,4 +317,28 @@
 	border-bottom: 1px solid gray;
 }
 
+.comment-textarea{
+	width: 100%;
+	border: none;
+}
+
+.comment-textarea:focus{
+	/* border: none; */
+}
+
+.commentDate{
+	padding-left: 10px;
+}
+
+.commnetText{
+	margin-top: 30px;
+}
   
+  
+.btn-body{
+	float: right;
+}  
+
+.btn-body a{
+	cursor: pointer;
+}
