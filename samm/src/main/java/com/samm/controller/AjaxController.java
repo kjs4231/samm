@@ -72,18 +72,22 @@ public class AjaxController {
 	}
 
 	@RequestMapping("/searchmap")
-	public List<FestivalVo> searchmap(String keyword, String page, String mapx, String mapy) {
+	public List<FestivalVo> searchmap(String keyword, String page, String mapx, String mapy, String eventstartdate, String eventenddate) {
 		Date date = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
-		String sdate = today.format(date).toString();
-		System.out.println(keyword + ", " + page);
+		if (eventstartdate == null) {
+			eventstartdate = today.format(date).toString();
+		}
+		if (eventenddate == null) {
+			eventenddate = today.format(date).toString();
+		}
 		List<FestivalVo> list = null;
 		if (mapx == null || mapx.equals("")) {
 			mapx = "127.052153";
 			mapy = "37.5071772";
 		}
 		try {
-			list = fbiz.searchMap(keyword, sdate, sdate, page, mapx, mapy);
+			list = fbiz.searchMap(keyword, eventstartdate, eventenddate, page, mapx, mapy);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,13 +96,18 @@ public class AjaxController {
 	}
 
 	@RequestMapping("/countsearchmap")
-	public int countsearchmap(String keyword, String page) {
+	public int countsearchmap(String keyword, String page,String eventstartdate, String eventenddate) {
 		Date date = new Date();
 		SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
-		String sdate = today.format(date).toString();
+		if (eventstartdate == null) {
+			eventstartdate = today.format(date).toString();
+		}
+		if (eventenddate == null) {
+			eventenddate = today.format(date).toString();
+		}
 		int count = 0;
 		try {
-			count = fbiz.countSearchMap(keyword, sdate, sdate);
+			count = fbiz.countSearchMap(keyword, eventstartdate, eventenddate);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

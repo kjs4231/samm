@@ -7,18 +7,44 @@ var customOverlay;
 
 var params;
 var state;
-var path
+var path;
 var fullhref;
 
 let geoloc_lat = 33.450701;
 let geoloc_lng = 126.570667;
-let currentKeyword = "";
+let currentKeyword;
+let currentStartdate;
+let currentEnddate;
 let maxPage;
 let startPage;
 let endPage;
 
+var temp_startdate;
+var temp_enddate;
+
 function checkNull(o) {
 	return (o == null || o.length <= 0 || o == undefined) ? true : false;
+};
+
+function dateToIntyyyymmdd(date) {
+	// var date = new Date();
+	var dd = String(date.getDate()).padStart(2, '0');
+	var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = date.getFullYear();
+	return parseInt("" + yyyy + mm + dd);
+}
+
+function dateToStringSlash(date) {
+	// var date = new Date();
+	var d = String(date.getDate());
+	var m = String(date.getMonth() + 1); //January is 0!
+	var yyyy = date.getFullYear();
+	return yyyy + '/' + m + '/' + d;
+}
+
+function parseDateyyyymmdd(yyyymmdd) {
+	yyyymmdd = yyyymmdd.toString();
+	return new Date(parseInt(yyyymmdd.substring(0, 4)), (parseInt(yyyymmdd.substring(4, 6)) - 1), parseInt(yyyymmdd.substring(6, 8)), 9);
 };
 
 function stateup() {
@@ -78,12 +104,20 @@ function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, evente
 		var gen_l_card_txt_location = '<div class="l-card-txt location"><span class="fa fa-map-marker"></span> ' +
 			'<span>' + addr1 + '</span></div>';
 	};
+	var today = dateToIntyyyymmdd(new Date());
+	if (today >= eventstartdate && today <= eventenddate) {
+		var ongoing = '진행중';
+	} else if (today < eventstartdate) {
+		var ongoing = '진행예정';
+	} else {
+		var ongoing = '진행종료';
+	}
 	var elm = '<a class="l-card item container" href="javascript:void(0)" onclick="openOverlay(' + contentid + ',' + mapx + ',' + mapy + ',' + 1 + '); " mapx="' + mapx + '" mapy="' + mapy + '" contentid="' + contentid + '">' +
 		gen_l_card_left +
 		'<div class="' + class_l_card_right + '">' +
 		'<div class="inline">' +
 		'<div class="l-card-txt dbtable">축제</div>' +
-		'<div class="l-card-txt ongoing">진행중</div>' +
+		'<div class="l-card-txt ongoing">' + ongoing + '</div>' +
 		'<div class="l-card-txt days"><span>' + eventstartdate + '</span> ~ ' +
 		'<span>' + eventenddate + '</span>' +
 		'</div>' +
@@ -100,9 +134,17 @@ function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, evente
 
 function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, infotext) {
 	var gen_imageheader = '<a class="img">';
+	var today = dateToIntyyyymmdd(new Date());
+	if (today >= eventstartdate && today <= eventenddate) {
+		var ongoing = '진행중';
+	} else if (today < eventstartdate) {
+		var ongoing = '진행예정';
+	} else {
+		var ongoing = '진행종료';
+	}
 	var elm =
 		'<div class="project-wrap map-overlay"' + 'contentid="' + contentid + '">' +
-		gen_imageheader + '<span class="price">진행중</span>' + '</a>' +
+		gen_imageheader + '<span class="price">' + ongoing + '</span>' + '</a>' +
 		'<a href="#" class="map-overlayclose" onclick="closeOverlay()" title="닫기"></a>' +
 		'<div class="text p-4">' +
 		'<span class="days"><span>' + eventstartdate + '</span> ~ <span>' + eventenddate + '</span></span>' +
@@ -157,7 +199,7 @@ function removeMarker() {
 // 	infowindows = new Map();
 // };
 
-function searchmap(keyword, page, mapx, mapy) {
+function searchmap(keyword, page, mapx, mapy, eventstartdate, eventenddate) {
 	params['keyword'] = keyword;
 	if (page == 1 || checkNull(page)) {
 		delete params['page'];
@@ -165,10 +207,22 @@ function searchmap(keyword, page, mapx, mapy) {
 		params['page'] = page;
 	}
 	delete params['contentid'];
+
+	var now = new Date();
+	if (!checkNull(eventstartdate) && parseDateyyyymmdd(eventstartdate).valueOf() != new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())).valueOf()) {
+		params['eventstartdate'] = eventstartdate;
+	} else {
+		delete params['eventstartdate'];
+	}
+	if (!checkNull(eventenddate) && parseDateyyyymmdd(eventenddate).valueOf() != new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())).valueOf()) {
+		params['eventenddate'] = eventenddate;
+	} else {
+		delete params['eventenddate'];
+	}
 	stateup();
 	$.ajax({
 		url: '/searchmap',
-		data: { keyword: keyword, page: page, mapx: mapx, mapy: mapy },
+		data: { keyword: keyword, page: page, mapx: mapx, mapy: mapy, eventstartdate: eventstartdate, eventenddate: eventenddate },
 		method: 'get',
 		dataType: 'json',
 		success: function (json) {
@@ -233,10 +287,10 @@ function elm_countsearchmap(count, page) {
 	return $(elm).prop('outerHTML');
 }
 
-function countsearchmap(keyword, page) {
+function countsearchmap(keyword, page, eventstartdate, eventenddate) {
 	$.ajax({
 		url: '/countsearchmap',
-		data: { keyword: keyword },
+		data: { keyword: keyword, eventstartdate: eventstartdate, eventenddate: eventenddate },
 		method: 'get',
 		dataType: 'text',
 		success: function (count) {
@@ -252,17 +306,27 @@ function searchmapinput() {
 	if (checkNull($('#map-searchform input[name="search"]').val())) {
 		var result = '<a class="l-card item l-card-none container"><div>검색어를 입력하십시오.</div></a>';
 		$('#map-searchlist').html(result);
-		$('#map-searchlist').removeAttr("style");
+		$('#map-searchlist').show();
 	} else {
 		currentKeyword = $('#map-searchform input[name="search"]').val();
-		searchmap(currentKeyword, 1, geoloc_lng, geoloc_lat);
-		countsearchmap(currentKeyword, 1);
+		currentStartdate = dateToIntyyyymmdd($('input[name="eventstartdate"]').datepicker('getDate'));
+		currentEnddate = dateToIntyyyymmdd($('input[name="eventenddate"]').datepicker('getDate'));
+		if (currentStartdate > currentEnddate) {
+			var result = '<a class="l-card item l-card-none container"><div>날짜범위가 잘못되었습니다.</div></a>';
+			$('#map-searchlist').html(result);
+			$('#map-searchlist').show();
+			$('#map-searchpager').html("");
+			$('#map-searchpager').hide();
+		} else {
+			searchmap(currentKeyword, 1, geoloc_lng, geoloc_lat, currentStartdate, currentEnddate);
+			countsearchmap(currentKeyword, 1, currentStartdate, currentEnddate);
+		}
 	}
 };
 
 function pagemove(page) {
-	searchmap(currentKeyword, page, geoloc_lng, geoloc_lat);
-	countsearchmap(currentKeyword, page);
+	searchmap(currentKeyword, page, geoloc_lng, geoloc_lat, currentStartdate, currentEnddate);
+	countsearchmap(currentKeyword, page, currentStartdate, currentEnddate);
 };
 
 $(document).ready(function () {
@@ -270,6 +334,8 @@ $(document).ready(function () {
 	params = $.deparam.querystring(true);
 	keyword = params.keyword;
 	page = params.page;
+	eventstartdate = params.eventstartdate;
+	eventenddate = params.eventenddate;
 	contentid = params.contentid;
 	getGeolocation();
 	customOverlay = new kakao.maps.CustomOverlay({
@@ -282,12 +348,19 @@ $(document).ready(function () {
 		$('#map-searchform input[name="search"]').val(currentKeyword);
 		$('#map-keyword').removeClass('keyword-empty');
 		$('#map-clearbtn').show();
+		if (!checkNull(eventstartdate) || !checkNull(eventenddate)) {
+			opensearchcal();
+			$('input[name="eventstartdate"]').datepicker("setDate", parseDateyyyymmdd(eventstartdate));
+			$('input[name="eventenddate"]').datepicker("setDate", parseDateyyyymmdd(eventenddate));
+			currentStartdate = eventstartdate;
+			currentEnddate = eventenddate;
+		}
 		if (Number.isInteger(page)) {
 			var page = page;
 		} else {
 			var page = 1;
 		}
-		searchmap(currentKeyword, page, geoloc_lng, geoloc_lat);
+		searchmap(currentKeyword, page, geoloc_lng, geoloc_lat, currentStartdate, currentEnddate);
 		pagemove(page);
 	}
 	if (!checkNull(contentid)) {
@@ -314,6 +387,11 @@ $(document).ready(function () {
 	}
 });
 
+$('.map-datepick').datepicker({
+	'format': 'yyyy/m/d',
+	'autoclose': true
+});
+
 $(document).on("click", ".btn-search", function () {
 	searchmapinput();
 });
@@ -337,7 +415,7 @@ $(document).on("click", ".pager-prev a", function () {
 	if ($('#map-searchpager li').eq(1).text() == 1) {
 
 	} else {
-		countsearchmap(currentKeyword, startPage - 5);
+		countsearchmap(currentKeyword, startPage - 5, currentStartdate, currentEnddate);
 	}
 });
 
@@ -345,18 +423,18 @@ $(document).on("click", ".pager-next a", function () {
 	if ($('#map-searchpager li').eq(-2).text() == maxPage) {
 
 	} else {
-		countsearchmap(currentKeyword, startPage + 5);
+		countsearchmap(currentKeyword, startPage + 5, currentStartdate, currentEnddate);
 	}
 });
 
-function clearsearch(){
+function clearsearch() {
 	$('#map-searchform input[name="search"]').val(null);
 	$('#map-keyword').addClass('keyword-empty');
 	$('#map-clearbtn').hide();
 	$('#map-searchlist').html("");
 	$('#map-searchlist').hide();
 	$('#map-searchpager').html("");
-	$('#map-searchpager').hide(); 
+	$('#map-searchpager').hide();
 }
 
 function opensearchcal() {
@@ -365,9 +443,23 @@ function opensearchcal() {
 	$('#map-calendarform').show();
 	$('#map-keyword').addClass('cal-open');
 	$('#map-searchbtn').appendTo($('#map-calendarform'));
+	if (!checkNull(temp_startdate)) {
+		$('input[name="eventstartdate"]').datepicker("setDate", temp_startdate);
+	} else {
+		$('input[name="eventstartdate"]').datepicker("setDate", new Date());
+	}
+	if (!checkNull(temp_enddate)) {
+		$('input[name="eventenddate"]').datepicker("setDate", temp_enddate);
+	} else {
+		$('input[name="eventenddate"]').datepicker("setDate", new Date());
+	}
 }
 
 function closesearchcal() {
+	temp_startdate = $('input[name="eventstartdate"]').datepicker("getDate");
+	temp_enddate = $('input[name="eventenddate"]').datepicker("getDate");
+	$('input[name="eventstartdate"]').datepicker("refresh");
+	$('input[name="eventenddate"]').datepicker("refresh");
 	$('#map-opencalbtn').show();
 	$('#map-closecalbtn').hide();
 	$('#map-calendarform').hide();
