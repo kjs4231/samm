@@ -40,38 +40,38 @@ function createPaging() {
 			$('#page-prev').after('<li class="hidden"><a href="searchfestival?keyword=' + keyword + '&page=' + (count - i) + '">' + (count - i) + '</a></li>');
 		}
 	}
-	let actvienum = Number($('ul').eq(1).children().eq(page).text());
+	let actvienum = Number($('#paging').children().eq(page).text());
 	var pnum = Math.floor(actvienum/10) *10;
-	$('ul').eq(1).children().not(".marking").addClass('hidden');
+	$('#paging').children().not(".marking").addClass('hidden');
 	for (i = 1; i <= 10; i++) {
-		$('ul').eq(1).children().eq(pnum + i).removeClass('hidden');
+		$('#paging').children().eq(pnum + i).removeClass('hidden');
 	}
 	console.log(page);
 
-	$('ul').eq(1).children().eq(page).addClass('active');
-	console.log($('ul').eq(1).children().eq(page).text())
+	$('#paging').children().eq(page).addClass('active');
+	console.log($('#paging').children().eq(page).text())
 }
 
 function nextpage() {
 	var count = Number($('#count').val());
-	var ten = Number($('ul').eq(1).children().not(".hidden").eq(10).text());
+	var ten = Number($('#paging').children().not(".hidden").eq(10).text());
 	if (count == ten || ten == 0) {
 		return;
 	}
-	$('ul').eq(1).children().not(".marking").addClass('hidden');
+	$('#paging').children().not(".marking").addClass('hidden');
 	for (i = 1; i <= 10; i++) {
-		$('ul').eq(1).children().eq(ten + i).removeClass('hidden');
+		$('#paging').children().eq(ten + i).removeClass('hidden');
 	}
 
 }
 function prevpage() {
-	var one = Number($('ul').eq(1).children().not(".hidden").eq(1).text());
+	var one = Number($('#paging').children().not(".hidden").eq(1).text());
 	if (one == 1) {
 		return;
 	}
-	$('ul').eq(1).children().not(".marking").addClass('hidden');
+	$('#paging').children().not(".marking").addClass('hidden');
 	for (i = 1; i <= 10; i++) {
-		$('ul').eq(1).children().eq(one - i).removeClass('hidden');
+		$('#paging').children().eq(one - i).removeClass('hidden');
 	}
 }
 
