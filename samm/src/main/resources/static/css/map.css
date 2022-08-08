@@ -112,22 +112,3 @@ body {
 	z-index: 3;
 	background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
 }
-
-.animate {
-	position: relative;
-	animation: leftright 3s infinite alternate ease-in-out;
-}
-
-@keyframes leftright {
-	0%,
-	20% {
-		transform: translateX(0%);
-		left: 0%;
-	}
-
-	80%,
-	100% {
-		transform: translateX(-100%);
-		left: 100%;
-	}
-}
