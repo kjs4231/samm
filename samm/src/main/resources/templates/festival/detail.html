@@ -195,7 +195,7 @@
 		<form id="festival--review" class="p-5 bg-light" name="review">
 			<div class="hidden-session">
 				<input th:if="${session.loginuser} != null" class="form-control"
-					name="uid" id="uid" th:value="${session.loginuser.id}" hidden>
+					name="uid" id="uuid" th:value="${session.loginuser.id}" hidden>
 				<input class="form-control" name="fid" id="fid"
 					th:value="${festival.contentid}" hidden>
 			</div>
