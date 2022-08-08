@@ -87,7 +87,7 @@ public class BoardController {
 		}
 		
 		m.addAttribute("center", "/board");
-		return "redirect:/board";
+		return "redirect:/board/detail?bno="+bno;
 	}
 	
 	@RequestMapping("/board/remove")

@@ -1,13 +1,12 @@
 package com.samm.mapper;
 import java.util.List;
-
-
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.samm.vo.BoardVo;
+import com.samm.vo.SearchCondition;
 
 @Repository
 @Mapper
@@ -24,9 +23,8 @@ public interface BoardMapper {
     public List<BoardVo> selectPage(Map map) throws Exception;
     public int deleteAll() throws Exception;
     public int count() throws Exception;
-	/*
-	 * public int searchResultCnt(SearchCondition sc) throws Exception; public
-	 * List<BoardVo> searchSelectPage(SearchCondition sc) throws Exception;
-	 */
-	
+    
+    public int searchResultCnt(SearchCondition sc) throws Exception;
+    public List<BoardVo> searchSelectPage(SearchCondition sc) throws Exception;
+	public int updateCommentCnt(Integer bno, int cnt);
 }

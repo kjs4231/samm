@@ -25,6 +25,13 @@ public class BoardVo {
 	private Date up_date;
 	private Date del_date;
 	private String img;
+	private Integer page = 1;
+	private Integer pageSize = 12;
+	private Integer offset = 0;
+	private String keyword = "";
+	private String option = "";
+	
+	
 
 
 

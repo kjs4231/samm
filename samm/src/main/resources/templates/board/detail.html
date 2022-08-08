@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="en">
 <head>
 <title>Pacific - Free Bootstrap 4 Template by Colorlib</title>
@@ -41,7 +41,6 @@
 				}
 				if (confirm("삭제하시겠습니까?"))
 				var bno= $('#bno').val()
-				alert(bno)
 				location.href='/board/remove?bno='+bno; 
 
 			});
@@ -55,19 +54,16 @@
 
 				if (confirm("수정하시겠습니까?"))
 					var bno= $('#bno').val()
-					alert(bno)
 					location.href='/board/revise?bno='+bno; 
 					 
 					  e.preventDefault();
-/* 						
-					 $('#titleform').attr("action", "/board/revise");
-					 
-				$('#titleform').attr("method", "post");
-				$('#titleform').submit();   */
-
 			});
+			
+		
 
 		});
+		
+		
 	</script>
 	<!-- END nav -->
 
@@ -102,28 +98,23 @@
 					<form id="titleform"
 						class="tag-widget post-tag-container mb-5 mt-5">
 						
-						<input th:value="${dp.bno}"  name="bno" hidden id="bno"> 
-						글번호:<a th:text="${dp.bno}"></a> 아이디:<a id="contentid" th:text="${dp.writer}">아이디</a> 조회수:<a th:text="${dp.view_cnt}">내용</a>
-						작성일:<a th:text="${dp.reg_date}">내용</a> 수정일:<a th:text="${dp.up_date}">내용</a> <div class="tagcloud">
-
-							<!-- <b class="btn btn-default" onclick="location.href='/board/write'">글쓰기</a> -->
-
+						<input th:value="${dp.bno}" name="bno" hidden id="bno"> 
+						글번호:<a th:text="${dp.bno}">글번호</a> 
+						아이디:<a id="contentid" th:text="${dp.writer}">아이디</a> 
+						조회수:<a th:text="${dp.view_cnt}">조회수</a>
+						작성일:<a th:text="${dp.reg_date}">작성일</a> 
+						수정일:<a th:text="${dp.up_date}">수정일</a> 
+						
+						<div class="tagcloud">
 							<button id="reviseBtn"  class="btn btn-default"
 								>revise</button>
 							<button id="deleteBtn" class="btn btn-default"
 								>delete</button>
-
 						</div>
+						
 					</form>
-					<h2 class="mb-3" th:text="${dp.title}">It is a long
-						established fact a reader be distracted</h2>
-					<p th:utext="${dp.content}">Lorem ipsum dolor sit amet,
-						consectetur adipisicing elit. Reiciendis, eius mollitia suscipit,
-						quisquam doloremque distinctio perferendis et doloribus unde
-						architecto optio laboriosam porro adipisci sapiente officiis nemo
-						accusamus ad praesentium? Esse minima nisi et. Dolore perferendis,
-						enim praesentium omnis, iste doloremque quia officia optio
-						deserunt molestiae voluptates soluta architecto tempora.</p>
+					<h2 class="mb-3" th:text="${dp.title}">제목</h2>
+					<p th:utext="${dp.content}">내용.</p>
 
 
 					<div class="about-author d-flex p-4 bg-light">
@@ -143,34 +134,18 @@
 
 
 
-				<div class="pt-5 mt-5">
+				<div class="pt-5 mt-5" th:each="c:${clist}>
 					<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">6
 						Comments</h3>
-					<ul class="comment-list">
+					<ul class="comment-list" >
+						
 						<li class="comment">
 							<div class="vcard bio">
 								<img src="images/person_1.jpg" alt="Image placeholder">
 							</div>
-							<div class="comment-body">
-								<h3>John Doe</h3>
-								<div class="meta">September 11, 2020 at 2:21pm</div>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Pariatur quidem laborum necessitatibus, ipsam impedit vitae
-									autem, eum officia, fugiat saepe enim sapiente iste iure! Quam
-									voluptas earum impedit necessitatibus, nihil?</p>
-								<p>
-									<a href="#" class="reply">Reply</a>
-								</p>
-							</div>
-						</li>
-
-						<li class="comment">
-							<div class="vcard bio">
-								<img src="images/person_1.jpg" alt="Image placeholder">
-							</div>
-							<div class="comment-body">
-								<h3>John Doe</h3>
-								<div class="meta">September 11, 2020 at 2:21pm</div>
+							<div class="comment-body" th:text="${c.commenter}">
+								<h3>lee</h3>
+								<div class="meta" th:text="${c.comment}">September 11, 2020 at 2:21pm</div>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 									Pariatur quidem laborum necessitatibus, ipsam impedit vitae
 									autem, eum officia, fugiat saepe enim sapiente iste iure! Quam
@@ -186,7 +161,7 @@
 										<img src="images/person_1.jpg" alt="Image placeholder">
 									</div>
 									<div class="comment-body">
-										<h3>John Doe</h3>
+										<h3>kim</h3>
 										<div class="meta">September 11, 2020 at 2:21pm</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
 											elit. Pariatur quidem laborum necessitatibus, ipsam impedit
@@ -197,45 +172,10 @@
 										</p>
 									</div>
 
-
-									<ul class="children">
-										<li class="comment">
-											<div class="vcard bio">
-												<img src="images/person_1.jpg" alt="Image placeholder">
-											</div>
-											<div class="comment-body">
-												<h3>John Doe</h3>
-												<div class="meta">September 11, 2020 at 2:21pm</div>
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-													elit. Pariatur quidem laborum necessitatibus, ipsam impedit
-													vitae autem, eum officia, fugiat saepe enim sapiente iste
-													iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-												<p>
-													<a href="#" class="reply">Reply</a>
-												</p>
-											</div>
-										</li>
-									</ul>
 								</li>
 							</ul>
 						</li>
-
-						<li class="comment">
-							<div class="vcard bio">
-								<img src="images/person_1.jpg" alt="Image placeholder">
-							</div>
-							<div class="comment-body">
-								<h3>John Doe</h3>
-								<div class="meta">September 11, 2020 at 2:21pm</div>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Pariatur quidem laborum necessitatibus, ipsam impedit vitae
-									autem, eum officia, fugiat saepe enim sapiente iste iure! Quam
-									voluptas earum impedit necessitatibus, nihil?</p>
-								<p>
-									<a href="#" class="reply">Reply</a>
-								</p>
-							</div>
-						</li>
+				
 					</ul>
 					<!-- END comment-list -->
 
@@ -243,6 +183,7 @@
 						<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">Leave
 							a comment</h3>
 						<form action="#" class="p-5 bg-light">
+							<!-- 댓글폼 -->
 							<div class="form-group">
 								<label for="name">Name *</label> <input type="text"
 									class="form-control" id="name">
@@ -262,8 +203,9 @@
 									class="form-control"></textarea>
 							</div>
 							<div class="form-group">
-								<input type="submit" value="Post Comment"
-									class="btn py-3 px-4 btn-primary">
+								<!-- <input type="submit" value="Post Comment"
+									class="btn py-3 px-4 btn-primary"> -->
+									<button id=sendBtn type="button" class="btn py-3 px-4 btn-primary">Post Comment</button>
 							</div>
 
 						</form>

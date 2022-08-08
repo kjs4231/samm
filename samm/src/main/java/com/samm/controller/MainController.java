@@ -23,6 +23,7 @@ import com.samm.vo.AdmintblVo;
 import com.samm.vo.BoardVo;
 import com.samm.vo.FestivalVo;
 import com.samm.vo.PageHadller;
+import com.samm.vo.SearchCondition;
 import com.samm.vo.UsersVo;
 
 @Controller
@@ -142,7 +143,7 @@ public class MainController {
 	}
 
 	@RequestMapping("/board")
-	public String main(Model m, Integer page, Integer pageSize) {
+	public String main(Model m, SearchCondition sc) {
 		List<BoardVo> blist = null;
 		try {
 			/*
@@ -154,20 +155,21 @@ public class MainController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(page==null) page=1;
-		if(pageSize==null) pageSize=12;
+		
 		
 		
 		try {
-			int totalCnt = bbiz.getCount();
-			PageHadller pageHandller = new PageHadller(totalCnt, page, pageSize);
+			int totalCnt = bbiz.getSearchResultCnt(sc);
+			PageHadller pageHandller = new PageHadller(totalCnt, sc);
 			
+			/*if(page==null) page=1;
+			if(pageSize==null) pageSize=12;*/
 			
-			Map map = new HashMap();
+			/*Map map = new HashMap();
 			map.put("offset", (page-1)*pageSize);
-			map.put("pageSize", pageSize);
+			map.put("pageSize", pageSize);*/
 		
-			blist = bbiz.getPage(map);
+			blist = bbiz.getSearchResultPage(sc);
 			m.addAttribute("blist", blist);
 			m.addAttribute("center", "board");
 			m.addAttribute("ph",pageHandller);
