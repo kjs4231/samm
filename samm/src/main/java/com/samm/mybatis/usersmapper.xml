@@ -3,8 +3,7 @@
 <mapper namespace="com.samm.mapper.UsersMapper">
 
 	<select id="select" parameterType="String" resultType="UsersVo">
-		SELECT *
-		FROM users WHERE id=#{id}
+		SELECT * FROM users WHERE id=#{id}
 	</select>
 	<select id="selectAll" resultType="UsersVo">
 		SELECT * FROM users

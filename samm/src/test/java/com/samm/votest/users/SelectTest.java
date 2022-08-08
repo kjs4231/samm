@@ -17,7 +17,7 @@ class SelectTest {
 	void contextLoads() {
 		UsersVo obj = null;
 		try {
-			obj = biz.get("id45");
+			obj = biz.get("id01");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
