@@ -1,4 +1,4 @@
-package com.samm.votest.board;
+package com.samm.votest.board.comment;
 
 import java.util.List;
 
@@ -7,33 +7,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.samm.biz.BoardBiz;
+import com.samm.biz.CommentBiz;
+import com.samm.mapper.BoardMapper;
+import com.samm.mapper.CommentMapper;
 import com.samm.vo.BoardVo;
+import com.samm.vo.CommentVo;
 import com.samm.vo.SearchCondition;
+import com.samm.vo.UsersVo;
 
 @SpringBootTest
-class InsertTest {
-	
+class SelectTest {
+
 	@Autowired
-	BoardBiz biz;
+	BoardBiz bbiz;
+	@Autowired
+	CommentBiz cbiz;
 
 	@Test
 	void contextLoads() {
-		SearchCondition sc = new SearchCondition("title1");
-		BoardVo obj = new BoardVo("test","content223");
-		List<BoardVo> list = null;
-		
+		CommentVo obj = null;
 		try {
-			list= biz.getSearchResultPage(sc);
-					System.out.println("List = " + list);
+			obj = cbiz.read(4);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(obj);
-		/*
-		 * try { biz.write(obj); System.out.println("test 완료"); } catch (Exception e) {
-		 * // TODO Auto-generated catch block e.printStackTrace(); }
-		 */
 	}
-
 }
