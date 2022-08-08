@@ -39,7 +39,8 @@
  		WHERE
 		a.areacode=#{areacode} AND
 		a.eventstartdate <![CDATA[ <= #{eventstartdate}]]> AND
-		a.eventenddate <![CDATA[ >= #{eventenddate}]]>
+		a.eventenddate <![CDATA[ >= #{eventenddate}]]> AND
+		b.del_date is null
 		GROUP BY a.contentid
 		ORDER BY a.eventstartdate desc
 	</select>

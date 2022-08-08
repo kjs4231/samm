@@ -1,5 +1,7 @@
 package com.samm.vo;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,15 +15,9 @@ import lombok.ToString;
 @ToString
 public class WishVo {
     private int id;
-    private String tablename;
-    private String fid;
+    private Date regdate;
+    private int fid;
     private String uid;
-    private Integer id2;
 
-    public WishVo(String tablename, String fid, String uid, Integer id2) {
-        this.tablename = tablename;
-        this.fid = fid;
-        this.uid = uid;
-        this.id2 = id2;
-    }
+
 }

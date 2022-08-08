@@ -4,6 +4,11 @@
 .hidden {
 	display: none !important;
 }
+/* .active{
+    background: #33313b; 
+    color: #fff; 
+    border: 1px solid transparent;
+} */
 </style>
 <section class="hero-wrap hero-wrap-2 js-fullheight"
 	style="background-image: url('images/festival2.jpg');">
@@ -156,6 +161,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 </section>
 
 
@@ -195,7 +201,12 @@
 							<span class="fa fa-map-marker"></span><span
 								th:text="${list.addr1}"></span>
 						</p>
-
+						<ul>
+							<li><i class="bi bi-eye star"></i> <span class="view_cnt"
+								th:text="${list.view_cnt}"></span></li>
+							<li><i class="bi bi-stars star"></i><span></span>0</li>
+							<!-- <li><span class="flaticon-mountains"></span>Near Mountain</li> -->
+						</ul>
 
 					</div>
 				</div>
@@ -229,8 +240,9 @@
 							<span class="fa fa-map-marker"></span><span
 								th:text="${list.addr1}"></span>
 						</p>
- 						<ul>
-							<li><i class="bi bi-eye star"></i> <span class="view_cnt" th:text="${list.view_cnt}"></span> </li>
+						<ul>
+							<li><i class="bi bi-eye star"></i> <span class="view_cnt"
+								th:text="${list.view_cnt}"></span></li>
 							<li><i class="bi bi-stars star"></i><span></span>0</li>
 							<!-- <li><span class="flaticon-mountains"></span>Near Mountain</li> -->
 						</ul>
@@ -246,8 +258,8 @@
 		<div class="row mt-5">
 			<div class="col text-center">
 				<div class="block-27">
-					<input hidden th:value="${count}" id="count"> 
-					<input hidden th:value="${keyword}" id="keyword">
+					<input hidden th:value="${count}" id="count"> <input hidden
+						th:value="${keyword}" id="keyword">
 					<ul th:if="${keyword} != null" id="paging">
 						<li id="page-prev" class="marking"><a onClick="prevpage()">&lt;</a></li>
 						<li id="page-next" class="marking"><a onClick="nextpage()">&gt;</a></li>

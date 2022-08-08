@@ -11,7 +11,7 @@ import com.samm.vo.WishVo;
 @Mapper
 public interface WishMapper {
     public void insert(WishVo v) throws Exception;
-    public void delete(int k) throws Exception;
+    public void delete(WishVo v) throws Exception;
     // public void update(WishVo v) throws Exception; 
     public WishVo select(int k) throws Exception;
     public List<WishVo> selectAll() throws Exception;
