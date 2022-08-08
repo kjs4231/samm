@@ -73,7 +73,7 @@ function submitReview() {
 			return;
 		}
 
-		if ($('#uid').val() == null) {
+		if ($('#uuid').val() == null || $('#uuid').val() == "") {
 			alert("login후 이용 가능합니다.")
 		} else {
 			$('#festival--review').attr({
@@ -108,19 +108,19 @@ function getWish() {
 	let fid = $('#fid').val();
 	if (loginuser != null) {
 		$.ajax({
-			url : "getWish",
-			data : { 
-				"loginuser": loginuser, 
-				"fid": fid 
-			 },
-			success : function(data) {
+			url: "getWish",
+			data: {
+				"loginuser": loginuser,
+				"fid": fid
+			},
+			success: function(data) {
 				$('.heart').children().addClass(data);
 			},
-			fail : function(){
+			fail: function() {
 				alert("error")
 			}
 		})
-	}else{
+	} else {
 		$('.heart').children().addClass("bi-heart");
 	}
 }
@@ -284,7 +284,7 @@ function updateReview(pnum, index) {
 					"fid": fid
 				},
 				success: function(data) {
-					alert(data);
+
 				}
 
 			})
@@ -293,14 +293,17 @@ function updateReview(pnum, index) {
 }
 
 function deleteReview(pnum) {
-	$.ajax({
-		url: "deleteReview",
-		data: { "pnum": pnum },
-		success: function(data) {
-			alert(data);
-			$('#reviewlist' + pnum).remove();
-		}
-	})
+	if (confirm("삭제하시겠습니까>")) {
+		$.ajax({
+			url: "deleteReview",
+			data: { "pnum": pnum },
+			success: function(data) {
+				alert(data);
+				$('#reviewlist' + pnum).remove();
+			}
+		})
+	}
+
 }
 
 
