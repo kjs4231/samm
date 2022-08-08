@@ -46,8 +46,18 @@ public class UsersController {
 	}
 	
 	@RequestMapping("/users/mypage")
-	public String mypage(Model m) {
+	public String mypage(Model m,String id) {
+		System.out.println("id::"+id);
+		UsersVo users = null;
+		try {
+			users = ubiz.get(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("users::"+users);
 		
+		m.addAttribute("users",users);
 		m.addAttribute("center", "/users/mypage");
 		return "index";
 	}
