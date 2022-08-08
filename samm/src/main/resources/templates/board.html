@@ -146,9 +146,12 @@ function goDetail(bno){
 		<div class="col text-center">
 			<div class="block-27 ">
 				<ul>
-
-					<li><a th:value="${ph.showPrev}" href="#">&lt;</a></li>
-					<li class="active"><span>1</span></li>
+					<li><a href="#">&lt;</a></li>
+						<span th:each="page:${#numbers.sequence(ph.beginPage,ph.endPage)}">
+						<li class="active">
+							<a th:text="${page}"></a>
+						</li>
+					</span>
 					<li><a href="#">&gt;</a></li>
 				</ul>
 			</div>
