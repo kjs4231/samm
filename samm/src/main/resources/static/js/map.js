@@ -153,7 +153,7 @@ function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, info
 		'<p class="location"><span class="fa fa-map-marker"></span> <span>' + addr1 + '</span></p>' +
 		'<a class="btn-map-gobtn" href="/detail?contentid=' + contentid + '">이 축제 가기</a>' +
 		'<div class="detail-icon">' +
-		'<a class="heart dicon" onClick="registerWish()"><i class="bi bi-heart"></i></a> ' +
+		'<a class="heart dicon" href="javascript:void(0);"><i class="bi bi-heart"></i></a> ' +
 		'<span class="dicon" data-toggle="modal" data-target="#myModal"><a class="share"><i class="bi bi-share" ></i></a></span>' +
 		'</div>' +
 		'</div>' +
@@ -329,6 +329,67 @@ function pagemove(page) {
 	countsearchmap(currentKeyword, page, currentStartdate, currentEnddate);
 };
 
+function getWishMap() {
+	let loginuser = $('#loginuser').val();
+	let fid = $('.map-overlay').attr('contentid');
+	if (loginuser != null) {
+		$.ajax({
+			url: "getWish",
+			data: {
+				"loginuser": loginuser,
+				"fid": fid
+			},
+			success: function(data) {
+				$('.heart').children().addClass(data);
+			},
+			fail: function() {
+				alert("error")
+			}
+		})
+	} else {
+		$('.heart').children().addClass("bi-heart");
+	}
+}
+
+
+function registerWishMap(event) {
+	let loginuser = $('#loginuser').val();
+	let fid = $(event.target).parent().parent().attr('contentid');
+	if (loginuser == null || loginuser == "") {
+		alert("login 후 이용 가능합니다");
+	} else {
+		if ($(event.target).children().hasClass("bi-heart")) {
+			$.ajax({
+				url: "registerWish",
+				data: {
+					"uid": loginuser,
+					"fid": fid
+				},
+				success: function(data) {
+					alert(data)
+				}
+			})
+			$(event.target).children().toggleClass("bi-heart");
+			$(event.target).children().toggleClass("bi-heart-fill");
+		} else {
+			console.log("bye")
+			$.ajax({
+				url: "deleteWish",
+				data: {
+					"uid": loginuser,
+					"fid": fid
+				},
+				success: function(data) {
+					alert(data)
+				}
+			})
+			$(event.target).children().toggleClass("bi-heart-fill");
+			$(event.target).children().toggleClass("bi-heart");
+		}
+
+	}
+}
+
 $(document).ready(function () {
 	path = window.location.origin + window.location.pathname;
 	params = $.deparam.querystring(true);
@@ -425,6 +486,10 @@ $(document).on("click", ".pager-next a", function () {
 	} else {
 		countsearchmap(currentKeyword, startPage + 5, currentStartdate, currentEnddate);
 	}
+});
+
+$(document).on("click", ".map-overlay .heart", function (event) {
+	registerWishMap(event);
 });
 
 function clearsearch() {
