@@ -1,9 +1,116 @@
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <section class="hero-wrap hero-wrap-2 js-fullheight"
-	style="background-image: url('images/bg_1.jpg');">
+	style="background-image: url('/images/festival11.jpg');">
 	<div class="overlay"></div>
-
 	<div class="container">
-		<h1>mypage</h1>
+		<div
+			class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+			<div class="col-md-9 ftco-animate pb-5 text-center">
+				<p class="breadcrumbs">
+					<span class="mr-2"><a href="/">Home <i
+							class="fa fa-chevron-right"></i></a></span> <span>Mypage<i
+						class="fa fa-chevron-right"></i></span>
+				</p>
+				<h1 class="mb-0 bread">My page</h1>
+			</div>
+		</div>
 	</div>
 </section>
+<div class="container">
+	<div class="row py-5 px-4 justify-content-center">
+		<div class="col-md-12 mx-auto">
+			<!-- Profile widget -->
+			<div class="bg-white shadow rounded overflow-hidden">
+				<div class="px-4 pt-2 pb-4 cover">
+					<div class="media align-items-end profile-head">
+						<div class="profile mr-3">
+							<img th:src=${users.profile_img} alt="..." width="130"
+								class="rounded mb-2 img-thumbnail"><a href="#"
+								class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+						</div>
+						<div class="media-body mb-5 text-white">
+							<h4 class="mt-0 mb-0" th:if="${users.pwd} == null"
+								th:text="${users.name}+' (Kakao Account)'">Mark Williams</h4>
+							<h4 class="mt-0 mb-0" th:unless="${users.pwd} == null"
+								th:text="${users.name}">Mark Williams</h4>
+							<p class="small mb-4">
+								<i class="fas fa-map-marker-alt mr-2"></i>New York
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="bg-light p-4 d-flex justify-content-end text-center">
+					<ul class="list-inline mb-0">
+						<li class="list-inline-item">
+							<h5 class="font-weight-bold mb-0 d-block">215</h5> <small
+							class="text-muted"> <i class="fas fa-image mr-1"></i>Wish
+						</small>
+						</li>
+						<li class="list-inline-item">
+							<h5 class="font-weight-bold mb-0 d-block">745</h5> <small
+							class="text-muted"> <i class="fas fa-user mr-1"></i>Review
+						</small>
+						</li>
+						<li class="list-inline-item">
+							<h5 class="font-weight-bold mb-0 d-block">340</h5> <small
+							class="text-muted"> <i class="fas fa-user mr-1"></i>Board
+						</small>
+						</li>
+					</ul>
+				</div>
+				<div class="px-4 py-3">
+					<h5 class="mb-0">About</h5>
+					<div class="p-4 rounded shadow-sm bg-light">
+						<p class="font-italic mb-0" th:if="${users.pwd} == null">
+							<span>ID : </span>Kakao Account
+						</p>
+						<p class="font-italic mb-0" th:unless="${users.pwd} == null">
+							<span>ID : </span><span th:text=${users.id}></span>
+						</p>
+						<p class="font-italic mb-0">
+							<span>Email : </span><span th:text="${users.email}"></span>
+						</p>
+						<p class="font-italic mb-0">
+							<span>Address : </span><span th:text="${users.address}"></span>
+						</p>
+						<p class="font-italic mb-0">
+							<span>Phone : </span><span th:text="${users.phone}"></span>
+						</p>
+						<p class="font-italic mb-0">
+							<span>Gender : </span><span th:text="${users.gender}"></span>
+						</p>
+						<a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit</a>
+					</div>
+				</div>
+				<div class="py-4 px-4">
+					<div class="d-flex align-items-center justify-content-between mb-3">
+						<h5 class="mb-0">Wish</h5>
+						<a href="#" class="btn btn-link text-muted">Show all</a>
+					</div>
+					<div class="p-4 rounded shadow-sm bg-light">wish list</div>
+				</div>
+				<div class="py-4 px-4">
+					<div class="d-flex align-items-center justify-content-between mb-3">
+						<h5 class="mb-0">Last Review</h5>
+						<a href="#" class="btn btn-link text-muted">Show all</a>
+					</div>
+					<div class="p-4 rounded shadow-sm bg-light">wish list</div>
+				</div>
+				<div class="py-4 px-4">
+					<div class="d-flex align-items-center justify-content-between mb-3">
+						<h5 class="mb-0">Last Board</h5>
+						<a href="#" class="btn btn-link text-muted">Show all</a>
+					</div>
+					<div class="p-4 rounded shadow-sm bg-light">wish list</div>
+				</div>
+				<div class="py-4 px-4">
+					<div class="d-flex align-items-center justify-content-between mb-3">
+						<h5 class="mb-0">Request Photo</h5>
+						<a href="#" class="btn btn-link text-muted">Show all</a>
+					</div>
+					<div class="p-4 rounded shadow-sm bg-light">wish list</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
