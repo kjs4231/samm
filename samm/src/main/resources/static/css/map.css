@@ -112,3 +112,26 @@ body {
 	z-index: 3;
 	background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
 }
+
+.project-wrap.map-overlay .detail-icon {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.project-wrap.map-overlay .dicon {
+	display: inline-block;
+	margin: 2px 5px 0;
+	padding: 2px 0 0;
+	width: 25px;
+	height: 25px;
+}
+
+.project-wrap.map-overlay .bi-heart {
+	width: 25px;
+	height: 25px;
+}
+
+.project-wrap.map-overlay .share {
+	width: 25px;
+	height: 25px;
+}

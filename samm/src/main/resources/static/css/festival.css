@@ -203,6 +203,10 @@
 	width: 25rem;
 }
 
+.s003.searchbox-close {
+	width: 74px;
+}
+
 .s003 form {
 	width: 100%;
 	max-width: 790px;
@@ -256,21 +260,21 @@
 
 /*.s003 form .inner-form*/
 #map-keyword {
-	width: calc(100% - 160px);
+	width: calc(100% - 210px);
 	border: 0;
 }
 
 /*.s003 form .inner-form*/
 #map-keyword.keyword-empty {
-	width: calc(100% - 110px);
+	width: calc(100% - 160px);
 }
 
 #map-keyword.cal-open {
-	width: calc(100% - 100px);
+	width: calc(100% - 150px);
 }
 
 #map-keyword.keyword-empty.cal-open {
-	width: calc(100% - 50px);
+	width: calc(100% - 100px);
 }
 
 /*.s003 form .inner-form*/
@@ -346,6 +350,30 @@
 }
 
 #map-closecalbtn svg {
+	width: 16px;
+}
+
+/*.s003 form .inner-form*/
+#map-opensearchbox {
+	width: 50px;
+	border: 0;
+	margin: 0;
+	padding: 17px 12px;
+}
+
+#map-opensearchbox svg {
+	width: 16px;
+}
+
+/*.s003 form .inner-form*/
+#map-closesearchbox {
+	width: 50px;
+	border: 0;
+	margin: 0;
+	padding: 17px 12px;
+}
+
+#map-closesearchbox svg {
 	width: 16px;
 }
 
@@ -525,6 +553,9 @@
 }
 
 @media screen and (max-width: 767px) {
+	.s003 {
+		width: 100%;
+	}
 	/* .s003 form .inner-form {
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
@@ -572,11 +603,14 @@
 .s003 #map-searchlist {
 	width: 100%;
 	height: calc(100vh - 250px);
-	;
 	max-width: 790px;
 	margin: 0;
 	padding: 0;
 	overflow: scroll;
+}
+
+.s003 #map-searchlist.cal-open {
+	height: calc(100vh - 295px);
 }
 
 .s003 .l-card {
