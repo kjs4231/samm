@@ -94,6 +94,20 @@
 		<div class="s003 d-flex flex-column" id="map-searchbox">
 			<form class="item" id="map-searchform">
 				<div id="map-keywordform" class="inner-form">
+					<button id="map-opensearchbox" onclick="opensearchbox()" style="display:none;" class="btn" type="button">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+							<!--! Font Awesome Pro 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+							<path fill="currentColor"
+								d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z" />
+						</svg>
+					</button>
+					<button id="map-closesearchbox" onclick="closesearchbox()" class="btn" type="button">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">-->
+							<!--! Font Awesome Pro 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+							<path fill="currentColor"
+								d="M352 352c-8.188 0-16.38-3.125-22.62-9.375L192 205.3l-137.4 137.4c-12.5 12.5-32.75 12.5-45.25 0s-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25C368.4 348.9 360.2 352 352 352z" />
+						</svg>
+					</button>
 					<div id="map-keyword" class="keyword-empty ">
 						<input name="search" type="text" placeholder="Enter Keywords?" />
 						<input type="text" style="display:none;">
@@ -192,19 +206,18 @@
 					<h4 class="modal-title">Share Festival</h4>
 				</div>
 				<div class="modal-body mbody1">
-					<a onClick="shareTwitter()"><i
-						class="bi bi-twitter share-icon-i"></i> <span class="icon-text">Twitter</span></a>
-					<a onClick="shareFacebook()"><i
-						class="bi bi-facebook share-icon-i"></i> <span class="icon-text">Facebook</span></a>
+					<a onClick="shareTwitter()"><i class="bi bi-twitter share-icon-i"></i> <span
+							class="icon-text">Twitter</span></a>
+					<a onClick="shareFacebook()"><i class="bi bi-facebook share-icon-i"></i> <span
+							class="icon-text">Facebook</span></a>
 					<a onClick="shareKakao()"> <img
-						src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-						alt="카카오톡 공유 보내기 버튼" class="share-icon-i" style="width: 50px;" /><span
-						class="icon-text">Kakao</span>
+							src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+							alt="카카오톡 공유 보내기 버튼" class="share-icon-i" style="width: 50px;" /><span
+							class="icon-text">Kakao</span>
 					</a>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default modal-close"
-						data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default modal-close" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 
