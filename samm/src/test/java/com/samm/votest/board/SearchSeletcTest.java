@@ -11,29 +11,25 @@ import com.samm.vo.BoardVo;
 import com.samm.vo.SearchCondition;
 
 @SpringBootTest
-class InsertTest {
+class SearchSeletcTest {
 	
 	@Autowired
 	BoardBiz biz;
 
 	@Test
 	void contextLoads() {
-		SearchCondition sc = new SearchCondition("title1");
-		BoardVo obj = new BoardVo("test","content223");
+		SearchCondition sc = new SearchCondition(1, 10, "title15", "T");
 		List<BoardVo> list = null;
 		
 		try {
 			list= biz.getSearchResultPage(sc);
+			int cnt = biz.getSearchResultCnt(sc);
 					System.out.println("List = " + list);
+					System.out.println("cnt = " + cnt);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(obj);
-		/*
-		 * try { biz.write(obj); System.out.println("test 완료"); } catch (Exception e) {
-		 * // TODO Auto-generated catch block e.printStackTrace(); }
-		 */
 	}
 
 }
