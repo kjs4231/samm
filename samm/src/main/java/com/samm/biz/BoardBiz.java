@@ -1,4 +1,4 @@
-package com.samm.biz;
+   package com.samm.biz;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.samm.frame.Biz;
 import com.samm.mapper.BoardMapper;
 import com.samm.vo.BoardVo;
+import com.samm.vo.SearchCondition;
 
 @Service
 public class BoardBiz implements Biz<Integer, BoardVo> {
@@ -24,6 +25,7 @@ public class BoardBiz implements Biz<Integer, BoardVo> {
     }
 
     public void write(BoardVo v) throws Exception {
+    	
        boardDao.insert(v);
     }
 
@@ -62,7 +64,7 @@ public class BoardBiz implements Biz<Integer, BoardVo> {
 	@Override
 	public BoardVo get(Integer k) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return boardDao.select(k);
 	}
 
 	@Override
@@ -71,13 +73,12 @@ public class BoardBiz implements Biz<Integer, BoardVo> {
 		return null;
 	}
 
-    /*@Override
-    public int getSearchResultCnt(SearchCondition sc) throws Exception {
+   
+	public int getSearchResultCnt(SearchCondition sc) throws Exception {
         return boardDao.searchResultCnt(sc);
     }
 
-    @Override
     public List<BoardVo> getSearchResultPage(SearchCondition sc) throws Exception {
         return boardDao.searchSelectPage(sc);
-    }*/
+    }
 }
