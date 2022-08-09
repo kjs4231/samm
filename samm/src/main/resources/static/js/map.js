@@ -142,6 +142,11 @@ function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, info
 	} else {
 		var ongoing = '진행종료';
 	}
+	if (!checkNull(infotext)) {
+		elm_infotext = '<span class="detail">' + infotext + '</span>';
+	} else {
+		elm_infotext = '';
+	}
 	var elm =
 		'<div class="project-wrap map-overlay"' + 'contentid="' + contentid + '">' +
 		gen_imageheader + '<span class="price">' + ongoing + '</span>' + '</a>' +
@@ -149,7 +154,7 @@ function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, info
 		'<div class="text p-4">' +
 		'<span class="days"><span>' + eventstartdate + '</span> ~ <span>' + eventenddate + '</span></span>' +
 		'<h3 class="animate"><a href="/detail?contentid=' + contentid + '"><input name="contentid" hidden value="' + contentid + '">' + title + '</a></h3>' +
-		'<span class="detail">' + infotext + '</span>' +
+		elm_infotext +
 		'<p class="location"><span class="fa fa-map-marker"></span> <span>' + addr1 + '</span></p>' +
 		'<a class="btn-map-gobtn" href="/detail?contentid=' + contentid + '">이 축제 가기</a>' +
 		'<div class="detail-icon">' +
@@ -486,6 +491,40 @@ $(document).on("click", ".pager-next a", function () {
 	}
 });
 
+function shareTwitter() {
+	var sendText = title; // 전달할 텍스트
+	var sendUrl = url; // 전달할 URL
+	window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl, 'Twitter',
+		'top=10,left=10,height=300, status=no, menubar=no, toolbar=no, resizable=no');
+}
+
+function shareFacebook() {
+	var sendUrl = url; // 전달할 URL
+	window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl, 'facebook',
+		'top=10,left=10,height=300, status=no, menubar=no, toolbar=no, resizable=no');
+}
+
+function shareKakao() {
+	console.log("HI KAKAO")
+	// 사용할 앱의 JavaScript 키 설정
+	Kakao.init('1f0d8b55d9f1a8931df0a3ae663baf4e');
+
+	// 카카오링크 버튼 생성
+	Kakao.Link.createDefaultButton({
+		container: '.kakao', // 카카오공유버튼ID
+		objectType: 'feed',
+		content: {
+			title: title, // 보여질 제목
+			description: overview, // 보여질 설명
+			imageUrl: images, // 콘텐츠 URL
+			link: {
+				mobileWebUrl: url,
+				webUrl: url
+			}
+		}
+	});
+}
+
 $(document).on("click", ".map-overlay .bi-heart", function () {
 	contentid = $(this).parent().parent().parent().parent().attr('contentid');
 	registerWishMap(contentid);
@@ -535,6 +574,7 @@ function closesearchcal() {
 	$('#map-keyword').removeClass('cal-open');
 	$('#map-searchbtn').appendTo($('#map-keywordform'));
 }
+
 
 // function openInfowindow(contentid, mapx, mapy) {
 // 	markers.forEach((value, key) => {
