@@ -3,6 +3,7 @@ package com.samm.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ import com.samm.biz.UsersBiz;
 import com.samm.vo.AdmintblVo;
 import com.samm.vo.BoardVo;
 import com.samm.vo.FestivalVo;
+import com.samm.vo.PageHadller;
+import com.samm.vo.SearchCondition;
 import com.samm.vo.UsersVo;
 
 @Controller
@@ -140,17 +143,48 @@ public class MainController {
 	}
 
 	@RequestMapping("/board")
-	public String main(Model m) {
+	public String main(Model m, SearchCondition sc) {
 		List<BoardVo> blist = null;
 		try {
-			blist = bbiz.getList();
-			m.addAttribute("blist", blist);
-			m.addAttribute("center", "board");
+			/*
+			 * blist = bbiz.getList(); 
+			 * m.addAttribute("blist", blist);
+			 * m.addAttribute("center", "board");
+			 */
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "index";
+		
+		
+		
+		try {
+			int totalCnt = bbiz.getSearchResultCnt(sc);
+			PageHadller pageHandller = new PageHadller(totalCnt, sc);
+			
+			/*if(page==null) page=1;
+			if(pageSize==null) pageSize=12;*/
+			
+			/*Map map = new HashMap();
+			map.put("offset", (page-1)*pageSize);
+			map.put("pageSize", pageSize);*/
+			System.out.println("sc::"+sc);
+			blist = bbiz.getSearchResultPage(sc);
+
+			System.out.println("blist::"+blist);
+			System.out.println("ph::"+pageHandller);
+			
+			m.addAttribute("blist", blist);
+			m.addAttribute("center", "board");
+			m.addAttribute("ph",pageHandller);
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	return "index";
+
 	}
 
 	@RequestMapping("/chatbot")
