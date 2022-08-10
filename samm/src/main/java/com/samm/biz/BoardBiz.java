@@ -81,4 +81,8 @@ public class BoardBiz implements Biz<Integer, BoardVo> {
     public List<BoardVo> getSearchResultPage(SearchCondition sc) throws Exception {
         return boardDao.searchSelectPage(sc);
     }
+    
+    public List<BoardVo> selectByUid(String uid) throws Exception{
+    	return boardDao.selectByUid(uid);
+    }
 }

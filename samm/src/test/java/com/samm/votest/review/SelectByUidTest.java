@@ -17,16 +17,11 @@ class SelectByUidTest {
 
 	@Test
 	void contextLoads() {
-		List<ReviewVo> list = null;
-		try {
-			list = biz.getByUid("id01", 1);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (ReviewVo obj : list) {
-			System.out.println(obj);
-		}
+		/*
+		 * List<ReviewVo> list = null; try { list = biz.getByUid("id01"); } catch
+		 * (Exception e) { // TODO Auto-generated catch block e.printStackTrace(); } for
+		 * (ReviewVo obj : list) { System.out.println(obj); }
+		 */
 	}
 
 }

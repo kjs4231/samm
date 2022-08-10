@@ -21,7 +21,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		DELETE FROM wish WHERE fid=#{fid} AND uid=#{uid}
 	</delete>
 	<select id="selectByUid" parameterType="String" resultType="WishVo">
-		SELECT * FROM wish WHERE uid=#{uid}
+		SELECT * FROM wish w
+		INNER JOIN festival f ON f.contentid = w.fid
+		WHERE uid=#{uid}
 	</select>
 	
 

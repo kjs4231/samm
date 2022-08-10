@@ -4,7 +4,7 @@
 <mapper namespace="com.samm.mapper.FestivalImgMapper">
 
 	<insert id="insert" parameterType="Map">
-		INSERT INTO festivalimg VALUES (NULL,#{name},default,#{fid},#{uid})
+		INSERT INTO festivalimg VALUES (NULL,#{name},default,#{fid},#{uid},now())
 	</insert>	
 	
 	<select id="selectAll" resultType="FestivalImgVo">
@@ -22,6 +22,12 @@
 	<update id="updateAllow" parameterType="FestivalImgVo">
 		UPDATE festivalimg SET allowYN=#{allowYN}
 	</update>
+
+	<select id="selectByUid" parameterType="String" resultType="FestivalImgVo">
+		SELECT * FROM festivalimg fi
+		INNER JOIN festival f ON fi.fid = f.contentid
+		WHERE uid=#{uid}
+	</select>
 
 </mapper>
 	
