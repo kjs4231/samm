@@ -14,9 +14,28 @@ let url = window.location.href;
 
 let reviewStar = $('.reviewStar').text();
 
-function createReviewStars() {
+function hiddenReviewlist() {
+	let size = $('#size').val();
+	for(i=0; i < size; i++ ){
+		if( i > 2){
+			$('.comment'+i).addClass("hidden")
+		}
+	}
+	$('#moreReview').click(function(){
+		showReviewlist();
+	})
 
 }
+
+function showReviewlist() {
+	let size = $('#size').val();
+	for(i=3; i < size; i++ ){
+		$('.comment'+i).removeClass("hidden")
+	}
+	$('#moreReview').hide();
+
+}
+
 
 function next() {
 	$('#next').click(function() {
@@ -308,6 +327,7 @@ function deleteReview(pnum) {
 
 
 $(document).ready(function() {
+	hiddenReviewlist();
 	getWish();
 	next();
 	prev();
