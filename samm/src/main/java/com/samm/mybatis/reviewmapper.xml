@@ -11,7 +11,7 @@
 		AND del_date is null
 	</select>
 	<select id="getCount" resultType="int">
-		SELECT count(*) From review where fid = #{fid}
+		SELECT count(*) From review where fid = #{fid} AND del_date is null
 	</select>
 	<select id="selectAll" resultType="ReviewVo">
 		SELECT * FROM review

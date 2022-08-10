@@ -342,3 +342,9 @@
 .btn-body a{
 	cursor: pointer;
 }
+
+#moreReview{
+	cursor: pointer;
+    display: block;
+    text-align: center;
+}
