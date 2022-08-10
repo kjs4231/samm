@@ -24,6 +24,8 @@ public class ReviewVo {
     
     private String username;
     private String profile_img;
+    
+    private String title;
 
     // 리뷰 삽입시
 	public ReviewVo(String contents, double star, Date regdate, String uid, int fid) {

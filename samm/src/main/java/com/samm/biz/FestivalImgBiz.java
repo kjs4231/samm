@@ -52,4 +52,8 @@ public class FestivalImgBiz implements Biz<Integer,FestivalImgVo> {
 	public void updateAllow(FestivalImgVo v) throws Exception{
 		dao.updateAllow(v);
 	}
+	
+	public List<FestivalImgVo> selectByUid(String uid) throws Exception {
+		return dao.selectByUid(uid);
+	}
 }

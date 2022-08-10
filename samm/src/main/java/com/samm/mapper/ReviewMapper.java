@@ -16,7 +16,7 @@ public interface ReviewMapper {
     public ReviewVo select(int k) throws Exception;
     public List<ReviewVo> selectAll() throws Exception;
     public List<ReviewVo> list(int page) throws Exception;
-    public List<ReviewVo> selectByUid(HashMap<String, Object> map) throws Exception;
+    public List<ReviewVo> selectByUid(String id) throws Exception;
     public List<ReviewVo> selectByContents(HashMap<String, Object> map) throws Exception;
     
     public List<ReviewVo> getfestivalreview(int fid) throws Exception;

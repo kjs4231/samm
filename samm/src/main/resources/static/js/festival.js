@@ -88,7 +88,7 @@ function submitReview() {
 
 function filecheck() {
 
-	if ($('#uid').val() == null) {
+	if ($('#uuid').val() == null) {
 		alert("login후 이용 가능합니다.")
 	} else {
 		$('#file-form').attr({

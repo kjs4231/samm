@@ -1,5 +1,7 @@
 package com.samm.vo;
 
+import java.util.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -19,7 +21,9 @@ public class FestivalImgVo {
 	private String name;
 	private int fid;
 	private String uid;
+	private Date regdate;
 	
+	private String title;
 	private String allowYN;
 	private MultipartFile mf;
 

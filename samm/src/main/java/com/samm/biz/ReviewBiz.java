@@ -47,13 +47,7 @@ public class ReviewBiz implements Biz<Integer, ReviewVo> {
         return result;
     }
 
-    public List<ReviewVo> getByUid(String uid, int page) throws Exception {
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("uid", uid);
-        param.put("page", page);
-        List<ReviewVo> result = reviewDao.selectByUid(param);
-        return result;
-    }
+  
 
     public List<ReviewVo> getByContents(String contents, int page) throws Exception {
         HashMap<String, Object> param = new HashMap<>();
@@ -69,5 +63,9 @@ public class ReviewBiz implements Biz<Integer, ReviewVo> {
     
 	public int getCount(int contentid) throws Exception{
 		return reviewDao.getCount(contentid);
+	}
+	
+	public List<ReviewVo> selectByUid(String id) throws Exception{
+		return reviewDao.selectByUid(id);
 	}
 }
