@@ -21,6 +21,7 @@ let endPage;
 
 var temp_startdate;
 var temp_enddate;
+var temp_searchbox;
 
 function checkNull(o) {
 	return (o == null || o.length <= 0 || o == undefined) ? true : false;
@@ -142,6 +143,11 @@ function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, info
 	} else {
 		var ongoing = '진행종료';
 	}
+	if (!checkNull(infotext)) {
+		elm_infotext = '<span class="detail">' + infotext + '</span>';
+	} else {
+		elm_infotext = '';
+	}
 	var elm =
 		'<div class="project-wrap map-overlay"' + 'contentid="' + contentid + '">' +
 		gen_imageheader + '<span class="price">' + ongoing + '</span>' + '</a>' +
@@ -149,12 +155,12 @@ function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, info
 		'<div class="text p-4">' +
 		'<span class="days"><span>' + eventstartdate + '</span> ~ <span>' + eventenddate + '</span></span>' +
 		'<h3 class="animate"><a href="/detail?contentid=' + contentid + '"><input name="contentid" hidden value="' + contentid + '">' + title + '</a></h3>' +
-		'<span class="detail">' + infotext + '</span>' +
+		elm_infotext +
 		'<p class="location"><span class="fa fa-map-marker"></span> <span>' + addr1 + '</span></p>' +
 		'<a class="btn-map-gobtn" href="/detail?contentid=' + contentid + '">이 축제 가기</a>' +
 		'<div class="detail-icon">' +
-		'<a class="heart dicon" onClick="registerWish()"><i class="bi bi-heart"></i></a> ' +
-		'<span class="dicon" data-toggle="modal" data-target="#myModal"><a class="share"><i class="bi bi-share" ></i></a></span>' +
+		'<a class="heart dicon" href="javascript:void(0);"><i class="bi"></i></a> ' +
+		'<a class="dicon share" data-toggle="modal" data-target="#myModal"><i class="bi bi-share" ></i></a>' +
 		'</div>' +
 		'</div>' +
 		'</div>';
@@ -174,14 +180,20 @@ function openOverlay(contentid, mapx, mapy, isPanTo) {
 		yAnchor: 0.95
 	});
 	customOverlay.setMap(map);
-
+	getWishMap(contentid);
 	if (isPanTo == 1) {
 		map.panTo(position);
+	};
+	if (matchMedia("screen and (max-width: 767px)").matches) {
+		closesearchbox();
 	};
 };
 
 function closeOverlay() {
 	customOverlay.setMap(null);
+	if (matchMedia("screen and (max-width: 767px)").matches) {
+		opensearchbox();
+	};
 }
 
 // 지도 위에 표시되고 있는 마커를 모두 제거합니다
@@ -200,7 +212,12 @@ function removeMarker() {
 // };
 
 function searchmap(keyword, page, mapx, mapy, eventstartdate, eventenddate) {
-	params['keyword'] = keyword;
+	if (checkNull(keyword)) {
+		delete params['keyword'];
+	} else {
+		params['keyword'] = keyword;
+	}
+
 	if (page == 1 || checkNull(page)) {
 		delete params['page'];
 	} else {
@@ -209,12 +226,12 @@ function searchmap(keyword, page, mapx, mapy, eventstartdate, eventenddate) {
 	delete params['contentid'];
 
 	var now = new Date();
-	if (!checkNull(eventstartdate) && parseDateyyyymmdd(eventstartdate).valueOf() != new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())).valueOf()) {
+	if (!checkNull(eventstartdate) && !isNaN(eventstartdate)) {
 		params['eventstartdate'] = eventstartdate;
 	} else {
 		delete params['eventstartdate'];
 	}
-	if (!checkNull(eventenddate) && parseDateyyyymmdd(eventenddate).valueOf() != new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())).valueOf()) {
+	if (!checkNull(eventenddate) && !isNaN(eventenddate)) {
 		params['eventenddate'] = eventenddate;
 	} else {
 		delete params['eventenddate'];
@@ -230,7 +247,11 @@ function searchmap(keyword, page, mapx, mapy, eventstartdate, eventenddate) {
 			var result = '';
 			removeMarker();
 			if (JSON.stringify(json) === '{}' || JSON.stringify(json) === '[]') {
-				result = result.concat('<a class="l-card item l-card-none container"><div>없습니다</div></a>');
+				result = result.concat('<a class="l-card item l-card-none container"><div>해당되는 검색결과가 없습니다</div></a>');
+				$('#map-searchlist').html(result);
+
+				$('#map-searchlist').show();
+
 			} else {
 				$.each(json, function (i, element) {
 					result = result.concat(elm_searchmap(element.contentid, element.mapx, element.mapy, element.firstimage, element.eventstartdate, element.eventenddate, element.title, element.addr1));
@@ -249,9 +270,10 @@ function searchmap(keyword, page, mapx, mapy, eventstartdate, eventenddate) {
 					});
 				});
 				map.setBounds(bounds);
+				$('#map-searchlist').html(result);
+				$('#map-searchlist').show();
 			};
-			$('#map-searchlist').html(result);
-			$('#map-searchlist').show();
+
 		}
 	})
 };
@@ -297,13 +319,13 @@ function countsearchmap(keyword, page, eventstartdate, eventenddate) {
 			var result = '';
 			result = result.concat(elm_countsearchmap(count, page));
 			$('#map-searchpager').html(result);
-			$('#map-searchpager').removeAttr("style");
+			$('#map-searchpager').show();
 		}
 	})
 };
 
 function searchmapinput() {
-	if (checkNull($('#map-searchform input[name="search"]').val())) {
+	if (checkNull($('#map-searchform input[name="search"]').val()) && $('#map-calendarform').is(":hidden")) {
 		var result = '<a class="l-card item l-card-none container"><div>검색어를 입력하십시오.</div></a>';
 		$('#map-searchlist').html(result);
 		$('#map-searchlist').show();
@@ -315,8 +337,6 @@ function searchmapinput() {
 			var result = '<a class="l-card item l-card-none container"><div>날짜범위가 잘못되었습니다.</div></a>';
 			$('#map-searchlist').html(result);
 			$('#map-searchlist').show();
-			$('#map-searchpager').html("");
-			$('#map-searchpager').hide();
 		} else {
 			searchmap(currentKeyword, 1, geoloc_lng, geoloc_lat, currentStartdate, currentEnddate);
 			countsearchmap(currentKeyword, 1, currentStartdate, currentEnddate);
@@ -329,13 +349,80 @@ function pagemove(page) {
 	countsearchmap(currentKeyword, page, currentStartdate, currentEnddate);
 };
 
+function getWishMap(contentid) {
+	let loginuser = $('#loginuser').val();
+	let fid = contentid;
+	if (loginuser != null) {
+		$.ajax({
+			url: "getWish",
+			data: {
+				"loginuser": loginuser,
+				"fid": fid
+			},
+			success: function (data) {
+				$('.map-overlay[contentid=' + contentid + ']').find('.heart').children().addClass(data);
+			},
+			fail: function () {
+				alert("error")
+			}
+		})
+	} else {
+		$('.map-overlay[contentid=' + contentid + ']').find('.heart').children().addClass("bi-heart");
+	}
+}
+
+function registerWishMap(contentid) {
+	let loginuser = $('#loginuser').val();
+	let fid = contentid;
+	if (loginuser == null || loginuser == "") {
+		alert("login 후 이용 가능합니다");
+	} else {
+		if ($('.map-overlay[contentid=' + contentid + ']').find('.heart').children().hasClass("bi-heart")) {
+			$.ajax({
+				url: "registerWish",
+				data: {
+					"uid": loginuser,
+					"fid": fid
+				},
+				success: function (data) {
+					alert(data)
+				}
+			})
+			$('.map-overlay[contentid=' + contentid + ']').find('.heart').children().toggleClass("bi-heart");
+			$('.map-overlay[contentid=' + contentid + ']').find('.heart').children().toggleClass("bi-heart-fill");
+		} else {
+			console.log("bye")
+			$.ajax({
+				url: "deleteWish",
+				data: {
+					"uid": loginuser,
+					"fid": fid
+				},
+				success: function (data) {
+					alert(data)
+				}
+			})
+			$('.map-overlay[contentid=' + contentid + ']').find('.heart').children().toggleClass("bi-heart-fill");
+			$('.map-overlay[contentid=' + contentid + ']').find('.heart').children().toggleClass("bi-heart");
+		}
+	}
+}
+
 $(document).ready(function () {
 	path = window.location.origin + window.location.pathname;
 	params = $.deparam.querystring(true);
 	keyword = params.keyword;
 	page = params.page;
-	eventstartdate = params.eventstartdate;
-	eventenddate = params.eventenddate;
+	if (!checkNull(params.eventstartdate) && !isNaN(params.eventstartdate)) {
+		eventstartdate = params.eventstartdate;
+	} else {
+		eventstartdate = dateToIntyyyymmdd(new Date());
+	}
+	if (!checkNull(params.eventenddate) && !isNaN(params.eventenddate)) {
+		eventenddate = params.eventenddate;
+	} else {
+		eventenddate = dateToIntyyyymmdd(new Date());
+	}
 	contentid = params.contentid;
 	getGeolocation();
 	customOverlay = new kakao.maps.CustomOverlay({
@@ -354,6 +441,9 @@ $(document).ready(function () {
 			$('input[name="eventenddate"]').datepicker("setDate", parseDateyyyymmdd(eventenddate));
 			currentStartdate = eventstartdate;
 			currentEnddate = eventenddate;
+		}
+		if (eventstartdate == dateToIntyyyymmdd(new Date()) && eventenddate == dateToIntyyyymmdd(new Date())) {
+			closesearchcal();
 		}
 		if (Number.isInteger(page)) {
 			var page = page;
@@ -427,6 +517,50 @@ $(document).on("click", ".pager-next a", function () {
 	}
 });
 
+function shareTwitter() {
+	var sendText = doc_title; // 전달할 텍스트
+	var sendUrl = window.location.origin + "/detail?contentid=" + params.contentid; // 전달할 URL
+	window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl, 'Twitter',
+		'top=10,left=10,height=300, status=no, menubar=no, toolbar=no, resizable=no');
+}
+
+function shareFacebook() {
+	var sendUrl = window.location.origin + "/detail?contentid=" + params.contentid; // 전달할 URL
+	window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl, 'facebook',
+		'top=10,left=10,height=300, status=no, menubar=no, toolbar=no, resizable=no');
+}
+
+function shareKakao() {
+	console.log("HI KAKAO")
+	// 사용할 앱의 JavaScript 키 설정
+	Kakao.init('1f0d8b55d9f1a8931df0a3ae663baf4e');
+
+	// 카카오링크 버튼 생성
+	Kakao.Link.createDefaultButton({
+		container: '.kakao', // 카카오공유버튼ID
+		objectType: 'feed',
+		content: {
+			title: doc_title, // 보여질 제목
+			description: overview, // 보여질 설명
+			imageUrl: images, // 콘텐츠 URL
+			link: {
+				mobileWebUrl: window.location.origin + "/detail?contentid=" + params.contentid,
+				webUrl: window.location.origin + "/detail?contentid=" + params.contentid
+			}
+		}
+	});
+}
+
+$(document).on("click", ".map-overlay .bi-heart", function () {
+	contentid = $(this).parent().parent().parent().parent().attr('contentid');
+	registerWishMap(contentid);
+});
+
+$(document).on("click", ".map-overlay .bi-heart-fill", function () {
+	contentid = $(this).parent().parent().parent().parent().attr('contentid');
+	registerWishMap(contentid);
+});
+
 function clearsearch() {
 	$('#map-searchform input[name="search"]').val(null);
 	$('#map-keyword').addClass('keyword-empty');
@@ -442,6 +576,7 @@ function opensearchcal() {
 	$('#map-closecalbtn').show();
 	$('#map-calendarform').show();
 	$('#map-keyword').addClass('cal-open');
+	$('#map-searchlist').addClass('cal-open');
 	$('#map-searchbtn').appendTo($('#map-calendarform'));
 	if (!checkNull(temp_startdate)) {
 		$('input[name="eventstartdate"]').datepicker("setDate", temp_startdate);
@@ -464,9 +599,20 @@ function closesearchcal() {
 	$('#map-closecalbtn').hide();
 	$('#map-calendarform').hide();
 	$('#map-keyword').removeClass('cal-open');
+	$('#map-searchlist').removeClass('cal-open');
 	$('#map-searchbtn').appendTo($('#map-keywordform'));
 }
 
+function opensearchbox() {
+	$('#map-searchbox').html(temp_searchbox);
+	$('#map-searchbox').removeClass('searchbox-close');
+}
+
+function closesearchbox() {
+	temp_searchbox = $('#map-searchbox').html();
+	$('#map-searchbox').html('<form class="item" id="map-searchform"><div id="map-keywordform" class="inner-form"><button id="map-opensearchbox" onclick="opensearchbox()" class="btn" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path fill="currentColor" d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z" /></svg></button>');
+	$('#map-searchbox').addClass('searchbox-close');
+}
 // function openInfowindow(contentid, mapx, mapy) {
 // 	markers.forEach((value, key) => {
 // 		if (key == contentid) {
