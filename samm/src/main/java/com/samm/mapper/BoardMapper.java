@@ -27,4 +27,6 @@ public interface BoardMapper {
     public int searchResultCnt(SearchCondition sc) throws Exception;
     public List<BoardVo> searchSelectPage(SearchCondition sc) throws Exception;
 	public int updateCommentCnt(Integer bno, int cnt);
+	
+	public List<BoardVo> selectByUid(String uid) throws Exception;
 }

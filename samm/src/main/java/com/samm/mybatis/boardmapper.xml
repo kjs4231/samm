@@ -91,4 +91,8 @@
     
     </update>
     
+   	<select id="selectByUid" parameterType="String" resultType="BoardVo">
+		SELECT * FROM board WHERE writer=#{uid}
+	</select>
+    
 </mapper>

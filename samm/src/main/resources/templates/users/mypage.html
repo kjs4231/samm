@@ -87,28 +87,123 @@
 						<h5 class="mb-0">Wish</h5>
 						<a href="#" class="btn btn-link text-muted">Show all</a>
 					</div>
-					<div class="p-4 rounded shadow-sm bg-light">wish list</div>
+					<div class="p-4 rounded shadow-sm bg-light">
+						<span class="table table-hover" th:if="${#lists.isEmpty(wish)}">
+							<p>등록된 게시물이 없습니다.</p>
+						</span>
+						<table class="table table-hover"
+							th:unless="${#lists.isEmpty(wish)}">
+							<thead>
+								<tr>
+									<th>축제명</th>
+									<th>축제주소</th>
+									<th>축제시작일</th>
+									<th>축제종료일</th>
+									<th>찜한날짜.</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="wish:${wish}">
+									<td th:text="${wish.title}">John</td>
+									<td th:text="${wish.addr1}">Doe</td>
+									<td th:text="${wish.eventstartdate}">john@example.com</td>
+									<td th:text="${wish.eventenddate}">john@example.com</td>
+									<td th:text="${#dates.format(wish.regdate,'yyyy-MM-dd')}">john@example.com</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
+
 				<div class="py-4 px-4">
 					<div class="d-flex align-items-center justify-content-between mb-3">
 						<h5 class="mb-0">Last Review</h5>
 						<a href="#" class="btn btn-link text-muted">Show all</a>
 					</div>
-					<div class="p-4 rounded shadow-sm bg-light">wish list</div>
+					<div class="p-4 rounded shadow-sm bg-light">
+						<span class="table table-hover" th:if="${#lists.isEmpty(review)}">
+							<p>등록된 게시물이 없습니다.</p>
+						</span>
+						<table class="table table-hover"
+							th:unless="${#lists.isEmpty(review)}">
+							<thead>
+								<tr>
+									<th>축제명</th>
+									<th>리뷰 내용</th>
+									<th>별점</th>
+									<th>작성일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="review:${review}">
+									<td th:text="${review.title}">John</td>
+									<td th:text="${review.contents}">Doe</td>
+									<td th:text="${review.star}">john@example.com</td>
+									<td th:text="${review.regdate}">john@example.com</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<div class="py-4 px-4">
 					<div class="d-flex align-items-center justify-content-between mb-3">
 						<h5 class="mb-0">Last Board</h5>
 						<a href="#" class="btn btn-link text-muted">Show all</a>
 					</div>
-					<div class="p-4 rounded shadow-sm bg-light">wish list</div>
+					<div class="p-4 rounded shadow-sm bg-light">
+						<span class="table table-hover" th:if="${#lists.isEmpty(board)}">
+							<p>등록된 게시물이 없습니다.</p>
+						</span>
+						<table class="table table-hover"
+							th:unless="${#lists.isEmpty(board)}">
+							<thead>
+								<tr>
+									<th>제목</th>
+									<th>조회수</th>
+									<th>댓글수</th>
+									<th>작성일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="board:${board}">
+									<td th:text="${board.title}">John</td>
+									<td th:text="${board.view_cnt}">Doe</td>
+									<td th:text="${board.comment_cnt}">john@example.com</td>
+									<td th:text="${#dates.format(board.regdate,'yyyy-MM-dd')}">john@example.com</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<div class="py-4 px-4">
 					<div class="d-flex align-items-center justify-content-between mb-3">
 						<h5 class="mb-0">Request Photo</h5>
 						<a href="#" class="btn btn-link text-muted">Show all</a>
 					</div>
-					<div class="p-4 rounded shadow-sm bg-light">wish list</div>
+					<div class="p-4 rounded shadow-sm bg-light">
+						<span class="table table-hover" th:if="${#lists.isEmpty(fimg)}">
+							<p>등록된 게시물이 없습니다.</p>
+						</span>
+						<table class="table table-hover"
+							th:unless="${#lists.isEmpty(fimg)}">
+							<thead>
+								<tr>
+									<th>축제명</th>
+									<th>사진</th>
+									<th>등록결과</th>
+									<th>등록일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="fimg:${fimg}">
+									<td th:text="${fimg.title}">John</td>
+									<td>Photo</td>
+									<td th:text="${fimg.allowYN}">john@example.com</td>
+									<td th:text="${#dates.format(fimg.regdate,'yyyy-MM-dd')}">Doe</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

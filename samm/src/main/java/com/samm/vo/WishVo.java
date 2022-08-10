@@ -18,6 +18,10 @@ public class WishVo {
     private Date regdate;
     private int fid;
     private String uid;
-
+    
+    private String title;
+    private String addr1;
+    private String eventstartdate;
+    private String eventenddate;
 
 }

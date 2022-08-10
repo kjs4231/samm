@@ -47,7 +47,9 @@
 		WHERE pnum=#{pnum}
 	</update>
 	<select id="selectByUid" parameterType="String" resultType="ReviewVo">
-		SELECT * FROM review WHERE uid=#{uid} 
+		SELECT * FROM review r
+		INNER JOIN festival f ON f.contentid = r.fid
+		WHERE uid=#{uid} 
 	</select>
 
 	<select id="selectByContents" parameterType="String" resultType="ReviewVo">
