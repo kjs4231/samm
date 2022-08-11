@@ -48,7 +48,8 @@ function logincheck() {
 		}
 	})
 }
-
+// restapi : ff0285935ed576b14858bccf4e1a7b2d
+// window.Kakao.init('ff0285935ed576b14858bccf4e1a7b2d');
 window.Kakao.init('1f0d8b55d9f1a8931df0a3ae663baf4e');
 function kakaoLogin() {
 

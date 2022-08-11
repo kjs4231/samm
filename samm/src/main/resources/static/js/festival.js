@@ -10,7 +10,7 @@ var length = document.getElementsByClassName("carousel-item").length;
 let title = $('#ftitle').text();
 let overview = $('.header--info').text();
 let images = $('#festivalimg').val();
-let url = window.location.href;
+const url = window.location.href;
 
 let reviewStar = $('.reviewStar').text();
 
@@ -202,7 +202,6 @@ function shareFacebook() {
 function shareKakao() {
 	console.log("HI KAKAO")
 	// 사용할 앱의 JavaScript 키 설정
-	Kakao.init('1f0d8b55d9f1a8931df0a3ae663baf4e');
 
 	// 카카오링크 버튼 생성
 	Kakao.Link.createDefaultButton({
