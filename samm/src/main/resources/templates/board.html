@@ -146,10 +146,12 @@ function goDetail(bno){
 		<div class="col text-center">
 			<div class="block-27 ">
 				<ul>
-					<li><a href="#">&lt;</a></li>
+					<li><a th:href="${ph.showPrev}">&lt;</a></li>
 						<span th:each="page:${#numbers.sequence(ph.beginPage,ph.endPage)}">
 						<li class="active">
-							<a th:text="${page}"></a>
+							<a th:text="${page}"  th:href="@{'/board'+${ph.sc.getQueryString(page)}} "></a>
+							
+							<!-- http://127.0.0.1/board$%7Bph.sc.getQueryString( -->
 						</li>
 					</span>
 					<li><a href="#">&gt;</a></li>

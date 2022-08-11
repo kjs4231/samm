@@ -155,11 +155,13 @@ public class MainController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
+
 		try {
 			int totalCnt = bbiz.getSearchResultCnt(sc);
+			sc.setOffset((sc.getPage()-1)*sc.getPageSize());
+			blist = bbiz.getSearchResultPage(sc);
+			
+			
 			PageHadller pageHandller = new PageHadller(totalCnt, sc);
 			
 			/*if(page==null) page=1;
@@ -169,7 +171,7 @@ public class MainController {
 			map.put("offset", (page-1)*pageSize);
 			map.put("pageSize", pageSize);*/
 			System.out.println("sc::"+sc);
-			blist = bbiz.getSearchResultPage(sc);
+			
 
 			System.out.println("blist::"+blist);
 			System.out.println("ph::"+pageHandller);
