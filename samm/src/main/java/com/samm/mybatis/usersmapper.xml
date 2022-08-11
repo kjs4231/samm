@@ -10,7 +10,7 @@
 	</select>
 
 	<insert id="insert" parameterType="UsersVo">
-		INSERT INTO users VALUES (#{id},#{pwd},#{name},#{email},#{address},#{phone},#{gender})
+		INSERT INTO users VALUES (#{id},#{pwd},#{name},#{email},#{address},#{phone},#{gender},null)
 		
 	</insert>
 	

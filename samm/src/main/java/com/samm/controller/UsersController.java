@@ -51,7 +51,7 @@ public class UsersController {
 		}
 		
 		m.addAttribute("center", "center");
-		return "index";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/users/forget")
