@@ -8,11 +8,11 @@ import com.samm.restapi.TourFestivalAPI;
 
 @Component
 public class Scheduler {
-/*
+
 	@Autowired
 	TourFestivalAPI tour;
 
-	@Scheduled(cron = "0 22 14 * * *")
+	@Scheduled(cron = "0 0 1 * * *")
 	public void weeklyMonUpdate() {
 		System.out.println("----------- Scheduler Start ------------");
 		try {
@@ -32,5 +32,5 @@ public class Scheduler {
 		}
 		System.out.println("----------- Scheduler End ------------");
 	}
-*/
+
 }

@@ -1,6 +1,8 @@
 $(document).ready(function() {
-	$('#search-btn').click(function() {
+	$('#search-btn').click(function(e) {
 		searchFestival();
+		e.preventDefault();
+		
 	});
 	$('#search-btn2').click(function() {
 		searchKeyowrd();
@@ -10,11 +12,18 @@ $(document).ready(function() {
 
 
 function searchFestival() {
-	$('#search-festival-form').attr({
-		action: "/searchFestivalimpl",
-		method: "post"
-	})
-	$('#search-festival-form').submit();
+	if (($('#startdate').val() == null || $('#startdate').val() == "") || ($('#enddate').val() == null || $('#enddate').val() == "")) {
+		alert("날짜를 모두 입력해 주세요.")
+		return;
+	} else {
+		$('#search-festival-form').attr({
+			action: "/searchFestivalimpl",
+			method: "post"
+		})
+		$('#search-festival-form').submit();
+	}
+
+
 
 }
 
@@ -41,7 +50,7 @@ function createPaging() {
 		}
 	}
 	let actvienum = Number($('#paging').children().eq(page).text());
-	var pnum = Math.floor(actvienum/10) *10;
+	var pnum = Math.floor(actvienum / 10) * 10;
 	$('#paging').children().not(".marking").addClass('hidden');
 	for (i = 1; i <= 10; i++) {
 		$('#paging').children().eq(pnum + i).removeClass('hidden');

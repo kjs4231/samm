@@ -7,7 +7,8 @@
 
 
 <link rel="stylesheet" href="/css/detail.css">
-<input th:if="${session.loginuser} != null" th:value="${session.loginuser.id}" id="loginuser" hidden>
+<input th:if="${session.loginuser} != null"
+	th:value="${session.loginuser.id}" id="loginuser" hidden>
 <section class="hero-wrap hero-wrap-2 js-fullheight"
 	th:style="'background-image:url('+@{${festival.firstimage}}+');'">
 	<div class="overlay"></div>
@@ -52,17 +53,12 @@
 		<span class="header--info-text" th:utext="${info['infotext']}"></span>
 	</div>
 	<div class="detail-icon">
-		<a class="heart dicon" onClick="registerWish()">
-			<i class="bi"></i>
-		</a> 
-		<span class="dicon" data-toggle="modal" data-target="#myModal">
-			<a class="share">
-				<i class="bi bi-share"></i>
-			</a>
-		</span> 
-		<span class="dicon share ">
-			<i class="bi bi-eye "></i>
-			<span class="cnttext" th:text="${festival.view_cnt}"></span>
+		<a class="heart dicon" onClick="registerWish()"> <i class="bi"></i>
+		</a> <span class="dicon" data-toggle="modal" data-target="#myModal">
+			<a class="share"> <i class="bi bi-share"></i>
+		</a>
+		</span> <span class="dicon share "> <i class="bi bi-eye "></i> <span
+			class="cnttext" th:text="${festival.view_cnt}"></span>
 		</span>
 		<div class="viewicon"></div>
 	</div>
@@ -203,9 +199,11 @@
 				<label for="star">Choose Star *</label> <input class="form-control"
 					type="text" id="star" name="star" hidden>
 				<div id="chooseStar">
-					<span class="fa fa-star cstar 0"></span> <span class="fa fa-star cstar 1"></span>
-					<span class="fa fa-star cstar 2"></span> <span class="fa fa-star cstar 3"></span>
-					<span class="fa fa-star cstar 4"></span> <span id="star-warnig"></span>
+					<span class="fa fa-star cstar 0"></span> <span
+						class="fa fa-star cstar 1"></span> <span
+						class="fa fa-star cstar 2"></span> <span
+						class="fa fa-star cstar 3"></span> <span
+						class="fa fa-star cstar 4"></span> <span id="star-warnig"></span>
 				</div>
 			</div>
 
@@ -224,40 +222,60 @@
 	<div class="pt-5 mt-5">
 
 		<ul class="comment-list">
-			<li th:id="'reviewlist'+${review.pnum}" class="comment" th:each="review:${review}">
-			<input hidden th:value="${reviewStat.size}" id="size">	
+			<li th:id="'reviewlist'+${review.pnum}"
+				th:class="'comment'+' '+'comment'+${reviewStat.index}"
+				th:each="review:${review}"><input hidden
+				th:value="${reviewStat.size}" id="size">
 				<div class="vcard bio">
-					<img th:if="${review.profile_img} == null" th:src="@{/images/noimagep.png}" alt="Image placeholder">		
-					<img th:unless="${review.profile_img} == null" th:src="${review.profile_img}" alt="Image placeholder">
+					<img th:if="${review.profile_img} == null"
+						th:src="@{/images/noimagep.png}" alt="Image placeholder"> <img
+						th:unless="${review.profile_img} == null"
+						th:src="${review.profile_img}" alt="Image placeholder">
 				</div>
 				<div class="comment-body">
 					<div class="btn-body">
-						<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.uid}" th:onClick="'updateReview('+${review.pnum}+','+${reviewStat.index}+')'"> 수정</a> 
-						<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.uid}" th:onClick="'deleteReview('+${review.pnum}+')'"> 삭제</a>
+						<a
+							th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.uid}"
+							th:onClick="'updateReview('+${review.pnum}+','+${reviewStat.index}+')'">
+							수정</a> <a
+							th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.uid}"
+							th:onClick="'deleteReview('+${review.pnum}+')'"> 삭제</a>
 					</div>
 					<h3 th:text="${review.username}">John Doe</h3>
-					
-					<span th:id="'comment'+${reviewStat.index}"><span class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span></span>	
-					<span th:if="${review.udate} == null" class="commentDate" th:text="${#dates.format(review.regdate,'M월dd일 hh시mm분')}" style="display:inline"></span>
-					<span th:unless="${review.udate} == null" class="commentDate" th:text="${#dates.format(review.udate,'yyyy-MM-dd')}" style="display:inline"></span>
+
+					<span th:id="'comment'+${reviewStat.index}"><span
+						class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span><span
+						class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span><span
+						class="fa fa-star rstar"></span></span> <span
+						th:if="${review.udate} == null" class="commentDate"
+						th:text="${#dates.format(review.regdate,'M월dd일 hh시mm분')}"
+						style="display: inline"></span> <span
+						th:unless="${review.udate} == null" class="commentDate"
+						th:text="${#dates.format(review.udate,'yyyy-MM-dd')}"
+						style="display: inline"></span>
 					<form id="reiew-form">
-						<p class="commnetText" th:id="'commnetText'+${review.pnum}" th:text="${review.contents}"></p>
-						<textarea th:id="'comment-textarea'+${review.pnum}" class="comment-textarea hidden" name="contents" th:text="${review.contents}" ></textarea>
-						<input th:value="${review.pnum}" name="pnum" hidden>
-						<input th:id="'review'+${reviewStat.index}" th:value="${review.star}" name="star" hidden>
-						<input name="uid"  id="uid" th:value="${review.uid}" hidden>
-						<input name="fid"  id="fid" th:value="${review.fid}" hidden>
+						<p class="commnetText" th:id="'commnetText'+${review.pnum}"
+							th:text="${review.contents}"></p>
+						<textarea th:id="'comment-textarea'+${review.pnum}"
+							class="comment-textarea hidden" name="contents"
+							th:text="${review.contents}"></textarea>
+						<input th:value="${review.pnum}" name="pnum" hidden> <input
+							th:id="'review'+${reviewStat.index}" th:value="${review.star}"
+							name="star" hidden> <input name="uid" id="uid"
+							th:value="${review.uid}" hidden> <input name="fid"
+							id="fid" th:value="${review.fid}" hidden>
 					</form>
-<!-- 						<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.uid}" href="" class="reply">reply</a> -->
-				</div>
-	
-			</li>
+					<!-- 						<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.uid}" href="" class="reply">reply</a> -->
+				</div></li>
 
 		</ul>
+		
 	</div>
+	<a id="moreReview">리뷰 더보기<i class="bi bi-plus"></i></a>
 </section>
 
 
 
 
-<script src="/js/festival.js" ></script>
+
+<script src="/js/festival.js"></script>
