@@ -53,6 +53,12 @@
 					gender=#{gender}
 				</otherwise>
 			</choose>
+			<choose>
+				<when test="profile_img == null or profile_img.equals('')"></when>
+				<otherwise>
+					profile_img=#{profile_img}
+				</otherwise>
+			</choose>
 		</trim>
 		WHERE id=#{id}
 	</update>
