@@ -193,7 +193,7 @@ function openOverlay(contentid, mapx, mapy, isPanTo) {
 function closeOverlay() {
 	customOverlay.setMap(null);
 	if (matchMedia("screen and (max-width: 767px)").matches) {
-		opensearchbox();
+		open_searchbox();
 	};
 }
 
