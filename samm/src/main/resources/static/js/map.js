@@ -506,7 +506,7 @@ $(document).on("click", ".btn-search", function () {
 
 function enterkey() {
 	if (window.event.keyCode == 13) {
-		 searchmapinput();
+		searchmapinput();
 	}
 }
 
