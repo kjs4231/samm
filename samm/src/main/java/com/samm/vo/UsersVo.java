@@ -1,5 +1,7 @@
 package com.samm.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,8 @@ public class UsersVo {
     private String phone;
     private String gender;
     private String profile_img;
+    
+    private MultipartFile mf;
 
     // 기본 생성자
     public UsersVo(String id, String pwd, String name, String email, String address, String phone, String gender) {

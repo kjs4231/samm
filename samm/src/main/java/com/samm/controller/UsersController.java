@@ -3,15 +3,18 @@ package com.samm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.samm.biz.BoardBiz;
 import com.samm.biz.FestivalImgBiz;
 import com.samm.biz.ReviewBiz;
 import com.samm.biz.UsersBiz;
 import com.samm.biz.WishBiz;
+import com.samm.frame.Util;
 import com.samm.vo.BoardVo;
 import com.samm.vo.FestivalImgVo;
 import com.samm.vo.ReviewVo;
@@ -34,6 +37,8 @@ public class UsersController {
 	BoardBiz boardbiz;
 	@Autowired
 	WishBiz wbiz;
+	@Value("${userdir}")
+	String userdir;
 	
 	@RequestMapping("/users/add")
 	public String add(Model m) {
@@ -51,7 +56,7 @@ public class UsersController {
 		}
 		
 		m.addAttribute("center", "center");
-		return "index";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/users/forget")
@@ -81,12 +86,6 @@ public class UsersController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("users::"+users);
-		System.out.println("wish::"+wish);
-		System.out.println("fimg::"+fimg);
-		System.out.println("review::"+review);
-		System.out.println("board::"+board);
-		
 		
 		m.addAttribute("wish",wish);
 		m.addAttribute("board",board);
@@ -95,5 +94,22 @@ public class UsersController {
 		m.addAttribute("users",users);
 		m.addAttribute("center", "/users/mypage");
 		return "index";
+	}
+	@RequestMapping("/userProfile")
+	public String userProfile(Model m, UsersVo users,String id) {
+		String imgname = users.getMf().getOriginalFilename();
+		users.setProfile_img(imgname);
+		try {
+			ubiz.modify(users);
+			Util.saveFile(users.getMf(), userdir);
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		
+		return "redirect:/users/mypage?id=" + users.getId();
 	}
 }
