@@ -44,8 +44,12 @@ function dateToStringSlash(date) {
 }
 
 function parseDateyyyymmdd(yyyymmdd) {
-	yyyymmdd = yyyymmdd.toString();
-	return new Date(parseInt(yyyymmdd.substring(0, 4)), (parseInt(yyyymmdd.substring(4, 6)) - 1), parseInt(yyyymmdd.substring(6, 8)), 9);
+	if (checkNull(yyyymmdd)) {
+		return new Date();
+	} else {
+		yyyymmdd = yyyymmdd.toString();
+		return new Date(parseInt(yyyymmdd.substring(0, 4)), (parseInt(yyyymmdd.substring(4, 6)) - 1), parseInt(yyyymmdd.substring(6, 8)), 9);
+	}
 };
 
 function stateup() {
@@ -193,7 +197,7 @@ function openOverlay(contentid, mapx, mapy, isPanTo) {
 function closeOverlay() {
 	customOverlay.setMap(null);
 	if (matchMedia("screen and (max-width: 767px)").matches) {
-		opensearchbox();
+		open_searchbox();
 	};
 }
 
@@ -329,6 +333,14 @@ function countsearchmap(keyword, page, eventstartdate, eventenddate) {
 };
 
 function searchmapinput() {
+	if (checkNull($('#map-searchform input[name="search"]').val())) {
+		$('#map-keyword').addClass('keyword-empty');
+		$('#map-clearbtn').hide();
+	} else {
+		$('#map-keyword').removeClass('keyword-empty');
+		$('#map-clearbtn').show();
+
+	}
 	if (checkNull($('#map-searchform input[name="search"]').val()) && $('#map-calendarform').is(":hidden")) {
 		var result = '<a class="l-card item l-card-none container"><div>검색어를 입력하십시오.</div></a>';
 		$('#map-searchlist').html(result);
@@ -475,7 +487,9 @@ $(document).ready(function () {
 				markers.set(element.contentid, marker);
 				elm_overlays.set(element.contentid, overlay);
 				map.panTo(locPosition);
-				openOverlay(element.contentid, element.mapx, element.mapy);
+				setTimeout(function () {
+					openOverlay(element.contentid, element.mapx, element.mapy)
+				}, 1000);
 			}
 		})
 	}
@@ -490,18 +504,11 @@ $(document).on("click", ".btn-search", function () {
 	searchmapinput();
 });
 
-$('#map-searchform input[name="search"]').keyup(function (e) {
-	if (checkNull($('#map-searchform input[name="search"]').val())) {
-		$('#map-keyword').addClass('keyword-empty');
-		$('#map-clearbtn').hide();
-	} else {
-		$('#map-keyword').removeClass('keyword-empty');
-		$('#map-clearbtn').show();
-	}
-	if (e.keyCode == 13) {
+function enterkey() {
+	if (window.event.keyCode == 13) {
 		searchmapinput();
 	}
-});
+}
 
 $(document).on("click", ".pager-prev a", function () {
 	// alert($('#map-searchpager li').eq(1).text());
@@ -610,9 +617,9 @@ function open_searchbox() {
 	$('#map-searchbox').html(temp_searchbox);
 	$('#map-searchform input[name="search"]').val(currentKeyword);
 	$('input[name="eventstartdate"]').val(dateToStringSlash(parseDateyyyymmdd(currentStartdate)));
-	$('input[name="eventstartdate"]').datepicker('setDate',parseDateyyyymmdd(currentStartdate));
+	$('input[name="eventstartdate"]').datepicker('setDate', parseDateyyyymmdd(currentStartdate));
 	$('input[name="eventenddate"]').val(dateToStringSlash(parseDateyyyymmdd(currentEnddate)));
-	$('input[name="eventenddate"]').datepicker('setDate',parseDateyyyymmdd(currentEnddate));
+	$('input[name="eventenddate"]').datepicker('setDate', parseDateyyyymmdd(currentEnddate));
 	$('#map-searchbox').removeClass('searchbox-close');
 }
 
