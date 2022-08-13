@@ -13,20 +13,20 @@
 	</select>
 
 	<update id="delete" parameterType="map">
-		UPDATE comment SET del_date = now() WHERE cno = #{cno} AND commenter = #{commenter}
+		UPDATE comment SET del_date = now() WHERE cno = #{cno}
 		
 	</update>
 
 	<insert id="insert" parameterType="CommentVo">
 		INSERT INTO comment
-		(bno, pcno, comment, commenter, reg_date)
+		(bno, comment, commenter, reg_date)
 		VALUES
-		(#{bno}, #{pcno}, #{comment}, #{commenter}, now())
+		(#{bno}, #{comment}, #{commenter}, now())
 	</insert>
 
 	<select id="selectAll" parameterType="int"
 		resultType="CommentVo">
-		SELECT cno, bno, pcno, comment, commenter, reg_date, up_date
+		SELECT cno, bno, comment, commenter, reg_date, up_date
 		FROM comment
 		WHERE bno = #{bno} and del_date is null
 		ORDER BY reg_date ASC, cno ASC
@@ -34,7 +34,7 @@
 	</select>
 
 	<select id="select" parameterType="int" resultType="CommentVo">
-		SELECT cno, bno, pcno, comment, commenter, reg_date, up_date
+		SELECT cno, bno, comment, commenter, reg_date, up_date
 		FROM comment
 		WHERE cno = #{cno} and del_date is null
 	</select>
@@ -43,6 +43,6 @@
 		UPDATE comment
 		SET comment = #{comment}
 		, up_date = now()
-		WHERE cno = #{cno} and commenter = #{commenter}
+		WHERE cno = #{cno}
 	</update>
 </mapper>

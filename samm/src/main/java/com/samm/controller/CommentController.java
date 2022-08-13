@@ -1,4 +1,4 @@
-package com.samm.controller;
+/*package com.samm.controller;
 
 import java.util.List;
 
@@ -109,6 +109,6 @@ public class CommentController {
     }
 	
 	
-}
+}*/
 
 
