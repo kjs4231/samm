@@ -1,4 +1,5 @@
-	<!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <title>Pacific - Free Bootstrap 4 Template by Colorlib</title>
@@ -32,38 +33,85 @@
 
 <body>
 	<script>
-		$(document).ready(function() {
-			$('#deleteBtn').click(function() {
+		$(document).ready(
+				function() {
+					$('#deleteBtn').click(function(e) {
 
-				if ($('#writerid').val() != $('#contentid').text()) {
-					alert("권한이 없습니다.");
-					return false;
-				}
-				if (confirm("삭제하시겠습니까?"))
-				var bno= $('#bno').val()
-				location.href='/board/remove?bno='+bno; 
+						if ($('#writerid').val() != $('#contentid').text()) {
+							alert("권한이 없습니다.");
+							return false;
+						}
+						if (confirm("삭제하시겠습니까?")){
+							var bno = $('#bno').val()
+						location.href = '/board/remove?bno=' + bno;
 
-			});
-			
-			$('#reviseBtn').on("click", function(e) {
+						e.preventDefault();
+						}else{
+							
+						}
+					});
 
-				if ($('#writerid').val() != $('#contentid').text()) {
-					alert("권한이 없습니다.");
-					return false;
-				}
+					$('#reviseBtn').on("click", function(e) {
 
-				if (confirm("수정하시겠습니까?"))
-					var bno= $('#bno').val()
-					location.href='/board/revise?bno='+bno; 
-					 
-					  e.preventDefault();
-			});
-			
-		
+						if ($('#writerid').val() != $('#contentid').text()) {
+							alert("권한이 없습니다.");
+							return false;
+						}
 
-		});
-		
-		
+						if (confirm("수정하시겠습니까?")){
+							var bno = $('#bno').val()
+						location.href = '/board/revise?bno=' + bno;
+
+						e.preventDefault();
+						}else{
+							
+						}
+					});
+
+					$('#cdeleteBtn').click(function(e) {
+					
+						if ($('#writerid').val() != $('#commenter').text()) {
+							alert("권한이 없습니다.");
+							return false;
+						}
+
+						if (confirm("삭제하시겠습니까?")){
+							var cno = $('#cno').val()
+						var bno = $('#bbno').val()
+						alert(bno);
+						
+						location.href = '/board/cremove?cno='+cno+'&bno=' + bno; 
+
+						e.preventDefault();
+						}else{
+							
+						}
+					});
+					$('#sendBtn').click(function() {
+								
+								if ($('#writerid').val() == null
+										|| $('#writerid').val() == "") {
+									alert("login후 이용 가능합니다.")
+
+								} else {
+									
+									if ($('textarea[name="comment"]').val() == "") {
+										alert("내용 입력해주세요.");
+										$("#comment").focus();
+										return false;
+									}
+									
+									$('#cpost').attr({
+										'method' : 'post',
+										'action' : '/board/cwrite'
+									});
+									$('#cpost').submit();
+									alert("ss");
+								}
+
+							});
+
+				});
 	</script>
 	<!-- END nav -->
 
@@ -97,65 +145,51 @@
 						th:value="${session.loginuser.id}" hidden id="writerid">
 					<form id="titleform"
 						class="tag-widget post-tag-container mb-5 mt-5">
-						
-						<input th:value="${dp.bno}" name="bno" hidden id="bno"> 
-						글번호:<a th:text="${dp.bno}">글번호</a> 
-						아이디:<a id="contentid" th:text="${dp.writer}">아이디</a> 
-						조회수:<a th:text="${dp.view_cnt}">조회수</a>
-						작성일:<a th:text="${dp.reg_date}">작성일</a> 
-						수정일:<a th:text="${dp.up_date}">수정일</a> 
-						
+
+						<input th:value="${dp.bno}" name="bno" hidden id="bno">
+						글번호:<a th:text="${dp.bno}">글번호</a> 아이디:<a id="contentid"
+							th:text="${dp.writer}">아이디</a> 조회수:<a th:text="${dp.view_cnt}">조회수</a>
+						작성일:<a th:text="${dp.reg_date}">작성일</a> 수정일:<a
+							th:text="${dp.up_date}">수정일</a>
+
 						<div class="tagcloud">
-							<button id="reviseBtn"  class="btn btn-default"
-								>revise</button>
-							<button id="deleteBtn" class="btn btn-default"
-								>delete</button>
+							<button id="reviseBtn" class="btn btn-default">revise</button>
+							<button id="deleteBtn" class="btn btn-default">delete</button>
 						</div>
-						
+
 					</form>
 					<h2 class="mb-3" th:text="${dp.title}">제목</h2>
 					<p th:utext="${dp.content}">내용.</p>
 
 
-					<div class="about-author d-flex p-4 bg-light">
-						<div class="bio mr-5">
-							<img src="images/person_1.jpg" alt="Image placeholder"
-								class="img-fluid mb-4">
-						</div>
-						<div class="desc">
-							<h3>George Washington</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-								Ducimus itaque, autem necessitatibus voluptate quod mollitia
-								delectus aut, sunt placeat nam vero culpa sapiente consectetur
-								similique, inventore eos fugit cupiditate numquam!</p>
-						</div>
-					</div>
-				</div>
 
 
 
-				<div class="pt-5 mt-5" th:each="c:${clist}>
-					<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">6
-						Comments</h3>
-					<ul class="comment-list" >
-						
-						<li class="comment">
-							<div class="vcard bio">
-								<img src="images/person_1.jpg" alt="Image placeholder">
-							</div>
-							<div class="comment-body" th:text="${c.commenter}">
-								<h3>lee</h3>
-								<div class="meta" th:text="${c.comment}">September 11, 2020 at 2:21pm</div>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Pariatur quidem laborum necessitatibus, ipsam impedit vitae
-									autem, eum officia, fugiat saepe enim sapiente iste iure! Quam
-									voluptas earum impedit necessitatibus, nihil?</p>
-								<p>
-									<a href="#" class="reply">Reply</a>
-								</p>
-							</div>
+					<div class="pt-5 mt-5">
+						<!-- <h3 class="mb-5" style="font-size: 20px; font-weight: bold;">6 
+							Comments</h3>-->
+						<ul class="comment-list">
 
-							<ul class="children">
+							<li class="comment" th:each="clist:${clist}">
+								<div class="vcard bio">
+									<img src="images/person_1.jpg" alt="Image placeholder">
+								</div>
+								<div class="comment-body">
+
+
+									<button id="cdeleteBtn" class="btn btn-default"
+										onclick="CdeleteBtn()">delete</button>
+
+									<input th:value="${clist.cno}" name="cno" hidden id="cno">
+									<input th:value="${clist.bno}" name="bno" hidden id="bbno">
+									<h3 id="commenter" th:text="${clist.commenter}">lee</h3>
+									<div class="meta" th:if="${clist.up_date} == null"
+										th:text="${clist.reg_date}">September 11, 2020 at 2:21pm</div>
+									<div class="meta" th:unless="${clist.up_date} == null"
+										th:text="${clist.up_date}">September 11, 2020 at 2:21pm</div>
+									<div th:text="${clist.comment}">comment</div>
+
+								</div> <!-- <ul class="children">
 								<li class="comment">
 									<div class="vcard bio">
 										<img src="images/person_1.jpg" alt="Image placeholder">
@@ -173,47 +207,40 @@
 									</div>
 
 								</li>
-							</ul>
-						</li>
-				
-					</ul>
-					<!-- END comment-list -->
+							</ul> -->
+							</li>
 
-					<div class="comment-form-wrap pt-5">
-						<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">Leave
-							a comment</h3>
-						<form action="#" class="p-5 bg-light">
-							<!-- 댓글폼 -->
-							<div class="form-group">
-								<label for="name">Name *</label> <input type="text"
-									class="form-control" id="name">
-							</div>
-							<div class="form-group">
-								<label for="email">Email *</label> <input type="email"
-									class="form-control" id="email">
-							</div>
-							<div class="form-group">
-								<label for="website">Website</label> <input type="url"
-									class="form-control" id="website">
-							</div>
+						</ul>
+						<!-- END comment-list -->
 
-							<div class="form-group">
-								<label for="message">Message</label>
-								<textarea name="" id="message" cols="30" rows="10"
-									class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<!-- <input type="submit" value="Post Comment"
+						<div class="comment-form-wrap pt-5">
+							<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">Leave
+								a comment</h3>
+
+							<form class="p-5 bg-light" id="cpost">
+
+								<!-- 댓글폼 -->
+								<div class="form-group">
+									<input th:value="${dp.bno}" name="bno" hidden id="cbno">
+									<input th:if="${session.loginuser} != null" name="commenter"
+										th:value="${session.loginuser.id}" hidden id="commenter">
+									<label for="message">Message</label>
+									<textarea id="comment" name="comment" cols="30" rows="10"
+										class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<!-- <input type="submit" value="Post Comment"
 									class="btn py-3 px-4 btn-primary"> -->
-									<button id=sendBtn type="button" class="btn py-3 px-4 btn-primary">Post Comment</button>
-							</div>
+									<button id=sendBtn type="button"
+										class="btn py-3 px-4 btn-primary">Post Comment</button>
+								</div>
 
-						</form>
+							</form>
+						</div>
 					</div>
-				</div>
 
+				</div>
 			</div>
-		</div>
 	</section>
 	<!-- .section -->
 
