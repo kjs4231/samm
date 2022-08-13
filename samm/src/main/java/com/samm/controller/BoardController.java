@@ -1,5 +1,7 @@
 package com.samm.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.samm.biz.BoardBiz;
+import com.samm.biz.CommentBiz;
 import com.samm.vo.BoardVo;
+import com.samm.vo.CommentVo;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -18,6 +22,8 @@ public class BoardController {
 	
 	@Autowired
 	BoardBiz bbiz;
+	@Autowired
+	CommentBiz cbiz;
 	
 	@RequestMapping("/board/write")
 	public String write(Model m) {
@@ -41,8 +47,16 @@ public class BoardController {
 	
 	@RequestMapping("/board/detail")
 	public String detail(Model m, int bno, HttpSession session) {
-
+		List<CommentVo> clist = null;
+		
+		try {
+			clist = cbiz.getList(bno);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		BoardVo obj = null;
+		
 		
 			try {
 				obj = bbiz.read(bno);
@@ -50,7 +64,7 @@ public class BoardController {
 				e.printStackTrace();
 			}
 			m.addAttribute("dp", obj);
-			
+			m.addAttribute("clist", clist);
 
 		m.addAttribute("center", "/board/detail");
 		return "index";
@@ -104,6 +118,41 @@ public class BoardController {
 		
 		m.addAttribute("center", "/board");
 		return "redirect:/board";
+	}
+	@RequestMapping("/board/cwrite")
+	public String cwrite(Model m, CommentVo u, int bno, HttpSession session, String commenter) {
+		try {
+			cbiz.write(u);
+			
+			u.setCommenter(commenter);
+			u.setBno(bno);
+			
+			
+			System.out.println(bno);
+			System.out.println("cwrite = "+u);
+			//System.out.println("writebno : "+u.getBno());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		m.addAttribute("center", "center");
+		return "redirect:/board/detail?bno="+bno;
+	}
+	
+	@RequestMapping("/board/cremove")
+	public String cremove(Model m, Integer cno, Integer bno, HttpSession session) {
+		System.out.println("removeccno : "+ cno);
+		System.out.println("removecbno : "+ bno);
+		
+		try {
+			cbiz.remove(cno);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		m.addAttribute("center", "/board");
+		return "redirect:/board/detail?bno="+bno;
 	}
 	
 	

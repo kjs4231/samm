@@ -1,4 +1,7 @@
+
 <meta charset="utf-8">
+<script src="/js/mypage.js"></script>
+<link rel="stylesheet" href="/css/mypage.css">
 <section class="hero-wrap hero-wrap-2 js-fullheight"
 	style="background-image: url('/images/festival11.jpg');">
 	<div class="overlay"></div>
@@ -24,9 +27,16 @@
 				<div class="px-4 pt-2 pb-4 cover">
 					<div class="media align-items-end profile-head">
 						<div class="profile mr-3">
-							<img th:src=${users.profile_img} alt="..." width="130"
-								class="rounded mb-2 img-thumbnail"><a href="#"
-								class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+							<img th:if="${users.pwd} == null" th:src=${users.profile_img} alt="..." width="130"
+								class="rounded mb-2 img-thumbnail">
+							<img th:unless="${users.pwd} == null" th:src="'/images/profile/'+${users.profile_img}" alt="..." width="130"
+								class="rounded mb-2 img-thumbnail">
+								<form id="profileImg">
+								<label for="file" id="label-file"><a id="editProfile"
+								class="btn btn-outline-dark btn-sm btn-block">Edit profile</a></label>
+								<input type="file" id="file" name="mf" onchange="changeprofile()" hidden>
+								<input th:value="${users.id}" name="id" hidden>
+								</form>
 						</div>
 						<div class="media-body mb-5 text-white">
 							<h4 class="mt-0 mb-0" th:if="${users.pwd} == null"
@@ -60,27 +70,33 @@
 				</div>
 				<div class="px-4 py-3">
 					<h5 class="mb-0">About</h5>
-					<div class="p-4 rounded shadow-sm bg-light">
+					<form class="p-4 rounded shadow-sm bg-light" id="mypageform">
 						<p class="font-italic mb-0" th:if="${users.pwd} == null">
-							<span>ID : </span>Kakao Account
+							<span>ID : </span><span>Kakao Account</span><input th:value=${users.id} name="id" hidden id="id">
 						</p>
 						<p class="font-italic mb-0" th:unless="${users.pwd} == null">
-							<span>ID : </span><span th:text=${users.id}></span>
+							<span>ID : </span><input class="mypagebi mypage" th:value=${users.id} readonly="readonly" name="id" id="id">
+						</p>
+						<p class="font-italic mb-0 " id="pwd" th:unless="${users.pwd} == null">
+							<span>Password : </span><input  type="password" class="mypagebi mypage"  readonly="readonly" name="pwd" id="pwda">
+						</p>
+						<p class="font-italic mb-0 ">
+							<span>Name : </span><input class="mypagebi mypage" th:value="${users.name}" readonly="readonly" name="name" id="name">
 						</p>
 						<p class="font-italic mb-0">
-							<span>Email : </span><span th:text="${users.email}"></span>
+							<span>Email : </span><input class="mypagebi mypage" th:value="${users.email}" readonly="readonly" name="email" id="email">
 						</p>
 						<p class="font-italic mb-0">
-							<span>Address : </span><span th:text="${users.address}"></span>
+							<span>Address : </span><input class="mypagebi mypage" th:value="${users.address}" readonly="readonly" name="address" id="address">
 						</p>
 						<p class="font-italic mb-0">
-							<span>Phone : </span><span th:text="${users.phone}"></span>
+							<span>Phone : </span><input class="mypagebi mypage" th:value="${users.phone}" readonly="readonly" name="phone" id="phone">
 						</p>
 						<p class="font-italic mb-0">
-							<span>Gender : </span><span th:text="${users.gender}"></span>
+							<span>Gender : </span><input class="mypagebi mypage" th:value="${users.gender}" readonly="readonly" name="gender" id="gender">
 						</p>
-						<a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit</a>
-					</div>
+						<a  class="btn btn-outline-dark btn-sm btn-block mypageEdit">Edit</a>
+					</form>
 				</div>
 				<div class="py-4 px-4">
 					<div class="d-flex align-items-center justify-content-between mb-3">

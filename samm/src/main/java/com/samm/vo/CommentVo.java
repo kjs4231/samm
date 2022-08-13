@@ -31,6 +31,28 @@ public class CommentVo {
 		this.comment = comment;
 		this.commenter = commenter;
 	}
+
+
+	public CommentVo(String comment) {
+		super();
+		this.comment = comment;
+	}
+
+
+	public CommentVo(Integer cno, String comment) {
+		super();
+		this.cno = cno;
+		this.comment = comment;
+	}
+
+
+	public CommentVo(Integer bno, String comment, String commenter) {
+		super();
+		this.bno = bno;
+		this.comment = comment;
+		this.commenter = commenter;
+	}
+	
 	
 	
 }
