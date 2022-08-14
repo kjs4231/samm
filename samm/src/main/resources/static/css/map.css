@@ -17,6 +17,15 @@ body {
 	position: relative;
 }
 
+@media screen and (max-width: 992px) {
+	.map-paintting {
+		margin-top: 73px;
+		height: calc(100vh - 73px);
+	}
+}
+
+@media screen and (max-width: 767px) {}
+
 #map-searchbox {
 	overflow: hidden;
 	position: absolute;
@@ -81,7 +90,7 @@ body {
 	font-size: 23px;
 	margin-bottom: 0;
 	z-index: 3;
-	animation: leftright 3s infinite alternate ease-in-out;
+	white-space: normal;
 }
 
 .project-wrap.map-overlay .text span {
@@ -146,19 +155,4 @@ body {
 .project-wrap.map-overlay .share {
 	width: 25px;
 	height: 25px;
-}
-
-@keyframes leftright {
-
-	0%,
-	20% {
-		transform: translateX(0%);
-		left: 0%;
-	}
-
-	80%,
-	100% {
-		transform: translateX(-120%);
-		left: 120%;
-	}
 }
