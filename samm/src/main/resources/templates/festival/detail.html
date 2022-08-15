@@ -100,43 +100,43 @@
 	<span class="nav-item dnav"><a href="#menu2" class="nav-link">상세정보</a></span>
 	<span class="nav-item dnav"><a href="#menu3" class="nav-link">축제톡</a></span>
 </section>
+
 <!-- 상세 사진 section -->
+
 <section class="ftco-section2 container imgmenu" id="menu1">
 
-	<div id="carouselExampleIndicators" class="carousel slide"
-		data-bs-ride="carousel">
+	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img th:src="${common['firstimage']}" class="d-block " alt="..."
-					style="height: 100%;">
+				<img th:src="${common['firstimage']}" class="d-block" style="height: 100%;">
 			</div>
 			<div class="carousel-item" th:each="img:${img}">
-				<img th:src="@{'/images/festival/'+${img.name}}"
-					class="d-block w-100" alt="...">
+				<img th:src="@{'/images/festival/'+${img.name}}" class="d-block">
 			</div>
 		</div>
 		<button class="carousel-control-prev control-opacity" type="button"
-			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"
-			id="prev">
+				data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" id="prev">
 			<span class="carousel-control-prev-icon " aria-hidden="true"></span>
 			<span class="visually-hidden">Previous</span>
 		</button>
 		<button class="carousel-control-next control-opacity" type="button"
-			data-bs-target="#carouselExampleIndicators" data-bs-slide="next"
-			id="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span> <span
-				class="visually-hidden">Next</span>
+				data-bs-target="#carouselExampleIndicators" data-bs-slide="next" id="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span> 
+			<span class="visually-hidden">Next</span>
 		</button>
 	</div>
+	
 	<form class="filebox" id="file-form">
-		<label for="file" id="label-file"><span class="file-span">직접
-				찍은 사진을 등록해주세요.</span><img
-			src="https://cdn.visitkorea.or.kr/resources/images/sub/bg_pic_reg.jpg"></label>
+		<label for="file" id="label-file">
+		<span class="file-span">직접 찍은 사진을 등록해주세요.</span>
+			<img src="https://cdn.visitkorea.or.kr/resources/images/sub/bg_pic_reg.jpg">
+		</label>
 		<input type="file" id="file" name="mf" onchange="filecheck()">
-		<input name="fid" th:value="${common['contentid']}" hidden> <span
-			th:if="${session.loginuser} != null"> <input name="uid"
-			th:value="${session.loginuser.id}" hidden>
-		</span> <input id="festivalimg" th:value="${common['firstimage']}" hidden>
+		<input name="fid" th:value="${common['contentid']}" hidden> 
+		<span th:if="${session.loginuser} != null"> 
+			<input name="uid" th:value="${session.loginuser.id}" hidden>
+		</span> 
+		<input id="festivalimg" th:value="${common['firstimage']}" hidden>
 	</form>
 
 </section>

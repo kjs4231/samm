@@ -71,7 +71,7 @@ public class MembersController {
 			e.printStackTrace();
 		}
 		m.addAttribute("vo", vo);		
-		m.addAttribute("center","members/minfo");
+		m.addAttribute("center","mng/members/minfo");
 		return "main";
 	}
 	
