@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script>
+$(document).ready(function(){ 
+	$('#mod_btn').click(function(){
+		$('#imgform').attr({
+			'method':'post',
+			'action':'updateYN' 
+		});
+		$('#imgform').submit();
+	});
+	
+	$('#del_btn').click(function(){
+		$('#imgform').attr({
+			'method':'post',
+			'action':'fdelimpl' 
+		});
+		$('#imgform').submit();
+	});
+});
+</script>
+
+
+</head>
+<body>
+
+
+<!-- 
+<table class="table table-hover col-md">
+<thead>
+  <tr>
+  	<th><b>선택</b></th>  
+    <th><b>회원</b></th>
+    <th><b>축제이름</b></th>
+    <th><b>등록일</b></th>
+    <th><b>이미지</b></th> 
+  </tr>
+</thead>
+
+<tbody>	
+  <tr th:each="vo : ${volist}">
+  	<td>
+  		<input type="checkbox" id="allowCheck" name="allowCheck">
+  		<input type="hidden" name="iid" th:value="${vo.iid}">
+  	</td>
+    <td name="uid" th:text="|${vo.uname} ( ${vo.uid} )|"></td>
+    <td name="ftitle" th:text="${vo.ftitle}"></td>
+    <td name="imgregdate" th:text="${vo.imgregdate}"></td>
+    <td>
+    	<img th:src="@{'/images/festival/'+${vo.imgname}}" 
+    		 class="w-1000">
+    </td>
+  </tr>
+</tbody> 
+
+</table> -->
+
+
+<br><br>
+
+
+<div class="row">
+<div class="col-lg-12 stretch-card grid-margin">
+ <div class="card">
+  <div class="card-body">
+ 
+<form id="imgform">
+ 	
+  <div  class="form-group" th:each="vo : ${volist}">
+  	<span class="col-md-1">
+  		<input type="checkbox" id="allowCheck" name="allowCheck" class="form-check-primary"> <input type="hidden" name="iid" th:value="${vo.iid}">
+  	</span>
+    <span name="uid" th:text="|${vo.uname} ( ${vo.uid} )|"></span>
+    <span class="col-md-6" name="ftitle" th:text="${vo.ftitle}"></span>
+    <span name="imgregdate" th:text="${#dates.format(vo.imgregdate, 'dd/MM/yy')}"></span> 
+    <span class="">
+    	<img th:src="@{'/images/festival/'+${vo.imgname}}" class="w-200">
+    </span>
+  </div>
+ </form>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<br><br>
+<button type="submit" id="mod_btn" class="btn btn-primary mr-2">허용</button>                  
+<button type="submit" id="del_btn" class="btn btn-light mr-2">삭제</button>
+</body>
+</html>

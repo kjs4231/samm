@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script>
+$(document).ready(function(){ 
+	$('#del_btn').click(function(){
+		$('#form').attr({
+			'method':'post',
+			'action':'bdelimpl' 
+		});
+		$('#form').submit();
+	});	 
+});
+</script>
+
+<style>
+.bcontent{
+	padding:20px;
+	margin:20px;
+}
+.bspan{
+	padding:20px;
+	 margin:20px; 
+}
+</style>
+</head>
+<body>
+
+<div class="row">
+<div class="col-md-12 grid-margin stretch-card">
+<div class="card">
+
+<div class="card-body">
+   <h4 class="card-title">게시글 상세내용</h4>
+   <p class="card-description"></p>
+ <div class="border">                  
+   <form id="form">
+	<div class="form-group row text-center border"> 
+		<span class="bspan border" th:value="${vo.bno}"></span>
+		<span class="bspan border" th:value="${vo.title}"></span>
+		<span class="bspan border" th:value="${vo.writer}"></span>
+		<span class="bspan border" th:value="${vo.reg_date}"></span>
+		<span class="bspan border" th:value="${vo.up_date}"></span>	
+	</div>
+	<div class="form-group row border"> 
+		<div class="bcontent border">내용</div>
+	</div>
+	<div class="form-group row  border"> 
+      <button type="submit" id="del_btn" class="btn btn-primary mr-2">삭제</button>
+    </div>
+   </form>
+ </div>
+</div>		
+
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+</body>
+</html>
