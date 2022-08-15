@@ -26,7 +26,7 @@ class DeleteTest {
 	@Test
 	void contextLoads() {
 		try {
-			cbiz.remove(4, 2, "asdf");
+//			cbiz.remove(4, 2, "asdf");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
