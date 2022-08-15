@@ -38,26 +38,21 @@
 </section>
 
 
-
+<div class="container">
 <form id="post">
 	<div class="form-group">
 		제목: <span id="title"></span><input type="text"
 			class="form-control form-control-user" name="title">
-
-	
 	<textarea id="summernote" name="content"></textarea>
 	<input th:if="${session.loginuser} != null"  name="writerid" th:value = "${session.loginuser.id}" hidden id="writerid">
 </div>
 </form>
-
 <a id="register" href="#" class="btn btn-primary btn-user btn-block">REGISTER</a>
-
+</div>
 <script>
 	$(document).ready(function() {
 	
 		$('#register').click(function(){
-			
-		
 			 if($('input[name="title"]').val()==""){
 				alert("제목 입력해주세요.");
 				$("#title").focus();
@@ -77,22 +72,23 @@
 		});
 		
 	});
+	
 	//서머노트에 text 쓰기
-	$('#summernote').summernote('insertText');
+	$('#summernote').summernote('insertHtml');
 
 	// 서머노트 쓰기 비활성화
-	$('#summernote').summernote('disable');
+	//$('#summernote').summernote('disable');
 
 	// 서머노트 쓰기 활성화
-	$('#summernote').summernote('enable');
+	//$('#summernote').summernote('enable');
 
 	// 서머노트 리셋
-	$('#summernote').summernote('reset');
+	//$('#summernote').summernote('reset');
 
 	// 마지막으로 한 행동 취소 ( 뒤로가기 )
-	$('#summernote').summernote('undo');
+	//$('#summernote').summernote('undo');
 	// 앞으로가기
-	$('#summernote').summernote('redo');
+	//$('#summernote').summernote('redo');
 	
 	
 	$('#summernote').summernote({
@@ -114,9 +110,9 @@
 						e.preventDefault();
 					}
 				}
-			}
+			} 
 		}
-});
+	});
 
 
 
@@ -126,9 +122,11 @@
 function uploadSummernoteImageFile(file, editor) {
 data = new FormData();
 data.append("file", file);
+console.log(data);
+console.log("image");
 $.ajax({
 	data : data,
-	type : "POST",
+	type : "post",
 	url : "/uploadSummernoteImageFile",
 	contentType : false,
 	processData : false,
