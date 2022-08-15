@@ -44,8 +44,12 @@ function dateToStringSlash(date) {
 }
 
 function parseDateyyyymmdd(yyyymmdd) {
-	yyyymmdd = yyyymmdd.toString();
-	return new Date(parseInt(yyyymmdd.substring(0, 4)), (parseInt(yyyymmdd.substring(4, 6)) - 1), parseInt(yyyymmdd.substring(6, 8)), 9);
+	if (checkNull(yyyymmdd)) {
+		return new Date();
+	} else {
+		yyyymmdd = yyyymmdd.toString();
+		return new Date(parseInt(yyyymmdd.substring(0, 4)), (parseInt(yyyymmdd.substring(4, 6)) - 1), parseInt(yyyymmdd.substring(6, 8)), 9);
+	}
 };
 
 function stateup() {
@@ -74,20 +78,21 @@ function paintingMap(lat, lng) {
 };
 
 function getGeolocation() {
-	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
-	if (navigator.geolocation) {
-		// GeoLocation을 이용해서 접속 위치를 얻어옵니다
-		navigator.geolocation.getCurrentPosition(function (position) {
-			geoloc_lat = position.coords.latitude, // 위도
-				geoloc_lng = position.coords.longitude; // 경도
-			var locPosition = new kakao.maps.LatLng(geoloc_lat, geoloc_lng) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-			console.log(geoloc_lat, geoloc_lng)
-			console.log("locPosition::" + locPosition);
-			paintingMap(geoloc_lat, geoloc_lng)
-		});
-	} else {
-		paintingMap(geoloc_lat, geoloc_lng);
-	};
+	// // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+	// if (navigator.geolocation) {
+	// 	// GeoLocation을 이용해서 접속 위치를 얻어옵니다
+	// 	navigator.geolocation.getCurrentPosition(function (position) {
+	// 		geoloc_lat = position.coords.latitude, // 위도
+	// 			geoloc_lng = position.coords.longitude; // 경도
+	// 		var locPosition = new kakao.maps.LatLng(geoloc_lat, geoloc_lng) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+	// 		console.log(geoloc_lat, geoloc_lng)
+	// 		console.log("locPosition::" + locPosition);
+	// 		paintingMap(geoloc_lat, geoloc_lng)
+	// 	});
+	// } else {
+	// 	paintingMap(geoloc_lat, geoloc_lng);
+	// };
+	paintingMap(geoloc_lat, geoloc_lng);
 };
 
 function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, eventenddate, title, addr1) {
@@ -185,14 +190,14 @@ function openOverlay(contentid, mapx, mapy, isPanTo) {
 		map.panTo(position);
 	};
 	if (matchMedia("screen and (max-width: 767px)").matches) {
-		closesearchbox();
+		close_searchbox();
 	};
 };
 
 function closeOverlay() {
 	customOverlay.setMap(null);
 	if (matchMedia("screen and (max-width: 767px)").matches) {
-		opensearchbox();
+		open_searchbox();
 	};
 }
 
@@ -230,13 +235,16 @@ function searchmap(keyword, page, mapx, mapy, eventstartdate, eventenddate) {
 		params['eventstartdate'] = eventstartdate;
 	} else {
 		delete params['eventstartdate'];
+		eventstartdate = dateToIntyyyymmdd(now);
 	}
 	if (!checkNull(eventenddate) && !isNaN(eventenddate)) {
 		params['eventenddate'] = eventenddate;
 	} else {
 		delete params['eventenddate'];
+		eventenddate = dateToIntyyyymmdd(now);
 	}
 	stateup();
+	closeOverlay();
 	$.ajax({
 		url: '/searchmap',
 		data: { keyword: keyword, page: page, mapx: mapx, mapy: mapy, eventstartdate: eventstartdate, eventenddate: eventenddate },
@@ -325,6 +333,14 @@ function countsearchmap(keyword, page, eventstartdate, eventenddate) {
 };
 
 function searchmapinput() {
+	if (checkNull($('#map-searchform input[name="search"]').val())) {
+		$('#map-keyword').addClass('keyword-empty');
+		$('#map-clearbtn').hide();
+	} else {
+		$('#map-keyword').removeClass('keyword-empty');
+		$('#map-clearbtn').show();
+
+	}
 	if (checkNull($('#map-searchform input[name="search"]').val()) && $('#map-calendarform').is(":hidden")) {
 		var result = '<a class="l-card item l-card-none container"><div>검색어를 입력하십시오.</div></a>';
 		$('#map-searchlist').html(result);
@@ -413,6 +429,7 @@ $(document).ready(function () {
 	params = $.deparam.querystring(true);
 	keyword = params.keyword;
 	page = params.page;
+	getGeolocation();
 	if (!checkNull(params.eventstartdate) && !isNaN(params.eventstartdate)) {
 		eventstartdate = params.eventstartdate;
 	} else {
@@ -424,7 +441,6 @@ $(document).ready(function () {
 		eventenddate = dateToIntyyyymmdd(new Date());
 	}
 	contentid = params.contentid;
-	getGeolocation();
 	customOverlay = new kakao.maps.CustomOverlay({
 		position: new kakao.maps.LatLng(geoloc_lat, geoloc_lng),
 		content: '<div></div>'
@@ -436,14 +452,14 @@ $(document).ready(function () {
 		$('#map-keyword').removeClass('keyword-empty');
 		$('#map-clearbtn').show();
 		if (!checkNull(eventstartdate) || !checkNull(eventenddate)) {
-			opensearchcal();
+			open_searchcal();
 			$('input[name="eventstartdate"]').datepicker("setDate", parseDateyyyymmdd(eventstartdate));
 			$('input[name="eventenddate"]').datepicker("setDate", parseDateyyyymmdd(eventenddate));
 			currentStartdate = eventstartdate;
 			currentEnddate = eventenddate;
 		}
 		if (eventstartdate == dateToIntyyyymmdd(new Date()) && eventenddate == dateToIntyyyymmdd(new Date())) {
-			closesearchcal();
+			close_searchcal();
 		}
 		if (Number.isInteger(page)) {
 			var page = page;
@@ -470,8 +486,10 @@ $(document).ready(function () {
 				marker.setMap(map);
 				markers.set(element.contentid, marker);
 				elm_overlays.set(element.contentid, overlay);
-				openOverlay(element.contentid, element.mapx, element.mapy);
 				map.panTo(locPosition);
+				setTimeout(function () {
+					openOverlay(element.contentid, element.mapx, element.mapy)
+				}, 1000);
 			}
 		})
 	}
@@ -486,18 +504,11 @@ $(document).on("click", ".btn-search", function () {
 	searchmapinput();
 });
 
-$('#map-searchform input[name="search"]').keyup(function (e) {
-	if (checkNull($('#map-searchform input[name="search"]').val())) {
-		$('#map-keyword').addClass('keyword-empty');
-		$('#map-clearbtn').hide();
-	} else {
-		$('#map-keyword').removeClass('keyword-empty');
-		$('#map-clearbtn').show();
-	}
-	if (e.keyCode == 13) {
+function enterkey() {
+	if (window.event.keyCode == 13) {
 		searchmapinput();
 	}
-});
+}
 
 $(document).on("click", ".pager-prev a", function () {
 	// alert($('#map-searchpager li').eq(1).text());
@@ -570,7 +581,7 @@ function clearsearch() {
 	$('#map-searchpager').hide();
 }
 
-function opensearchcal() {
+function open_searchcal() {
 	$('#map-opencalbtn').hide();
 	$('#map-closecalbtn').show();
 	$('#map-calendarform').show();
@@ -589,11 +600,11 @@ function opensearchcal() {
 	}
 }
 
-function closesearchcal() {
+function close_searchcal() {
 	temp_startdate = $('input[name="eventstartdate"]').datepicker("getDate");
 	temp_enddate = $('input[name="eventenddate"]').datepicker("getDate");
-	$('input[name="eventstartdate"]').datepicker("refresh");
-	$('input[name="eventenddate"]').datepicker("refresh");
+	$('input[name="eventstartdate"]').datepicker("setDate", new Date());
+	$('input[name="eventenddate"]').datepicker("setDate", new Date());
 	$('#map-opencalbtn').show();
 	$('#map-closecalbtn').hide();
 	$('#map-calendarform').hide();
@@ -602,14 +613,19 @@ function closesearchcal() {
 	$('#map-searchbtn').appendTo($('#map-keywordform'));
 }
 
-function opensearchbox() {
+function open_searchbox() {
 	$('#map-searchbox').html(temp_searchbox);
+	$('#map-searchform input[name="search"]').val(currentKeyword);
+	$('input[name="eventstartdate"]').val(dateToStringSlash(parseDateyyyymmdd(currentStartdate)));
+	$('input[name="eventstartdate"]').datepicker('setDate', parseDateyyyymmdd(currentStartdate));
+	$('input[name="eventenddate"]').val(dateToStringSlash(parseDateyyyymmdd(currentEnddate)));
+	$('input[name="eventenddate"]').datepicker('setDate', parseDateyyyymmdd(currentEnddate));
 	$('#map-searchbox').removeClass('searchbox-close');
 }
 
-function closesearchbox() {
+function close_searchbox() {
 	temp_searchbox = $('#map-searchbox').html();
-	$('#map-searchbox').html('<form class="item" id="map-searchform"><div id="map-keywordform" class="inner-form"><button id="map-opensearchbox" onclick="opensearchbox()" class="btn" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path fill="currentColor" d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z" /></svg></button>');
+	$('#map-searchbox').html('<form class="item" id="map-searchform"><div id="map-keywordform" class="inner-form"><button id="map-opensearchbox" onclick="open_searchbox()" class="btn" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path fill="currentColor" d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z" /></svg></button>');
 	$('#map-searchbox').addClass('searchbox-close');
 }
 // function openInfowindow(contentid, mapx, mapy) {

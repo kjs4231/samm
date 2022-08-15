@@ -330,6 +330,7 @@ public class AjaxController {
 		
 		return "찜제거!";
 	}
+
 	
 	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
 	@ResponseBody
@@ -360,4 +361,17 @@ public class AjaxController {
 		return jsonObject;
 	}
 	
+
+	@RequestMapping("/updateMypage")
+	public void updateMypage(UsersVo mypage) {
+		
+		System.out.println(mypage);
+		try {
+			ubiz.modify(mypage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }

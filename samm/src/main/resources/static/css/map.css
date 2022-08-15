@@ -17,6 +17,15 @@ body {
 	position: relative;
 }
 
+@media screen and (max-width: 992px) {
+	.map-paintting {
+		margin-top: 73px;
+		height: calc(100vh - 73px);
+	}
+}
+
+@media screen and (max-width: 767px) {}
+
 #map-searchbox {
 	overflow: hidden;
 	position: absolute;
@@ -39,6 +48,17 @@ body {
 	position: relative;
 }
 
+.project-wrap.map-overlay:after {
+	content: "";
+	position: absolute;
+	left: 116px;
+	bottom: -19px;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-top: 20px solid white;
+	z-index: 4;
+}
+
 .project-wrap.map-overlay .img {
 	width: 270px;
 	height: 0;
@@ -47,13 +67,13 @@ body {
 
 .project-wrap.map-overlay .p-4 {
 	width: 270px;
-	padding: 40px 1rem 1rem 1rem !important;
+	padding: 40px 1rem 0.5rem 1rem !important;
 	overflow: hidden;
 	margin-top: 40px;
 }
 
 .project-wrap.map-overlay .img .price {
-	z-index: 3;
+	z-index: 5;
 }
 
 .project-wrap.map-overlay .text .days {
@@ -70,6 +90,7 @@ body {
 	font-size: 23px;
 	margin-bottom: 0;
 	z-index: 3;
+	white-space: normal;
 }
 
 .project-wrap.map-overlay .text span {

@@ -10,7 +10,7 @@
 	</select>
 
 	<insert id="insert" parameterType="UsersVo">
-		INSERT INTO users VALUES (#{id},#{pwd},#{name},#{email},#{address},#{phone},#{gender})
+		INSERT INTO users VALUES (#{id},#{pwd},#{name},#{email},#{address},#{phone},#{gender},null)
 		
 	</insert>
 	
@@ -51,6 +51,12 @@
 				<when test="gender == null or gender.equals('')"></when>
 				<otherwise>
 					gender=#{gender}
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="profile_img == null or profile_img.equals('')"></when>
+				<otherwise>
+					profile_img=#{profile_img}
 				</otherwise>
 			</choose>
 		</trim>
