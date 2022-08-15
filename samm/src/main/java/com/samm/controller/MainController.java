@@ -170,11 +170,11 @@ public class MainController {
 			/*Map map = new HashMap();
 			map.put("offset", (page-1)*pageSize);
 			map.put("pageSize", pageSize);*/
-			System.out.println("sc::"+sc);
+//			System.out.println("sc::"+sc);
 			
 
-			System.out.println("blist::"+blist);
-			System.out.println("ph::"+pageHandller);
+//			System.out.println("blist::"+blist);
+//			System.out.println("ph::"+pageHandller);
 			
 			m.addAttribute("blist", blist);
 			m.addAttribute("center", "board");
