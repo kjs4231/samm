@@ -73,7 +73,7 @@
 						  <li><a  th:href="@{/users/mypage(id=${session.loginuser.id})}" class="nav-link droplink">My page</a></li>
 						</ul>
 					</li>  
-
+ 
 					<!-- admin  -->
 					<li class="nav-item active" th:if="${session.loginadmin != null && session.loginuser == null}"> 
 						<a href="/logout" class="nav-link" >Sign Out</a>

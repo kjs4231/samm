@@ -51,26 +51,22 @@ public class BoardBiz implements Biz<Integer, BoardVo> {
 
 	@Override
 	public void register(BoardVo v) throws Exception {
-		// TODO Auto-generated method stub
-		
+		boardDao.insert(v);		
 	}
 
 	@Override
 	public void remove(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		
+		boardDao.delete(k);		
 	}
 
 	@Override
 	public BoardVo get(Integer k) throws Exception {
-		// TODO Auto-generated method stub
 		return boardDao.select(k);
 	}
 
 	@Override
 	public List<BoardVo> get() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectAll();
 	}
 
    
@@ -85,4 +81,8 @@ public class BoardBiz implements Biz<Integer, BoardVo> {
     public List<BoardVo> selectByUid(String uid) throws Exception{
     	return boardDao.selectByUid(uid);
     }
+
+	public List<BoardVo> get(Map<String, Integer> m) throws Exception {
+		return boardDao.get(m);
+	}
 }

@@ -94,5 +94,16 @@
    	<select id="selectByUid" parameterType="String" resultType="BoardVo">
 		SELECT * FROM board WHERE writer=#{uid}
 	</select>
+   
+   
+    <select id="get" parameterType="map" resultType="BoardVo">
+		SELECT * FROM
+		( SELECT @rownum:=@rownum+1 as rn, A.* 
+  		  FROM board A, (SELECT @ROWNUM := 0) R 
+  		  where A.del_date is null
+  		) list
+		WHERE rn between (#{section}-1)*100 + (#{pageNum}-1)*10+1 
+		         and (#{section}-1)*100 + #{pageNum} * 10 
+	</select>
     
 </mapper>
