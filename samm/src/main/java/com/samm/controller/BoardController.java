@@ -48,10 +48,9 @@ public class BoardController {
 	@RequestMapping("/board/writeimpl")
 	public String writeimpl(Model m, BoardVo u, HttpSession session, String writerid) {
 		try {
-			/*
 			u.setWriter(writerid);
 			bbiz.write(u);
-			*/
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -189,7 +188,7 @@ public class BoardController {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
 			System.out.println("save completed");
-			jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
+			jsonObject.addProperty("url", "/images/festival/"+savedFileName);
 			jsonObject.addProperty("responseCode", "success");
 			System.out.println("json");
 			System.out.println(jsonObject);
@@ -210,7 +209,7 @@ public class BoardController {
 	    //로 접속하면 C:/summernote_image/1234.jpg 파일을 불러온다.
 	    @Override
 	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	        registry.addResourceHandler("/summernoteImage/**")
+	        registry.addResourceHandler("/images/festival/**")
 	                .addResourceLocations("file:///C:/multicampus finalproject/samm/samm/src/main/resources/static/images/festival/");
 	    }
 	}

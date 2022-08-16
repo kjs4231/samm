@@ -6,16 +6,12 @@ function goDetail(bno){
 };
 
 function Write(){
-	$('#writeBtn').click(function() {
-
 		if ($('#loginuser').val() == null || $('#loginuser').val() == "") {
-			alert("login후 이용 가능합니다.")
-		
+			alert("login후 이용 가능합니다.")	
 		}
 		else{
 			location.href='/board/write'
 		}
-	})
 }
 
 
