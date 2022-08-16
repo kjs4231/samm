@@ -46,42 +46,7 @@
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light scrolled awake"
-		id="ftco-navbar">
-		<div class="container">
-			<a class="navbar-brand" href="/">SAMM<span>Search Festival</span></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> Menu
-			</button>
-
-			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
-					<li class="nav-item active"><a href="/about" class="nav-link">About</a></li>
-					<li class="nav-item active"><a href="/map" class="nav-link">Festival</a></li>
-					<li class="nav-item active"><a href="/board" class="nav-link">Board</a></li>
-
-					<li class="nav-item active" th:if="${session.loginuser == null}"><a href="/login"
-							class="nav-link">Sign In</a></li>
-
-					<li th:unless="${session.loginuser == null}" class="nav-item active dropdown">
-						<a class="nav-link dropdown-toggle" data-toggle="dropdown">
-							<span th:text="${session.loginuser.name}"></span>
-						</a>
-						<ul class="dropdown-menu fdrop">
-							<li><a href="/logout" class="nav-link droplink">Sign Out</a></li>
-							<li><a href="/users/mypage" class="nav-link droplink">My page</a></li>
-							<input th:value="${session.loginuser.id}" id="loginuser" hidden>
-						</ul>
-					</li>
-
-					<li class="nav-item active" th:if="${loginadmin} != null">
-						<a href="/mng/main" class="nav-link"><span class="nav-item"></span> Admin </a>
-
-
-				</ul>
-			</div>
-		</div>
+		id="ftco-navbar" th:insert="nav">
 	</nav>
 
 	<div id="chatbot-div">
