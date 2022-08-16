@@ -30,4 +30,8 @@ public interface BoardMapper {
 	
 	public List<BoardVo> selectByUid(String uid) throws Exception;
 	public List<BoardVo> get(Map<String, Integer> m) throws Exception;
+	
+	public List<BoardVo> bsearch(Map<String, String> map) throws Exception;
+	
+	
 }

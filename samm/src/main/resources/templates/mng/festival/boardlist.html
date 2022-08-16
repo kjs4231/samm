@@ -8,7 +8,7 @@ $(document).ready(function(){
 	$('#btnSearch').click(function(){
 		$('#search_form').attr({
 			'method':'get',
-			'action':'asearch' 
+			'action':'bsearch' 
 		});
 		$('#search_form').submit();
 	});
@@ -30,11 +30,9 @@ $(document).ready(function(){
   <div class="input-group justify-content-end">
     <div class="border border-primary">
    		<select name="select" class="border-0 form-select" style="margin:15px 5px">
-  		 <option th:value="id" >ID</option>
-  		 <option th:value="name" selected>이름</option>  	  
-  		 <option th:value="email">Email</option>
-  		 <option th:value="address">주소</option>  
-  		 <option th:value="phone">전화번호</option>  
+  		 <option th:value="writer" selected>작성자ID</option>  	  
+  		 <option th:value="title">제목</option>
+  		 <option th:value="content">내용</option>  
   		</select>	
     </div>
     <input type="text" name="txt" class="form-control border border-primary col-md-2"  
