@@ -22,8 +22,7 @@ public class AdminController {
 	
 	@RequestMapping("/alist")
 	public String alist(Model m, String section, String pageNum) {	
-		System.out.println("admin alist");
-		
+
 		if(section==null||section=="") {	
 			section = "1"; 
 			pageNum = "1";	

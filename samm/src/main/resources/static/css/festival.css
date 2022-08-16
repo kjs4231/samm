@@ -730,3 +730,54 @@
 .s003 .l-card-none {
 	height: 85.6px;
 }
+
+.registerText{
+	font-size : 18px;
+	color: white !important;
+	font-weight: bold;
+	background-color: rgba(125,231,111,0.4);
+}
+
+.registerInput{
+	background-color: transparent;
+	color: white;
+    font-size: 22px;
+    border-radius: 5px;
+    height: 58px !important;
+    box-shadow: none;
+    font-weight: 400;
+    line-height: 1.5;
+    display: block;
+    width: 100%;
+    border:none;
+   	border-bottom: 2px solid #ced4da;
+   	margin:10px 0;
+}
+.registerInput::placeholder{
+	color:white;
+	font-weight: bold;
+}
+#btn--div{
+   	margin-bottom: 30px;
+ 	margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+.warning{
+	color:red !important;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.inputbtn{
+	background-color: inherit !important;
+	border:none; 
+	font-weight: bold;
+	font-size: 16px;
+	color:white;
+}
+
+.inputbtn:hover{
+	color: #fd7e14;
+}
