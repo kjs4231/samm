@@ -122,9 +122,9 @@
 				class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
 				<div class="col-md-9 ftco-animate pb-5 text-center">
 					<p class="breadcrumbs">
-						<span class="mr-2"><a href="index.html">Home <i
+						<span class="mr-2"><a href="/">Home <i
 								class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a
-							href="index.html">Blog <i class="fa fa-chevron-right"></i></a></span> <span>Blog
+							href="/board">Blog <i class="fa fa-chevron-right"></i></a></span> <span>Blog
 							Single <i class="fa fa-chevron-right"></i>
 						</span>
 					</p>
@@ -138,8 +138,6 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 ftco-animate py-md-5 mt-md-5" id="post">
-
-
 					<input th:if="${session.loginuser} != null" name="writerid"
 						th:value="${session.loginuser.id}" hidden id="writerid">
 					<form id="titleform"
@@ -159,11 +157,6 @@
 					</form>
 					<h2 class="mb-3" th:text="${dp.title}">제목</h2>
 					<p th:utext="${dp.content}">내용.</p>
-
-
-
-
-
 					<div class="pt-5 mt-5">
 						<!-- <h3 class="mb-5" style="font-size: 20px; font-weight: bold;">6 
 							Comments</h3>-->
@@ -239,6 +232,7 @@
 					</div>
 
 				</div>
+			</div>
 			</div>
 	</section>
 	<!-- .section -->

@@ -1,7 +1,19 @@
 <meta charset="utf-8">
 <script>
-function goDetail(bno){
 
+$(document).ready(function(){
+	let query = window.location.search;
+	let param = new URLSearchParams(query);
+	let page = param.get('page');
+	if(page == null){
+		page = 1 ;
+	}
+	console.log(page);
+	$('.pagenum').removeClass("active");
+	$('.pagenum').eq(page-1).addClass("active");
+	
+});
+function goDetail(bno){
 	location.href='/board/detail?bno='+bno; 
 };
 
@@ -85,6 +97,29 @@ function Write(){
 .search-button:hover {
 	color: rgb(165, 165, 165);
 }
+
+.bNum{
+    font-size: 40px;
+    font-weight: 400;
+    color: #fff;
+    line-height: 1;
+}
+
+.mos{
+	font-weight: bold;
+}
+.writer{
+	margin: 0;
+    font-style: italic;
+     font-size: 14px;
+}
+
+.written{
+    margin-bottom: 0;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
 </style>
 
 <section class="hero-wrap hero-wrap-2 js-fullheight"
@@ -96,10 +131,10 @@ function Write(){
 			<div class="col-md-9 ftco-animate pb-5 text-center">
 				<p class="breadcrumbs">
 					<span class="mr-2"><a href="index.html">Home <i
-							class="fa fa-chevron-right"></i></a></span> <span>Board <i
+							class="fa fa-chevron-right"></i></a></span> <span>Blog <i
 						class="fa fa-chevron-right"></i></span>
 				</p>
-				<h1 class="mb-0 bread">Board</h1>
+				<h1 class="mb-0 bread">Blog</h1>
 			</div>
 		</div>
 	</div>
@@ -116,10 +151,11 @@ function Write(){
 					<div class="text">
 						<div class="d-flex align-items-center mb-4 topp">
 							<div class="one">
-								<span class="day" th:text="${b.bno}">11</span>
+								<span class="bNum" th:text="${#dates.format(b.reg_date,'d')}">11</span>
 							</div>
 							<div class="two">
-								<span class="mos" th:text="${b.reg_date}">September</span>
+								<span class="mos" th:text="${#dates.format(b.reg_date,'yyyy')}"></span>
+								<span class="mos" th:text="${#dates.monthName(b.reg_date)}"></span>
 							</div>
 						</div>
 						<div class="contents-box">
@@ -129,7 +165,8 @@ function Write(){
 							
 								<a th:onclick="'goDetail(' + ${b.bno} + ');'"
 									class="btn btn-primary">Read more</a>
-							</p>
+							<p class="written">written by.. </p>		
+							<p th:text="${b.writer}" class="writer"></p>
 						</div>
 					</div>
 				</div>
@@ -166,11 +203,11 @@ function Write(){
 			<div class="block-27 ">
 				<ul>
 					<li><a th:href="${ph.showPrev}">&lt;</a></li>
-					<span th:each="page:${#numbers.sequence(ph.beginPage,ph.endPage)}">
-						<li class="active"><a th:text="${page}"
-							th:href="@{'/board'+${ph.sc.getQueryString(page)}} "></a> <!-- http://127.0.0.1/board$%7Bph.sc.getQueryString( -->
+					<li th:each="page:${#numbers.sequence(ph.beginPage,ph.endPage)}" class="pagenum">
+						<span>
+						<a th:text="${page}" th:href="@{'/board'+${ph.sc.getQueryString(page)}} "></a> <!-- http://127.0.0.1/board$%7Bph.sc.getQueryString( -->
+						</span>
 					</li>
-					</span>
 					<li><a href="#">&gt;</a></li>
 				</ul>
 			</div>
