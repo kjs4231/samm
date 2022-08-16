@@ -13,6 +13,8 @@
 
 					if ($('#writerid').val() != $('#contentid').text()) {
 						alert("권한이 없습니다.");
+						console.log($('#writerid').val())
+						console.log($('#contentid').text())
 						return false;
 					}
 					if (confirm("삭제하시겠습니까?")){
@@ -35,25 +37,6 @@
 					if (confirm("수정하시겠습니까?")){
 						var bno = $('#bno').val()
 					location.href = '/board/revise?bno=' + bno;
-
-					e.preventDefault();
-					}else{
-						
-					}
-				});
-
-				$('#cdeleteBtn').click(function(e) {
-				
-					if ($('#writerid').val() != $('#commenter').text()) {
-						alert("권한이 없습니다.");
-						return false;
-					}
-
-					if (confirm("삭제하시겠습니까?")){
-						var cno = $('#cno').val()
-					var bno = $('#bbno').val()
-					
-					location.href = '/board/cremove?cno='+cno+'&bno=' + bno; 
 
 					e.preventDefault();
 					}else{
@@ -85,6 +68,19 @@
 						});
 
 			});
+
+	function CdeleteBtn(cno,bno,commenter){
+		if ($('#writerid').val() != commenter) {
+			alert("권한이 없습니다.");
+			return false;
+		}
+		if (confirm("삭제하시겠습니까?")){
+		location.href = '/board/cremove?cno='+cno+'&bno=' + bno; 
+		e.preventDefault();
+		}else{
+			
+		}
+	}
 </script>
 <!-- END nav -->
 
@@ -175,11 +171,9 @@
 							<div class="comment-body">
 
 
-								<button id="cdeleteBtn" class="btn btn-default"
-									onclick="CdeleteBtn()">delete</button>
+								<button  class="btn btn-default cdeleteBtn"
+									th:onclick="CdeleteBtn([[${clist.cno}]],[[${clist.bno}]],[[${clist.commenter}]])">delete</button>
 
-								<input th:value="${clist.cno}" name="cno" hidden id="cno">
-								<input th:value="${clist.bno}" name="bno" hidden id="bbno">
 								<h3 id="commenter" th:text="${clist.commenter}">lee</h3>
 								<div class="meta" th:if="${clist.up_date} == null"
 									th:text="${clist.reg_date}">September 11, 2020 at 2:21pm</div>

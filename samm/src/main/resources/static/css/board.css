@@ -8,3 +8,10 @@
 .commentdiv{
 	border-top: 1px solid gray;
 }
+
+.row{
+	justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
