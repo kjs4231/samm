@@ -106,4 +106,10 @@
 		         and (#{section}-1)*100 + #{pageNum} * 10 
 	</select>
     
+    
+    <select id="bsearch" resultType="BoardVo" parameterType="map">
+		SELECT * FROM board WHERE ${select} LIKE CONCAT('%',#{txt},'%')
+	</select>
+    
+    
 </mapper>

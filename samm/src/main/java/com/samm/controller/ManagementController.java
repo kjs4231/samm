@@ -11,8 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.samm.biz.BoardBiz;
+import com.samm.biz.CommentBiz;
 import com.samm.biz.ImgAllowBiz;
+import com.samm.vo.AdmintblVo;
 import com.samm.vo.BoardVo;
+import com.samm.vo.CommentVo;
 import com.samm.vo.imgallowVo;
  
  
@@ -27,7 +30,8 @@ public class ManagementController {
 	@Autowired
 	BoardBiz boardbiz;
 	
-	
+	@Autowired
+	CommentBiz cbiz;
 	
 	@RequestMapping("/festivalimg")
 	public String festivalimg(Model m) {
@@ -83,14 +87,11 @@ public class ManagementController {
 		pagingMap.put("section", Integer.parseInt(section));
 		pagingMap.put("pageNum", Integer.parseInt(pageNum));
 		
-		
 		int tot = 0;		
 		List<BoardVo> volist = null;
 		try {
 			volist= boardbiz.get(pagingMap);
-			
 			tot = boardbiz.getCount();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -114,17 +115,80 @@ public class ManagementController {
 		System.out.println("boarddetail: " + bno);
 		
 		BoardVo vo = null;
+		List<CommentVo> cvolist = null;
+		
 		try {
 			vo = boardbiz.get(bno);
-			System.out.println("boarddetail: " + vo.toString());
+			//System.out.println("boarddetail3333: " + vo.toString());
+			cvolist = cbiz.getList(bno);
+			for(CommentVo c : cvolist ) {
+				//System.out.println("cvolist- cvo: " + c.toString());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		m.addAttribute("cvolist", cvolist);
 		m.addAttribute("vo", vo);
 		m.addAttribute("center", "mng/festival/boarddetail");
 		return "mng/main";
 	}
 	
+	
+	@RequestMapping("bdelimpl")
+	public String bdelimpl(Model m, int bno) {
+		//System.out.println("bdelimpl: "+vo.toString()); 
+		//int bno = vo.getBno();
+		try {
+			boardbiz.remove(bno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:boardlist";
+	}
+	
+	
+	@RequestMapping("cdelimpl")
+	public String cdelimpl(Model m, int cno) { 
+		System.out.println("cdelimpl - cno: "+ cno); 
+		int bno = 0;
+		try {
+			CommentVo cvo = cbiz.read(cno);
+			bno = cvo.getBno();
+			cbiz.deleteComment(cno);
+			System.out.println("cdelimpl: "+ cvo.toString()+ " / bno : " + bno); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:boarddetail?bno=" + bno;
+	}
+	
+	
+	@RequestMapping("bsearch")
+	public String bsearch(Model m, String txt, String select) {
+		
+		System.out.println(txt + " / " + select);
+		
+		Map<String, String> map = new HashMap<String, String>(); 
+		
+		map.put("txt", txt);
+		map.put("select", select);		
+		
+		List<BoardVo> volist = null;
+		
+		try {
+			volist = boardbiz.bsearch(map);
+			for(BoardVo vo : volist) {
+				System.out.println(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		 
+		m.addAttribute("volist", volist);		
+		m.addAttribute("center","mng/festival/boardlist");
+		return "mng/main";
+	}
 	
 	
 	
