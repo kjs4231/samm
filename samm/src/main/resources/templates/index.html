@@ -54,7 +54,7 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
 					<li class="nav-item active"><a href="/about" class="nav-link">About</a></li>
-					<li class="nav-item active"><a href="/map" class="nav-link">Festival</a></li>
+					<li class="nav-item active"><a href="/map" class="nav-link">FestivalMap</a></li>
 					<li class="nav-item active"><a href="/board" class="nav-link">Board</a></li>
 					
 					<li class="nav-item active " th:if="${session.loginuser == null && session.loginadmin == null}">
@@ -73,7 +73,7 @@
 						  <li><a  th:href="@{/users/mypage(id=${session.loginuser.id})}" class="nav-link droplink">My page</a></li>
 						</ul>
 					</li>  
-
+ 
 					<!-- admin  -->
 					<li class="nav-item active" th:if="${session.loginadmin != null && session.loginuser == null}"> 
 						<a href="/logout" class="nav-link" >Sign Out</a>
@@ -99,7 +99,7 @@
 	</div>
 
 	<footer class="ftco-footer bg-bottom ftco-no-pt" id="footer--screen"
-		style="background-image: url(images/bg_3.jpg);">
+		style="background-image: url(/images/bg_3.jpg);">
 		<div class="container">
 			<div class="row mb-5">
 				<div class="col-md pt-5">
@@ -178,8 +178,8 @@
 	<script src="/js/chatbot.js"></script>
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="/js/popper.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
+<!-- 	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script> -->
 	<script src="/js/jquery.easing.1.3.js"></script>
 	<script src="/js/jquery.waypoints.min.js"></script>
 	<script src="/js/jquery.stellar.min.js"></script>

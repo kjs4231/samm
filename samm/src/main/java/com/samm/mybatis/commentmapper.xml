@@ -16,7 +16,13 @@
 		UPDATE comment SET del_date = now() WHERE cno = #{cno}
 		
 	</update>
-
+	
+	
+	<update id="deleteComment" parameterType="int">
+		UPDATE comment SET del_date = now() WHERE cno = #{cno}
+	</update>
+	
+	
 	<insert id="insert" parameterType="CommentVo">
 		INSERT INTO comment
 		(bno, comment, commenter, reg_date)
@@ -29,8 +35,7 @@
 		SELECT cno, bno, comment, commenter, reg_date, up_date
 		FROM comment
 		WHERE bno = #{bno} and del_date is null
-		ORDER BY reg_date ASC, cno ASC
-		
+		ORDER BY reg_date ASC, cno ASC		
 	</select>
 
 	<select id="select" parameterType="int" resultType="CommentVo">
