@@ -1,272 +1,209 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Pacific - Free Bootstrap 4 Template by Colorlib</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link
-	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css2?family=Arizonia&display=swap"
-	rel="stylesheet">
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<link rel="stylesheet" href="css/animate.css">
-
-<link rel="stylesheet" href="css/owl.carousel.min.css">
-<link rel="stylesheet" href="css/owl.theme.default.min.css">
-<link rel="stylesheet" href="css/magnific-popup.css">
-
-<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="css/jquery.timepicker.css">
+<link rel="stylesheet" href="/css/board.css">
 
 
-<link rel="stylesheet" href="css/flaticon.css">
-<link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
 	<script>
-		$(document).ready(
-				function() {
-					$('#deleteBtn').click(function(e) {
+	$(document).ready(
+			function() {
+				$('#deleteBtn').click(function(e) {
 
-						if ($('#writerid').val() != $('#contentid').text()) {
-							alert("권한이 없습니다.");
-							return false;
-						}
-						if (confirm("삭제하시겠습니까?")){
-							var bno = $('#bno').val()
-						location.href = '/board/remove?bno=' + bno;
+					if ($('#writerid').val() != $('#contentid').text()) {
+						alert("권한이 없습니다.");
+						return false;
+					}
+					if (confirm("삭제하시겠습니까?")){
+						var bno = $('#bno').val()
+					location.href = '/board/remove?bno=' + bno;
 
-						e.preventDefault();
-						}else{
-							
-						}
-					});
-
-					$('#reviseBtn').on("click", function(e) {
-
-						if ($('#writerid').val() != $('#contentid').text()) {
-							alert("권한이 없습니다.");
-							return false;
-						}
-
-						if (confirm("수정하시겠습니까?")){
-							var bno = $('#bno').val()
-						location.href = '/board/revise?bno=' + bno;
-
-						e.preventDefault();
-						}else{
-							
-						}
-					});
-
-					$('#cdeleteBtn').click(function(e) {
-					
-						if ($('#writerid').val() != $('#commenter').text()) {
-							alert("권한이 없습니다.");
-							return false;
-						}
-
-						if (confirm("삭제하시겠습니까?")){
-							var cno = $('#cno').val()
-						var bno = $('#bbno').val()
+					e.preventDefault();
+					}else{
 						
-						location.href = '/board/cremove?cno='+cno+'&bno=' + bno; 
-
-						e.preventDefault();
-						}else{
-							
-						}
-					});
-					$('#sendBtn').click(function() {
-								
-								if ($('#writerid').val() == null
-										|| $('#writerid').val() == "") {
-									alert("login후 이용 가능합니다.")
-
-								} else {
-									
-									if ($('textarea[name="comment"]').val() == "") {
-										alert("내용 입력해주세요.");
-										$("#comment").focus();
-										return false;
-									}
-									
-									$('#cpost').attr({
-										'method' : 'post',
-										'action' : '/board/cwrite'
-									});
-									$('#cpost').submit();
-									
-								}
-
-							});
-
+					}
 				});
-	</script>
-	<!-- END nav -->
 
-	<section class="hero-wrap hero-wrap-2 js-fullheight"
-		style="background-image: url('images/bg_1.jpg');">
-		<div class="overlay"></div>
-		<div class="container">
-			<div
-				class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
-				<div class="col-md-9 ftco-animate pb-5 text-center">
-					<p class="breadcrumbs">
-						<span class="mr-2"><a href="/">Home <i
-								class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a
-							href="/board">Blog <i class="fa fa-chevron-right"></i></a></span> <span>Blog
-							Single <i class="fa fa-chevron-right"></i>
-						</span>
-					</p>
-					<h1 class="mb-0 bread">Blog Details</h1>
-				</div>
+				$('#reviseBtn').on("click", function(e) {
+
+					if ($('#writerid').val() != $('#contentid').text()) {
+						alert("권한이 없습니다.");
+						return false;
+					}
+
+					if (confirm("수정하시겠습니까?")){
+						var bno = $('#bno').val()
+					location.href = '/board/revise?bno=' + bno;
+
+					e.preventDefault();
+					}else{
+						
+					}
+				});
+
+				$('#cdeleteBtn').click(function(e) {
+				
+					if ($('#writerid').val() != $('#commenter').text()) {
+						alert("권한이 없습니다.");
+						return false;
+					}
+
+					if (confirm("삭제하시겠습니까?")){
+						var cno = $('#cno').val()
+					var bno = $('#bbno').val()
+					
+					location.href = '/board/cremove?cno='+cno+'&bno=' + bno; 
+
+					e.preventDefault();
+					}else{
+						
+					}
+				});
+				$('#sendBtn').click(function() {
+							
+							if ($('#writerid').val() == null
+									|| $('#writerid').val() == "") {
+								alert("login후 이용 가능합니다.")
+
+							} else {
+								
+								if ($('textarea[name="comment"]').val() == "") {
+									alert("내용 입력해주세요.");
+									$("#comment").focus();
+									return false;
+								}
+								
+								$('#cpost').attr({
+									'method' : 'post',
+									'action' : '/board/cwrite'
+								});
+								$('#cpost').submit();
+								
+							}
+
+						});
+
+			});
+</script>
+<!-- END nav -->
+
+<section class="hero-wrap hero-wrap-2 js-fullheight"
+	style="background-image: url('/images/festival13.jpg');">
+	<div class="overlay"></div>
+	<div class="container">
+		<div
+			class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+			<div class="col-md-9 ftco-animate pb-5 text-center">
+				<p class="breadcrumbs">
+					<span class="mr-2"><a href="/">Home <i
+							class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a
+						href="/board">Blog <i class="fa fa-chevron-right"></i></a></span> <span>Blog
+						Single <i class="fa fa-chevron-right"></i>
+					</span>
+				</p>
+				<h1 class="mb-0 bread bdeatial">Blog Details</h1>
+				<span class="subbread" th:text="${dp.writer}"></span> 
+				<span class="subbread" th:text="' | '+${#dates.format(dp.reg_date,'yyyy.MM.dd. hh:mm')}"></span>
+			</div>
+			
+		</div>
+	</div>
+</section>
+
+<section class="ftco-section ftco-no-pt ftco-no-pb">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 ftco-animate py-md-5 mt-md-5" id="post">
+				<input th:if="${session.loginuser} != null" name="writerid"
+					th:value="${session.loginuser.id}" hidden id="writerid">
+				<form id="titleform"
+					class="tag-widget post-tag-container mb-5 mt-5">
+
+					<input th:value="${dp.bno}" name="bno" hidden id="bno">
+					글번호:<a th:text="${dp.bno}">글번호</a> 조회수:<a th:text="${dp.view_cnt}">조회수</a>
+				</form>
+				
+				
+					<div class="tagcloud">
+						<button id="reviseBtn" class="btn btn-default">revise</button>
+						<button id="deleteBtn" class="btn btn-default">delete</button>
+					</div>
+				
+				<!-- main contents -->
+				<h2 class="mb-3" th:text="${dp.title}">제목</h2>
+				<p th:utext="${dp.content}">내용.</p>
+						
+				
+
+					
+					
+					<!-- END comment-form -->
+						
+					<div class="comment-form-wrap pt-5 commentdiv">
+						<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">Leave
+							a comment</h3>
+
+						<form class="p-5 bg-light" id="cpost">
+
+							<!-- 댓글폼 -->
+							<div class="form-group">
+								<input th:value="${dp.bno}" name="bno" hidden id="cbno">
+								<input th:if="${session.loginuser} != null" name="commenter"
+									th:value="${session.loginuser.id}" hidden id="commenter">
+								<label for="message">Message</label>
+								<textarea id="comment" name="comment" cols="30" rows="10"
+									class="form-control"></textarea>
+							</div>
+							<div class="form-group">
+								<!-- <input type="submit" value="Post Comment"
+								class="btn py-3 px-4 btn-primary"> -->
+								<button id=sendBtn type="button"
+									class="btn py-3 px-4 btn-primary">Post Comment</button>
+							</div>
+
+						</form>
+					</div>
+					
+					<!-- comment List -->		
+					<ul class="comment-list">
+
+						<li class="comment" th:each="clist:${clist}">
+							<div class="vcard bio">
+								<img src="images/person_1.jpg" alt="Image placeholder">
+							</div>
+							<div class="comment-body">
+
+
+								<button id="cdeleteBtn" class="btn btn-default"
+									onclick="CdeleteBtn()">delete</button>
+
+								<input th:value="${clist.cno}" name="cno" hidden id="cno">
+								<input th:value="${clist.bno}" name="bno" hidden id="bbno">
+								<h3 id="commenter" th:text="${clist.commenter}">lee</h3>
+								<div class="meta" th:if="${clist.up_date} == null"
+									th:text="${clist.reg_date}">September 11, 2020 at 2:21pm</div>
+								<div class="meta" th:unless="${clist.up_date} == null"
+									th:text="${clist.up_date}">September 11, 2020 at 2:21pm</div>
+								<div th:text="${clist.comment}">comment</div>
+							</div>
+						</li>
+
+					</ul>
+					
+					
+
 			</div>
 		</div>
-	</section>
-
-	<section class="ftco-section ftco-no-pt ftco-no-pb">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 ftco-animate py-md-5 mt-md-5" id="post">
-					<input th:if="${session.loginuser} != null" name="writerid"
-						th:value="${session.loginuser.id}" hidden id="writerid">
-					<form id="titleform"
-						class="tag-widget post-tag-container mb-5 mt-5">
-
-						<input th:value="${dp.bno}" name="bno" hidden id="bno">
-						글번호:<a th:text="${dp.bno}">글번호</a> 아이디:<a id="contentid"
-							th:text="${dp.writer}">아이디</a> 조회수:<a th:text="${dp.view_cnt}">조회수</a>
-						작성일:<a th:text="${dp.reg_date}">작성일</a> 수정일:<a
-							th:text="${dp.up_date}">수정일</a>
-
-						<div class="tagcloud">
-							<button id="reviseBtn" class="btn btn-default">revise</button>
-							<button id="deleteBtn" class="btn btn-default">delete</button>
-						</div>
-
-					</form>
-					<h2 class="mb-3" th:text="${dp.title}">제목</h2>
-					<p th:utext="${dp.content}">내용.</p>
-					<div class="pt-5 mt-5">
-						<!-- <h3 class="mb-5" style="font-size: 20px; font-weight: bold;">6 
-							Comments</h3>-->
-						<ul class="comment-list">
-
-							<li class="comment" th:each="clist:${clist}">
-								<div class="vcard bio">
-									<img src="images/person_1.jpg" alt="Image placeholder">
-								</div>
-								<div class="comment-body">
-
-
-									<button id="cdeleteBtn" class="btn btn-default"
-										onclick="CdeleteBtn()">delete</button>
-
-									<input th:value="${clist.cno}" name="cno" hidden id="cno">
-									<input th:value="${clist.bno}" name="bno" hidden id="bbno">
-									<h3 id="commenter" th:text="${clist.commenter}">lee</h3>
-									<div class="meta" th:if="${clist.up_date} == null"
-										th:text="${clist.reg_date}">September 11, 2020 at 2:21pm</div>
-									<div class="meta" th:unless="${clist.up_date} == null"
-										th:text="${clist.up_date}">September 11, 2020 at 2:21pm</div>
-									<div th:text="${clist.comment}">comment</div>
-
-								</div> <!-- <ul class="children">
-								<li class="comment">
-									<div class="vcard bio">
-										<img src="images/person_1.jpg" alt="Image placeholder">
-									</div>
-									<div class="comment-body">
-										<h3>kim</h3>
-										<div class="meta">September 11, 2020 at 2:21pm</div>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-											elit. Pariatur quidem laborum necessitatibus, ipsam impedit
-											vitae autem, eum officia, fugiat saepe enim sapiente iste
-											iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-										<p>
-											<a href="#" class="reply">Reply</a>
-										</p>
-									</div>
-
-								</li>
-							</ul> -->
-							</li>
-
-						</ul>
-						<!-- END comment-list -->
-
-						<div class="comment-form-wrap pt-5">
-							<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">Leave
-								a comment</h3>
-
-							<form class="p-5 bg-light" id="cpost">
-
-								<!-- 댓글폼 -->
-								<div class="form-group">
-									<input th:value="${dp.bno}" name="bno" hidden id="cbno">
-									<input th:if="${session.loginuser} != null" name="commenter"
-										th:value="${session.loginuser.id}" hidden id="commenter">
-									<label for="message">Message</label>
-									<textarea id="comment" name="comment" cols="30" rows="10"
-										class="form-control"></textarea>
-								</div>
-								<div class="form-group">
-									<!-- <input type="submit" value="Post Comment"
-									class="btn py-3 px-4 btn-primary"> -->
-									<button id=sendBtn type="button"
-										class="btn py-3 px-4 btn-primary">Post Comment</button>
-								</div>
-
-							</form>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			</div>
-	</section>
-	<!-- .section -->
+		
+		
+		</div>
+</section>
 
 
 
 
 
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen">
-		<svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
-	</div>
 
 
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/scrollax.min.js"></script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="js/google-map.js"></script>
-	<script src="js/main.js"></script>
 
-</body>
-</html>
