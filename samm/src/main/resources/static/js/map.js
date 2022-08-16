@@ -29,18 +29,45 @@ function checkNull(o) {
 
 function dateToIntyyyymmdd(date) {
 	// var date = new Date();
-	var dd = String(date.getDate()).padStart(2, '0');
-	var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-	var yyyy = date.getFullYear();
-	return parseInt("" + yyyy + mm + dd);
+	// now accepts yyyymmdd format
+	if (Object.prototype.toString.call(date) === '[object Date]' && !isNaN(date)) {
+		var dd = String(date.getDate()).padStart(2, '0');
+		var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = date.getFullYear();
+		return parseInt("" + yyyy + mm + dd);
+	} else {
+		return date;
+	}
 }
 
 function dateToStringSlash(date) {
 	// var date = new Date();
-	var d = String(date.getDate());
-	var m = String(date.getMonth() + 1); //January is 0!
-	var yyyy = date.getFullYear();
+	// now accepts yyyymmdd format
+	if (Object.prototype.toString.call(date) === '[object Date]' && !isNaN(date)) {
+		var d = String(date.getDate());
+		var m = String(date.getMonth() + 1); //January is 0!
+		var yyyy = date.getFullYear();
+	} else {
+		yyyymmdd = date.toString();
+		var yyyy = parseInt(yyyymmdd.substring(0, 4));
+		var m = parseInt(yyyymmdd.substring(4, 6));
+		var d = parseInt(yyyymmdd.substring(6, 8));
+	}
 	return yyyy + '/' + m + '/' + d;
+}
+
+function dateToStringDash(date) {
+	if (Object.prototype.toString.call(date) === '[object Date]' && !isNaN(date)) {
+		var dd = String(date.getDate()).padStart(2, '0');
+		var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = date.getFullYear();
+	} else {
+		yyyymmdd = date.toString();
+		var yyyy = yyyymmdd.substring(0, 4);
+		var mm = yyyymmdd.substring(4, 6).padStart(2, '0');
+		var dd = yyyymmdd.substring(6, 8).padStart(2, '0');
+	}
+	return yyyy + '-' + mm + '-' + dd;
 }
 
 function parseDateyyyymmdd(yyyymmdd) {
@@ -124,8 +151,8 @@ function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, evente
 		'<div class="inline">' +
 		'<div class="l-card-txt dbtable">축제</div>' +
 		'<div class="l-card-txt ongoing">' + ongoing + '</div>' +
-		'<div class="l-card-txt days"><span>' + eventstartdate + '</span> ~ ' +
-		'<span>' + eventenddate + '</span>' +
+		'<div class="l-card-txt days"><span>' + dateToStringDash(eventstartdate) + '</span> ~ ' +
+		'<span>' + dateToStringDash(eventenddate) + '</span>' +
 		'</div>' +
 		'</div>' +
 		'<div>' +
@@ -158,8 +185,8 @@ function elm_overlay(contentid, eventstartdate, eventenddate, title, addr1, info
 		gen_imageheader + '<span class="price">' + ongoing + '</span>' + '</a>' +
 		'<a href="#" class="map-overlayclose" onclick="closeOverlay()" title="닫기"></a>' +
 		'<div class="text p-4">' +
-		'<span class="days"><span>' + eventstartdate + '</span> ~ <span>' + eventenddate + '</span></span>' +
-		'<h3 class="animate"><a href="/detail?contentid=' + contentid + '"><input name="contentid" hidden value="' + contentid + '">' + title + '</a></h3>' +
+		'<span class="days"><span>' + dateToStringDash(eventstartdate) + '</span> ~ <span>' + dateToStringDash(eventenddate) + '</span></span>' +
+		'<h3 class="festival-name"><a href="/detail?contentid=' + contentid + '"><input name="contentid" hidden value="' + contentid + '">' + title + '</a></h3>' +
 		elm_infotext +
 		'<p class="location"><span class="fa fa-map-marker"></span> <span>' + addr1 + '</span></p>' +
 		'<a class="btn-map-gobtn" href="/detail?contentid=' + contentid + '">이 축제 가기</a>' +
@@ -425,6 +452,7 @@ function registerWishMap(contentid) {
 }
 
 $(document).ready(function () {
+	datepicker_init();
 	path = window.location.origin + window.location.pathname;
 	params = $.deparam.querystring(true);
 	keyword = params.keyword;
@@ -486,19 +514,27 @@ $(document).ready(function () {
 				marker.setMap(map);
 				markers.set(element.contentid, marker);
 				elm_overlays.set(element.contentid, overlay);
-				map.panTo(locPosition);
 				setTimeout(function () {
 					openOverlay(element.contentid, element.mapx, element.mapy)
+					map.panTo(locPosition);
 				}, 1000);
 			}
 		})
 	}
 });
 
-$('.map-datepick').datepicker({
-	'format': 'yyyy/m/d',
-	'autoclose': true
-});
+function datepicker_init() {
+	$('.datepicker').datepicker({
+		'format': 'yyyy/m/d',
+		'autoclose': true
+	});
+
+	$('.map-datepick').datepicker({
+		'format': 'yyyy/m/d',
+		'autoclose': true
+	});
+}
+
 
 $(document).on("click", ".btn-search", function () {
 	searchmapinput();
@@ -588,6 +624,7 @@ function open_searchcal() {
 	$('#map-keyword').addClass('cal-open');
 	$('#map-searchlist').addClass('cal-open');
 	$('#map-searchbtn').appendTo($('#map-calendarform'));
+	console.log($('input[name="eventstartdate"]').val());
 	if (!checkNull(temp_startdate)) {
 		$('input[name="eventstartdate"]').datepicker("setDate", temp_startdate);
 	} else {
@@ -598,6 +635,7 @@ function open_searchcal() {
 	} else {
 		$('input[name="eventenddate"]').datepicker("setDate", new Date());
 	}
+	console.log($('input[name="eventstartdate"]').val());
 }
 
 function close_searchcal() {
@@ -616,11 +654,15 @@ function close_searchcal() {
 function open_searchbox() {
 	$('#map-searchbox').html(temp_searchbox);
 	$('#map-searchform input[name="search"]').val(currentKeyword);
-	$('input[name="eventstartdate"]').val(dateToStringSlash(parseDateyyyymmdd(currentStartdate)));
-	$('input[name="eventstartdate"]').datepicker('setDate', parseDateyyyymmdd(currentStartdate));
-	$('input[name="eventenddate"]').val(dateToStringSlash(parseDateyyyymmdd(currentEnddate)));
-	$('input[name="eventenddate"]').datepicker('setDate', parseDateyyyymmdd(currentEnddate));
+	console.log($('input[name="eventstartdate"]').val());
+	datepicker_init();
+
+	$('input[name="eventstartdate"]').datepicker("setDate", parseDateyyyymmdd(currentStartdate));
+	console.log($('input[name="eventstartdate"]').val());
+
+	$('input[name="eventenddate"]').datepicker("setDate", parseDateyyyymmdd(currentEnddate));
 	$('#map-searchbox').removeClass('searchbox-close');
+	console.log($('input[name="eventstartdate"]').val());
 }
 
 function close_searchbox() {
