@@ -78,17 +78,18 @@ body {
 
 .project-wrap.map-overlay .text .days {
 	font-size: 12px;
+	margin-left: 2px;
 }
 
 .project-wrap.map-overlay .location {
 	margin-top: 0;
 	margin-bottom: 0.3rem;
 	padding: 0;
+	overflow: hidden;
 }
 
 .project-wrap.map-overlay .text h3 {
-	font-size: 23px;
-	margin-bottom: 0;
+	margin: -4px auto 2px 0;
 	z-index: 3;
 	white-space: normal;
 }
@@ -155,4 +156,26 @@ body {
 .project-wrap.map-overlay .share {
 	width: 25px;
 	height: 25px;
+}
+
+.mbody1 {
+	display: flex;
+	justify-content: space-around;
+	padding-bottom: 0px;
+}
+
+.share-icon-i {
+	display: flex;
+	justify-content: center;
+	padding-bottom: 10px;
+}
+
+.share-icon {
+	font-size: 50px;
+	cursor: pointer;
+}
+
+.icon-text {
+	font-size: 15px;
+	display: block;
 }
