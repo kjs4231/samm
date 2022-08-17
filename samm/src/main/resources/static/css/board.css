@@ -53,3 +53,11 @@
 	padding-bottom: 10px;
 	border-bottom: 0.5px solid gray;
 }
+
+.write-title{
+	font-size: 30px;
+	height : 70px;
+	margin-bottom: 70px;
+	border:none;
+	border-bottom: 2px solid black;
+}
