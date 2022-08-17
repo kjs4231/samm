@@ -809,3 +809,10 @@
 	color: #fd7e14;
 }
 
+.endParty{
+    background-color: darkgrey !important;
+}
+
+.incommingParty{
+	background-color: crimson !important;
+}

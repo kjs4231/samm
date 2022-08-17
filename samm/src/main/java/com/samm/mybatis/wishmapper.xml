@@ -26,6 +26,13 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		WHERE uid=#{uid}
 	</select>
 	
+	<select id="getAllDday" resultType="WishVo">
+		select w.uid, w.fid,u.email, f.eventstartdate - date_format(now(),"%Y%m%d") as dDay, f.title, f.firstimage from wish w
+		INNER JOIN users u ON u.id = w.uid
+		INNER JOIN festival f ON f.contentid = w.fid
+		where f.eventstartdate >= now()
+	</select>	
+	
 
 	
 </mapper>
