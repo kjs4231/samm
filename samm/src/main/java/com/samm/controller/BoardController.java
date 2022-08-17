@@ -70,8 +70,6 @@ public class BoardController {
 			e1.printStackTrace();
 		}
 		BoardVo obj = null;
-		
-		
 			try {
 				obj = bbiz.read(bno);
 			} catch (Exception e) {
@@ -155,7 +153,8 @@ public class BoardController {
 	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
 		System.out.println("callback");
 		JsonObject jsonObject = new JsonObject();
-		String fileRoot = "/root/apache-tomcat-8.5.27/webapps/samm/WEB-INF/classes/static/images/board/";	//저장될 외부 파일 경로
+		//String fileRoot = "C:\\multicampus finalproject\\samm\\samm\\src\\main\\resources\\static\\images\\board\\";  // 로컬
+		String fileRoot = "/root/apache-tomcat-8.5.27/webapps/samm/WEB-INF/classes/static/images/board/";	//저장될 외부 파일 경로 ncp
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 		System.out.println("originalFileName::"+ originalFileName);
@@ -169,7 +168,8 @@ public class BoardController {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
 			System.out.println("save completed");
-			jsonObject.addProperty("url", "/images/board/"+savedFileName);
+			//jsonObject.addProperty("url", "/images/board/"+savedFileName); // 로컬
+			jsonObject.addProperty("url", "/images/board/"+savedFileName);  //ncp
 			jsonObject.addProperty("responseCode", "success");
 			System.out.println("json");
 			System.out.println(jsonObject);
@@ -191,7 +191,10 @@ public class BoardController {
 	    @Override
 	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	        registry.addResourceHandler("/images/board/**")
-	                .addResourceLocations("file:///49.50.174.134:8080/root/apache-tomcat-8.5.27/webapps/samm/WEB-INF/classes/static/images/board/");
+	               .addResourceLocations("file:///49.50.174.134:8080/root/apache-tomcat-8.5.27/webapps/samm/WEB-INF/classes/static/images/board/");
+	        
+	        //registry.addResourceHandler("/images/board/**")
+            //		.addResourceLocations("file:///C:/multicampus finalproject/samm/samm/src/main/resources/static/images/board/");
 	    }
 	}
 	
