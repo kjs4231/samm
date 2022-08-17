@@ -66,8 +66,13 @@ $(document).ready(function(){
      <br> <hr> <br>               
 
 	<div class="form-group row col-sm-12"> 
+<!--
 		<label for="comment" class="col-sm-1"><b>내용</b></label>
 		<input class="form-control border-0 col-sm-10" th:value="${vo.content}" readonly>
+-->
+		<label for="comment" class="col-sm-1"><b>내용</b></label>
+    <div class="form-control border-0 col-sm-10" th:utext="${vo.content}" ></div>
+
 	</div>
      <br> <hr> <br>  
 	

@@ -53,4 +53,9 @@ public class WishBiz implements Biz<Integer,WishVo> {
     public void deleteWish(WishVo v) throws Exception {
     	wishDao.delete(v);
     }
+    
+    public List<WishVo> getAllDday() throws Exception {
+    	
+    	return wishDao.getAllDday();
+    }
 }

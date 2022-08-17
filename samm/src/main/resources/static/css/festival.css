@@ -104,6 +104,33 @@
 	}
 }
 
+.goLink{
+	display:inline !important;
+
+    animation: shadowLightingAnimation 5s ease-in-out infinite 
+}
+@keyframes shadowLightingAnimation {
+	0% {
+		text-shadow: 0;
+	}
+
+	50%{
+  	  text-shadow: 0 0 10px #fd7e14,
+	               0 0 20px #fd7e14,
+	               0 0 30px #fd7e14,
+	               0 0 40px #fd7e14,
+  	  			   0 0 50px #fd7e14,
+              	   0 0 60px #fd7e14,
+	               0 0 70px #fd7e14,
+	               0 0 80px #fd7e14;
+	}
+
+	
+	100% {
+		text-shadow: 0;
+	}
+}
+
 .view_cnt {
 	padding-left: 7px;
 	color: #b3b3b3 !important;
@@ -780,4 +807,12 @@
 
 .inputbtn:hover{
 	color: #fd7e14;
+}
+
+.endParty{
+    background-color: darkgrey !important;
+}
+
+.incommingParty{
+	background-color: crimson !important;
 }
