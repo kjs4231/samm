@@ -242,15 +242,14 @@
 							th:onClick="'deleteReview('+${review.pnum}+')'"> 삭제</a>
 					</div>
 					<h3 th:text="${review.username}">John Doe</h3>
-
 					<span th:id="'comment'+${reviewStat.index}"><span
 						class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span><span
 						class="fa fa-star rstar"></span><span class="fa fa-star rstar"></span><span
 						class="fa fa-star rstar"></span></span> <span
-						th:if="${review.udate} == null" class="commentDate"
+						th:if="${review.udate} == null" class="commentDate meta"
 						th:text="${#dates.format(review.regdate,'M월dd일 hh시mm분')}"
 						style="display: inline"></span> <span
-						th:unless="${review.udate} == null" class="commentDate"
+						th:unless="${review.udate} == null" class="commentDate meta"
 						th:text="${#dates.format(review.udate,'yyyy-MM-dd')}"
 						style="display: inline"></span>
 					<form id="reiew-form">

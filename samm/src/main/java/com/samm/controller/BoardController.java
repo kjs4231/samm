@@ -128,8 +128,6 @@ public class BoardController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		m.addAttribute("center", "/board");
 		return "redirect:/board";
 	}
@@ -140,8 +138,6 @@ public class BoardController {
 			
 			u.setCommenter(commenter);
 			u.setBno(bno);
-			
-			
 			System.out.println(bno);
 			System.out.println("cwrite = "+u);
 			//System.out.println("writebno : "+u.getBno());
@@ -151,23 +147,8 @@ public class BoardController {
 		m.addAttribute("center", "center");
 		return "redirect:/board/detail?bno="+bno;
 	}
-	
-	@RequestMapping("/board/cremove")
-	public String cremove(Model m, Integer cno, Integer bno, HttpSession session) {
-		System.out.println("removeccno : "+ cno);
-		System.out.println("removecbno : "+ bno);
-		
-		try {
-			cbiz.remove(cno);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		m.addAttribute("center", "/board");
-		return "redirect:/board/detail?bno="+bno;
-	}
+
+
 	
 	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
 	@ResponseBody
