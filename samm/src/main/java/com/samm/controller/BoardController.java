@@ -155,7 +155,7 @@ public class BoardController {
 	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
 		System.out.println("callback");
 		JsonObject jsonObject = new JsonObject();
-		String fileRoot = "C:\\multicampus finalproject\\samm\\samm\\src\\main\\resources\\static\\images\\festival\\";	//저장될 외부 파일 경로
+		String fileRoot = "/root/apache-tomcat-8.5.27/webapps/samm/WEB-INF/classes/static/images/board/";	//저장될 외부 파일 경로
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 		System.out.println("originalFileName::"+ originalFileName);
@@ -169,7 +169,7 @@ public class BoardController {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
 			System.out.println("save completed");
-			jsonObject.addProperty("url", "/images/festival/"+savedFileName);
+			jsonObject.addProperty("url", "/images/board/"+savedFileName);
 			jsonObject.addProperty("responseCode", "success");
 			System.out.println("json");
 			System.out.println(jsonObject);
@@ -190,8 +190,8 @@ public class BoardController {
 	    //로 접속하면 C:/summernote_image/1234.jpg 파일을 불러온다.
 	    @Override
 	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	        registry.addResourceHandler("/images/festival/**")
-	                .addResourceLocations("file:///C:/multicampus finalproject/samm/samm/src/main/resources/static/images/festival/");
+	        registry.addResourceHandler("/images/board/**")
+	                .addResourceLocations("file:///49.50.174.134:8080/root/apache-tomcat-8.5.27/webapps/samm/WEB-INF/classes/static/images/board/");
 	    }
 	}
 	
