@@ -48,6 +48,8 @@
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light scrolled awake"
 		id="ftco-navbar" th:insert="nav">
 	</nav>
+	<input th:if="${session.loginuser} != null"
+	th:value="${session.loginuser.id}" id="loginuser" hidden>
 
 	<div id="chatbot-div">
 		<span id="chatbot-text" class="hidden">원하는 축제를 챗봇이 찾아 드려요!</span>
