@@ -120,6 +120,10 @@ function Write(){
     font-size: 14px;
 }
 
+.contents-box h2 a{
+	cursor: pointer;
+}
+
 </style>
 
 <section class="hero-wrap hero-wrap-2 js-fullheight"
@@ -159,12 +163,10 @@ function Write(){
 							</div>
 						</div>
 						<div class="contents-box">
-							<h3 class="heading" th:text="${b.title}">
-								<a href="#">title</a>
-							</h3>
+							<h2 class="heading" >
+								<a th:text="${b.title}" th:onclick="goDetail([[${b.bno}]])"> </a>
+							</h2>
 							
-								<a th:onclick="'goDetail(' + ${b.bno} + ');'"
-									class="btn btn-primary">Read more</a>
 							<p class="written">written by.. </p>		
 							<p th:text="${b.writer}" class="writer"></p>
 						</div>

@@ -4,40 +4,23 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <link rel="stylesheet" href="/css/board.css">
-
+<link rel="stylesheet" href="/css/detail.css">
 
 	<script>
 	$(document).ready(
 			function() {
 				$('#deleteBtn').click(function(e) {
-
-					if ($('#writerid').val() != $('#contentid').text()) {
-						alert("권한이 없습니다.");
-						console.log($('#writerid').val())
-						console.log($('#contentid').text())
-						return false;
-					}
 					if (confirm("삭제하시겠습니까?")){
 						var bno = $('#bno').val()
 					location.href = '/board/remove?bno=' + bno;
-
 					e.preventDefault();
-					}else{
-						
 					}
 				});
 
 				$('#reviseBtn').on("click", function(e) {
-
-					if ($('#writerid').val() != $('#contentid').text()) {
-						alert("권한이 없습니다.");
-						return false;
-					}
-
 					if (confirm("수정하시겠습니까?")){
 						var bno = $('#bno').val()
 					location.href = '/board/revise?bno=' + bno;
-
 					e.preventDefault();
 					}else{
 						
@@ -70,13 +53,18 @@
 			});
 
 	function CdeleteBtn(cno,bno,commenter){
-		if ($('#writerid').val() != commenter) {
-			alert("권한이 없습니다.");
-			return false;
-		}
 		if (confirm("삭제하시겠습니까?")){
-		location.href = '/board/cremove?cno='+cno+'&bno=' + bno; 
-		e.preventDefault();
+			$.ajax({
+				url: "/cremove",
+				data: { 
+					"cno": cno,
+					"bno": bno
+				},
+				success: function(data) {
+					alert(data);
+					$('#reviewlist' + cno).remove();
+				}
+			})
 		}else{
 			
 		}
@@ -98,7 +86,7 @@
 						Single <i class="fa fa-chevron-right"></i>
 					</span>
 				</p>
-				<h1 class="mb-0 bread bdeatial">Blog Details</h1>
+				<h1 class="mb-0 bread bdeatial" th:text="${dp.title}">Blog Details</h1>
 				<span class="subbread" th:text="${dp.writer}"></span> 
 				<span class="subbread" th:text="' | '+${#dates.format(dp.reg_date,'yyyy.MM.dd. hh:mm')}"></span>
 			</div>
@@ -110,35 +98,35 @@
 <section class="ftco-section ftco-no-pt ftco-no-pb">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8 ftco-animate py-md-5 mt-md-5" id="post">
+			<div class="col-lg-12 ftco-animate py-md-5 mt-md-5" id="post">
 				<input th:if="${session.loginuser} != null" name="writerid"
 					th:value="${session.loginuser.id}" hidden id="writerid">
-				<form id="titleform"
-					class="tag-widget post-tag-container mb-5 mt-5">
+					
+				<div class="tagcloud" 
+					th:if="${session.loginuser} != null and ${session.loginuser.id} == ${dp.writer}">
+					<button id="reviseBtn" class="btn btn-default">revise</button>
+					<button id="deleteBtn" class="btn btn-default">delete</button>
+				</div>
+				
+				<!-- main contents -->
+			<!-- 	<h2 class="mb-3 boardSubject" th:text="${dp.title}">제목</h2> -->
+				<p th:utext="${dp.content}">내용.</p>
+						
+				<form id="titleform" class="tag-widget post-tag-container">
 
 					<input th:value="${dp.bno}" name="bno" hidden id="bno">
 					글번호:<a th:text="${dp.bno}">글번호</a> 조회수:<a th:text="${dp.view_cnt}">조회수</a>
 				</form>
 				
 				
-					<div class="tagcloud">
-						<button id="reviseBtn" class="btn btn-default">revise</button>
-						<button id="deleteBtn" class="btn btn-default">delete</button>
-					</div>
-				
-				<!-- main contents -->
-				<h2 class="mb-3" th:text="${dp.title}">제목</h2>
-				<p th:utext="${dp.content}">내용.</p>
-						
-				
+
 
 					
 					
-					<!-- END comment-form -->
+					<!-- omment-form -->
 						
 					<div class="comment-form-wrap pt-5 commentdiv">
-						<h3 class="mb-5" style="font-size: 20px; font-weight: bold;">Leave
-							a comment</h3>
+						<h3 class="mb-5 commentcnt" style="font-size: 20px; font-weight: bold;">Comments</h3>
 
 						<form class="p-5 bg-light" id="cpost">
 
@@ -149,7 +137,7 @@
 									th:value="${session.loginuser.id}" hidden id="commenter">
 								<label for="message">Message</label>
 								<textarea id="comment" name="comment" cols="30" rows="10"
-									class="form-control"></textarea>
+									class="form-control" placeholder="로그인후 소중한 댓글을 남겨주세요."></textarea>
 							</div>
 							<div class="form-group">
 								<!-- <input type="submit" value="Post Comment"
@@ -161,30 +149,51 @@
 						</form>
 					</div>
 					
-					<!-- comment List -->		
+					<!-- comment List -->	
+				<div class="pt-5 mt-5">		
+					
 					<ul class="comment-list">
-
-						<li class="comment" th:each="clist:${clist}">
+						<li th:id="'reviewlist'+${review.cno}"
+							th:class="'comment'+' '+'comment'+${reviewStat.index}"
+							th:each="review:${clist}"><input hidden
+							th:value="${reviewStat.size}" id="size">
 							<div class="vcard bio">
-								<img src="images/person_1.jpg" alt="Image placeholder">
+								<img th:if="${review.profile_img} == null"
+									th:src="@{/images/noimagep.png}" alt="Image placeholder"> <img
+									th:unless="${review.profile_img} == null"
+									th:src="${review.profile_img}" alt="Image placeholder">
 							</div>
 							<div class="comment-body">
-
-
-								<button  class="btn btn-default cdeleteBtn"
-									th:onclick="CdeleteBtn([[${clist.cno}]],[[${clist.bno}]],[[${clist.commenter}]])">delete</button>
-
-								<h3 id="commenter" th:text="${clist.commenter}">lee</h3>
-								<div class="meta" th:if="${clist.up_date} == null"
-									th:text="${clist.reg_date}">September 11, 2020 at 2:21pm</div>
-								<div class="meta" th:unless="${clist.up_date} == null"
-									th:text="${clist.up_date}">September 11, 2020 at 2:21pm</div>
-								<div th:text="${clist.comment}">comment</div>
-							</div>
-						</li>
-
+								<div class="btn-body">
+								<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.commenter}"
+								   th:onClick="'updateReview('+${review.cno}+','+${reviewStat.index}+')'"> 수정</a> 
+								<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.commenter}"
+									th:onclick="CdeleteBtn([[${review.cno}]],[[${review.bno}]],[[${review.commenter}]])">삭제</a>
+								</div>
+								<h3 th:text="${review.name}">John Doe</h3>
+									<span th:if="${review.up_date} == null" class="commentDate meta"
+									th:text="${#dates.format(review.reg_date,'M월dd일 hh시mm분')}"
+									style="display: inline"> </span> <span
+									th:unless="${review.up_date} == null" class="commentDate meta"
+									th:text="${#dates.format(review.up_date,'yyyy-MM-dd')}"
+									style="display: inline"></span>
+								<form id="reiew-form">
+									<p class="commnetText" th:id="'commnetText'+${review.cno}"
+										th:text="${review.comment}"></p>
+									<textarea th:id="'comment-textarea'+${review.cno}"
+										class="comment-textarea hidden" name="contents"
+										th:text="${review.comment}"></textarea>
+									<input th:value="${review.cno}" name="cno" hidden> 
+								 	<input name="commenter" id="uid" th:value="${review.commenter}" hidden>
+								</form>
+							</div></li>
+			
 					</ul>
+				
 					
+					
+					
+				</div>
 					
 
 			</div>
