@@ -8,8 +8,23 @@ $(document).ready(function() {
 		searchKeyowrd();
 	});
 	createPaging();
+	endParty();
+	incommingParty();
 });
 
+function endParty(){
+	let size = $('#eventSize').val();
+	for(i=0;i<size;i++){
+		$('#event'+i).addClass('endParty');
+	}
+}
+
+function incommingParty(){
+	let size = $('#eventSize').val();
+	for(i=0;i<size;i++){
+		$('#incomming'+i).addClass('incommingParty');
+	}	
+}
 
 function searchFestival() {
 	if (($('#startdate').val() == null || $('#startdate').val() == "") || ($('#enddate').val() == null || $('#enddate').val() == "")) {

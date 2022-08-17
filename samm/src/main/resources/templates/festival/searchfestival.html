@@ -9,6 +9,8 @@
     color: #fff; 
     border: 1px solid transparent;
 } */
+
+
 </style>
 <section class="hero-wrap hero-wrap-2 js-fullheight"
 	style="background-image: url('images/festival2.jpg');">
@@ -174,18 +176,19 @@
 		<div class="row" id="festivalING">
 			<div class="col-md-4 ftco-animate" th:each="list:${festival}">
 				<div class="project-wrap">
+				<input id="eventSize" th:value="${listStat.size}" hidden>
 					<a class="img" th:if="${list.firstimage} != null"
 						th:style="'background-image:url('+@{${list.firstimage}}+');'">
 						<span class="price"
 						th:if="${today} >= ${list.eventstartdate} and ${today} <= ${list.eventenddate}">진행중</span>
-						<span class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
-						<span class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
+						<span th:id="'incomming'+${listStat.index}" class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
+						<span th:id="'event'+${listStat.index}" class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
 					</a> <a class="img" th:unless="${list.firstimage} != null"
 						th:style="'background-image:url('+@{/images/noimage.jpg}+');'">
 						<span class="price"
 						th:if="${today} >= ${list.eventstartdate} and ${today} <= ${list.eventenddate}">진행중</span>
-						<span class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
-						<span class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
+						<span th:id="'incomming'+${listStat.index}" class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
+						<span th:id="'event'+${listStat.index}" class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
 					</a>
 					<div class="text p-4">
 						<span class="days"><span
@@ -213,18 +216,19 @@
 			</div>
 			<div class="col-md-4 ftco-animate" th:each="list:${klist}">
 				<div class="project-wrap">
+				<input id="eventSize" th:value="${listStat.size}" hidden>
 					<a class="img" th:if="${list.firstimage} != null"
 						th:style="'background-image:url('+@{${list.firstimage}}+');'">
 						<span class="price"
 						th:if="${today} >= ${list.eventstartdate} and ${today} <= ${list.eventenddate}">진행중</span>
-						<span class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
-						<span class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
+						<span th:id="'incomming'+${listStat.index}" class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
+						<span th:id="'event'+${listStat.index}" class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
 					</a> <a class="img" th:unless="${list.firstimage} != null"
 						th:style="'background-image:url('+@{/images/noimage.jpg}+');'">
 						<span class="price"
 						th:if="${today} >= ${list.eventstartdate} and ${today} <= ${list.eventenddate}">진행중</span>
-						<span class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
-						<span class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
+						<span th:id="'incomming'+${listStat.index}" class="price" th:if="${today} < ${list.eventstartdate}">진행예정</span>
+						<span th:id="'event'+${listStat.index}" class="price" th:if="${today} > ${list.eventenddate}">진행종료</span>
 					</a>
 					<div class="text p-4">
 						<span class="days"><span
