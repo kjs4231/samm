@@ -22,12 +22,6 @@ public interface FestivalImgMapper{
 	
 	public void updateAllow(FestivalImgVo v) throws Exception;
 	public List<FestivalImgVo> selectByUid(String uid) throws Exception;
-	
-
-	public void updateYN(Integer k) throws Exception;
-	public void deleteNew(int k) throws Exception;
-	public imgallowVo selectNew(int k) throws Exception;
-	public List<imgallowVo> selectAllNew() throws Exception;
-	
+ 
 	
 }

@@ -31,12 +31,7 @@ public class CommentBiz {
     public int remove(Integer cno) throws Exception {
         return commentDao.delete(cno);
     }
-
-	 public void deleteComment(Integer cno) throws Exception{
-		 commentDao.deleteComment(cno);
-	 	}
-	 
-	 
+ 
     
     public int write(CommentVo CommentVo) throws Exception {
         return commentDao.insert(CommentVo);

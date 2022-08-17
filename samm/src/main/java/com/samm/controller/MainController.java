@@ -14,10 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.samm.biz.AdmintblBiz;
+ 
 import com.samm.biz.AreaBiz;
 import com.samm.biz.BoardBiz;
 import com.samm.biz.FestivalBiz;
+import com.samm.biz.MngBiz;
 import com.samm.biz.UsersBiz;
 import com.samm.vo.AdmintblVo;
 import com.samm.vo.BoardVo;
@@ -39,7 +40,7 @@ public class MainController {
 	BoardBiz bbiz;
 
 	@Autowired
-	AdmintblBiz adminbiz;
+	MngBiz mbiz;
 
 	@RequestMapping("/")
 	public String main(Model m, String areacode, String eventstartdate, String eventenddate, HttpSession session) {
@@ -112,7 +113,7 @@ public class MainController {
 					m.addAttribute("loginuser", u);
 				}
 			} else if (u == null) {
-				admin = adminbiz.get(id);
+				admin = mbiz.aget(id);
 				if (admin != null) {
 					if (admin.getPwd().equals(pwd)) {
 						session.setAttribute("loginadmin", admin);
@@ -196,8 +197,17 @@ public class MainController {
 
 	@RequestMapping("/mng/main")
 	public String adminMain(Model m, HttpSession session) {
-
 		session.setAttribute("loginadmin", session.getAttribute("loginadmin"));
+		
+		List<FestivalVo> fvolist = null;
+		
+		try {
+			fvolist = mbiz.fnowget();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		m.addAttribute("fvolist", fvolist);
 		m.addAttribute("center", "mng/center");
 		return "/mng/main";
 	}

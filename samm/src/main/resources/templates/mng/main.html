@@ -55,7 +55,7 @@
  
         <ul class="navbar-nav navbar-nav-right">  
           <li class="nav-item d-flex mr-4">	
-          	<span th:text="${session.loginadmin.name}"></span>
+          	<span th:text="| ${session.loginadmin.name} 님 환영합니다. |"></span>
           	<a class="btn btn-info font-weight-bold" id="btnService" type="button" href="/">서비스 페이지로 돌아가기</a>
           </li>        
           <li class="nav-item dropdown d-flex mr-4 ">

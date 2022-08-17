@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.samm.biz.AdmintblBiz;
+import com.samm.biz.MngBiz;
 import com.samm.vo.AdmintblVo;
  
  
@@ -18,7 +18,7 @@ import com.samm.vo.AdmintblVo;
 public class AdminController {
 
 	@Autowired
-	AdmintblBiz biz;
+	MngBiz biz;
 	
 	@RequestMapping("/alist")
 	public String alist(Model m, String section, String pageNum) {	
@@ -36,7 +36,7 @@ public class AdminController {
 		List<AdmintblVo> volist = null;
 		
 		try {
-			tot = biz.getTotalNum();
+			tot = biz.agetTotalNum();
 			volist = biz.get(pagingMap);			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,7 +59,7 @@ public class AdminController {
 	public String ainfo(Model m, String id) {
 		AdmintblVo vo = null; 
 		try {
-			vo = biz.get(id);
+			vo = biz.aget(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,7 +80,7 @@ public class AdminController {
 	public String regimpl(Model m, AdmintblVo vo) {
 		System.out.println("a-regimpl : " + vo);
 		try {
-			biz.register(vo);
+			biz.aregister(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -92,7 +92,7 @@ public class AdminController {
 	public String aupdate(Model m, String id) {
 		AdmintblVo vo = null; 
 		try {
-			vo = biz.get(id);
+			vo = biz.aget(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
@@ -106,7 +106,7 @@ public class AdminController {
 	@RequestMapping("/modimpl")
 	public String modimpl(Model m, AdmintblVo vo) {
 		try {
-			biz.modify(vo);
+			biz.amodify(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -121,7 +121,7 @@ public class AdminController {
 	public String delimpl(Model m, AdmintblVo vo) {		
 		String id = vo.getId();
 		try {
-			biz.remove(id);
+			biz.aremove(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
