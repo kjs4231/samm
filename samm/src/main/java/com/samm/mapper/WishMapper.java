@@ -17,4 +17,5 @@ public interface WishMapper {
     public List<WishVo> selectAll() throws Exception;
     public List<WishVo> selectByUid(String uid) throws Exception;
     public List<WishVo> selectById2(int id2) throws Exception;
+    public List<WishVo> getAllDday() throws Exception;
 }
