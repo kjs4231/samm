@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
 import com.samm.biz.AdmintblBiz;
+import com.samm.biz.CommentBiz;
 import com.samm.biz.EmailBiz;
 import com.samm.biz.FestivalBiz;
 import com.samm.biz.ReviewBiz;
@@ -55,6 +56,8 @@ public class AjaxController {
 	ReviewBiz rbiz;
 	@Autowired
 	WishBiz wbiz;
+	@Autowired
+	CommentBiz cbiz;
 
 	@RequestMapping("/callArea")
 	public List<FestivalVo> getAreaCode(String code) {
@@ -266,7 +269,7 @@ public class AjaxController {
 	}
 	
 	@RequestMapping("/deleteReview")
-	public String deleteReview(int pnum) {
+	public String deleteReview(Integer pnum,Integer cno) {
 		try {
 			rbiz.remove(pnum);
 		} catch (Exception e) {
@@ -342,6 +345,16 @@ public class AjaxController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("/cremove")
+	public String cremove(Integer cno) {
+		try {
+			cbiz.remove(cno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "삭제가 완료되었습니다.";
 	}
 
 }

@@ -32,8 +32,8 @@
 
 	<select id="selectAll" parameterType="int"
 		resultType="CommentVo">
-		SELECT cno, bno, comment, commenter, reg_date, up_date
-		FROM comment
+		SELECT * FROM comment c
+		INNER JOIN users u ON u.id = c.commenter
 		WHERE bno = #{bno} and del_date is null
 		ORDER BY reg_date ASC, cno ASC		
 	</select>

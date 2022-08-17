@@ -23,6 +23,9 @@ public class CommentVo {
 	private Date up_date;
 	private Date del_date;
 	
+	private String profile_img;
+	private String name;
+	
 	
 	public CommentVo(Integer bno, Integer pcno, String comment, String commenter) {
 		super();
