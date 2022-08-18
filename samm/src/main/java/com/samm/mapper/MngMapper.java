@@ -40,8 +40,9 @@ public interface MngMapper {
 	public List<UsersVo> msearch(Map<String, String> m) throws Exception;
 	
 	/**********************************/
+	public void iupdateNwhy(int iid, String whytext) throws Exception;
 	
-	public void iupdateYN(Integer k) throws Exception;
+	public void iupdateY(Integer k) throws Exception;
 	public void ideleteNew(int k) throws Exception;
 	public imgallowVo iselectNew(int k) throws Exception;
 	public List<imgallowVo> iselectAllNew() throws Exception;
@@ -68,9 +69,11 @@ public interface MngMapper {
 	
 	
     public List<CommentVo> cgetList(Integer bno) throws Exception;
-	public CommentVo cget(int cno);
+	public CommentVo cget(int cno) throws Exception;
+	public void iupdateNwhy(imgallowVo vo) throws Exception;
+	public List<FestivalVo> fnowget() throws Exception;
  
-	public List<FestivalVo> fnowget() throws Exception; 
+
 			
 	 /**********************************/
 	
