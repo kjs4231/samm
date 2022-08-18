@@ -162,7 +162,7 @@
 							<img th:if="${review.profile_img} == null"
 								th:src="@{/images/noimagep.png}" alt="Image placeholder"> 
 							<img th:unless="${review.profile_img} == null"
-								th:src="@{'/images/'+${review.profile_img}}" alt="no image">
+								th:src="@{'/images/profile/'+${review.profile_img}}" alt="no image">
 							</div>
 							<div class="comment-body">
 								<div class="btn-body">
