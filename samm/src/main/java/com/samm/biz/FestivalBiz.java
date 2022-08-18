@@ -74,12 +74,33 @@ public class FestivalBiz implements Biz<Integer, FestivalVo> {
 		return festivalDao.searchFestival(param);
 	}
 	
-	public List<FestivalVo> searchFestival2(String areacode, String eventstartdate, String eventenddate) throws Exception {
+	public List<FestivalVo> searchFestival2(String areacode, String eventstartdate, String eventenddate, Integer page) throws Exception {
 		HashMap<String, String> param = new HashMap<>();
-		param.put("areacode", areacode);
-        param.put("eventstartdate", eventstartdate);
-		param.put("eventenddate", eventenddate);
-		return festivalDao.searchFestival2(param);
+		if(areacode.equals("national")) {
+			param.put("eventstartdate", eventstartdate);
+			param.put("eventenddate", eventenddate);
+			return festivalDao.searchFestivalNoArea(param);
+		}else {
+			param.put("areacode", areacode);
+	        param.put("eventstartdate", eventstartdate);
+			param.put("eventenddate", eventenddate);
+			return festivalDao.searchFestival2(param);
+		}
+
+	}
+	
+	public List<FestivalVo> searchFestival3(String areacode, String eventstartdate, String eventenddate) throws Exception {
+		HashMap<String, String> param = new HashMap<>();
+		if(areacode.equals("national")) {
+			param.put("eventstartdate", eventstartdate);
+			param.put("eventenddate", eventenddate);
+			return festivalDao.searchFestivalAll(param);
+		}else {
+			param.put("areacode", areacode);
+	        param.put("eventstartdate", eventstartdate);
+			param.put("eventenddate", eventenddate);
+			return festivalDao.searchFestival3(param);
+		}
 	}
 	
 	public List<FestivalVo> searchMap(String keyword, String eventstartdate, String eventenddate, String page, String mapx, String mapy) throws Exception {

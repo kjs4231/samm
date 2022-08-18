@@ -2,6 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+.modal-body img{
+    width: 100% !important;
+    border-radius: 0 !important;
+    height: 100% !important;
+}
+</style>
 <script>
 $(document).ready(function(){ 
 	$('#mod_btn').click(function(){
@@ -22,74 +29,81 @@ $(document).ready(function(){
 });
 </script>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
-
-<!-- 
-<table class="table table-hover col-md">
-<thead>
-  <tr>
-  	<th><b>선택</b></th>  
-    <th><b>회원</b></th>
-    <th><b>축제이름</b></th>
-    <th><b>등록일</b></th>
-    <th><b>이미지</b></th> 
-  </tr>
-</thead>
-
-<tbody>	
-  <tr th:each="vo : ${volist}">
-  	<td>
-  		<input type="checkbox" id="allowCheck" name="allowCheck">
-  		<input type="hidden" name="iid" th:value="${vo.iid}">
-  	</td>
-    <td name="uid" th:text="|${vo.uname} ( ${vo.uid} )|"></td>
-    <td name="ftitle" th:text="${vo.ftitle}"></td>
-    <td name="imgregdate" th:text="${vo.imgregdate}"></td>
-    <td>
-    	<img th:src="@{'/images/festival/'+${vo.imgname}}" 
-    		 class="w-1000">
-    </td>
-  </tr>
-</tbody> 
-
-</table> -->
-
-
 <br><br>
-
 
 <div class="row">
 <div class="col-lg-12 stretch-card grid-margin">
  <div class="card">
   <div class="card-body">
- 
+
+<table class="table table-hover col-md">
+<thead>
+<tr>
+	<th><b>선택</b></th>
+	<th><b>작성자</b></th>
+	<th><b>축제이름</b></th>
+	<th><b>작성일</b></th>
+	<th><b>사진</b></th>
+</tr>
+</thead>
+
 <form id="imgform">
+<tbody>
+<tr th:each="vo : ${volist}">
+  	<td>
+  		<input type="checkbox" id="allowCheck" name="iid" th:value="${vo.iid}" class="form-check-primary">
+  	</td>
+ 	<td th:text="|${vo.uname} ( ${vo.uid} )|"></td>
+ 	<td th:text="${vo.ftitle}"></td>
+ 	<td th:text="${#dates.format(vo.imgregdate, 'dd/MM/yy')}"></td>
+ 	<td> 
  	
-  <div  class="form-group" th:each="vo : ${volist}">
-  	<span class="col-md-1">
-  		<input type="checkbox" id="allowCheck" name="allowCheck" class="form-check-primary"> <input type="hidden" name="iid" th:value="${vo.iid}">
-  	</span>
-    <span name="uid" th:text="|${vo.uname} ( ${vo.uid} )|"></span>
-    <span class="col-md-6" name="ftitle" th:text="${vo.ftitle}"></span>
-    <span name="imgregdate" th:text="${#dates.format(vo.imgregdate, 'dd/MM/yy')}"></span> 
-    <span class="">
-    	<img th:src="@{'/images/festival/'+${vo.imgname}}" class="w-200">
-    </span>
+ 	<button type="button" class="btn btn-warning" data-bs-toggle="modal" th:data-bs-target="'#'+'imgModal'+${vo.iid}"> 보기 </button>
+
+<!-- The Modal -->
+<div class="modal" th:id="'imgModal'+${vo.iid}">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+
+      <div class="modal-header">
+        <h4 class="modal-title">Fesltival 요청 사진</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div> 
+
+      <!-- Modal body -->
+      <div class="modal-body">  
+        <img th:src="@{'/images/festival/'+${vo.imgname}}" class="w-200"> 
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
   </div>
- </form>
+</div> 
+<!-- The Modal -->
+</td>
+</tr>	
+</tbody>
+</form>
+ 
+</table>
+  
 </div>
 </div>
 </div>
-</div>
-
-
-
-
+</div> <!-- row -->
+ 
 <br><br>
+
 <button type="submit" id="mod_btn" class="btn btn-primary mr-2">허용</button>                  
 <button type="submit" id="del_btn" class="btn btn-light mr-2">삭제</button>
+
+
 </body>
 </html>

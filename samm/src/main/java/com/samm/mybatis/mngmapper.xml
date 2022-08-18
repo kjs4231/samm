@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.samm.mapper.MngMapper">
+
+<!-- 축제 관리자 계정 관리 -> admintbl table -->	
+
+	<select id="aselect" parameterType="String" resultType="admintblVo">
+		SELECT * FROM admintbl where id=#{id}
+	</select>
+	
+	<select id="aselectAll" resultType="admintblVo">
+		SELECT * FROM admintbl
+	</select>
+
+	<insert id="ainsert" parameterType="AdmintblVo">
+		INSERT INTO admintbl VALUES (#{id}, #{pwd}, #{name}, #{email}, #{address}, #{phone})
+
+<!-- 		INSERT INTO admintbl VALUES (#{id},#{pwd},#{name}
+		<choose>
+			<when test="address == null or address.equals('')">,null</when>
+			<otherwise>
+				,#{address}
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="phone == null or phone.equals('')">,null</when>
+			<otherwise>
+				,#{phone}
+			</otherwise>
+		</choose>
+		) -->
+	</insert>
+	<update id="aupdate" parameterType="admintblVo">
+		UPDATE admintbl
+		<trim prefix="SET" suffixOverrides=",">
+			<choose>
+				<when test="pwd == null or pwd.equals('')"></when>
+				<otherwise>
+				pwd=#{pwd},
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="name == null or name.equals('')"></when>
+				<otherwise>
+				name=#{name},
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="address == null or address.equals('')"></when>
+				<otherwise>
+				address=#{address},
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="phone == null or phone.equals('')"></when>
+				<otherwise>
+				phone=#{phone},
+				</otherwise>
+			</choose>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	
+	<delete id="adelete" parameterType="String">
+		DELETE FROM admintbl WHERE id=#{id}
+	</delete>
+	
+	
+	
+	<select id="aselectlist" resultType="AdmintblVo" parameterType="map">
+		SELECT * FROM
+		( SELECT @rownum:=@rownum+1 as rn, A.* 
+  			FROM admintbl A, (SELECT @ROWNUM := 0) R
+  		) list
+		WHERE rn between (#{section}-1)*100 + (#{pageNum}-1)*10+1 
+		         and (#{section}-1)*100 + #{pageNum} * 10     
+	</select>
+		
+	<select id="agetTotalNum" resultType="int">
+		select count(*) from admintbl  
+	</select>	
+	
+	<select id="asearch" resultType="AdmintblVo" parameterType="map">
+		SELECT * FROM admintbl WHERE ${select} LIKE CONCAT('%',#{txt},'%')
+	</select>
+	
+	
+	
+	
+<!-- 회원관리 -> users table -->	
+	
+	<delete id="mdelete" parameterType="String">
+		DELETE FROM users WHERE id=#{id}
+	</delete>
+	
+	<select id="idCheck" parameterType="String" resultType="java.lang.String">
+		SELECT id
+		FROM users WHERE id=#{id}
+	</select>
+
+	<select id="mgetTotalNum" resultType="int">
+		select count(*) from users  
+	</select>
+	
+	<select id="msearch" resultType="UsersVo" parameterType="map">
+		SELECT * FROM users WHERE ${select} LIKE CONCAT('%',#{txt},'%')
+	</select>	
+	
+	<select id="mselectlist" resultType="UsersVo" parameterType="map">
+		SELECT * FROM
+		( SELECT @rownum:=@rownum+1 as rn, A.* 
+  			FROM users A, (SELECT @ROWNUM := 0) R
+  		) list
+		WHERE rn between (#{section}-1)*100 + (#{pageNum}-1)*10+1 
+		         and (#{section}-1)*100 + #{pageNum} * 10     
+	</select>
+	
+	<select id="mselect" resultType="UsersVo" parameterType="String">
+		SELECT * FROM users WHERE id=#{id}    
+	</select>	
+	
+	
+	
+	
+<!-- 축제 이미지 허용 -->		
+
+	<update id="iupdateYN" parameterType="int">
+		UPDATE festivalimg SET allowYN='Y' 
+		WHERE id=#{id}
+	</update>
+ 
+	<delete id="ideleteNew" parameterType="int">
+		DELETE FROM festivalimg WHERE id=#{id}
+	</delete>
+
+	<select id="iselectAllNew" resultType="imgallowVo">
+		SELECT i.id as iid, i.uid as uid, u.name as uname, 
+			   f.title as ftitle, i.regdate as imgregdate, 
+			   i.name as imgname
+		FROM festivalimg i join festival f join users u
+		on i.fid = f.contentid and u.id = i.uid 
+		where i.allowYN = 'N'
+	</select>
+
+	<select id="iselectNew" parameterType="int" resultType="imgallowVo">
+		SELECT i.id as iid, i.uid as uid, u.name as uname, 
+			   f.title as ftitle, i.regdate as imgregdate, 
+			   i.name as imgname
+		FROM festivalimg i join festival f join users u
+		on i.fid = f.contentid and u.id = i.uid 
+		where i.id=#{iid}
+	</select>
+
+<!-- 게시판 글, 댓글 삭제 / 검색 -->		
+
+	<select id="bcount" resultType="int">
+        SELECT count(*) FROM board
+    </select>
+    
+    <select id="bselectAll" resultType="BoardVo">
+        SELECT * FROM board
+    </select>
+    
+    <select id="bselect" resultType="BoardVo">
+        SELECT * FROM board WHERE bno = #{bno} 
+    </select>   
+    
+    
+    <select id="bget" parameterType="map" resultType="BoardVo">
+		SELECT * FROM
+		( SELECT @rownum:=@rownum+1 as rn, A.* 
+  		  FROM board A, (SELECT @ROWNUM := 0) R 
+  		  where A.del_date is null
+  		) list
+		WHERE rn between (#{section}-1)*100 + (#{pageNum}-1)*10+1 
+		         and (#{section}-1)*100 + #{pageNum} * 10 
+	</select>
+    
+    <select id="bsearch" resultType="BoardVo" parameterType="map">
+		SELECT * FROM board WHERE ${select} LIKE CONCAT('%',#{txt},'%')
+	</select>
+
+    <update id="bdelete" parameterType="BoardVo">
+        UPDATE board SET del_date = now() WHERE bno = #{bno}
+    </update>
+
+	<update id="deleteComment" parameterType="int">
+		UPDATE comment SET del_date = now() WHERE cno = #{cno}
+	</update>
+
+
+
+    <select id="cgetList" resultType="CommentVo" parameterType="int">
+		SELECT * FROM comment 
+		WHERE bno = #{bno}
+	</select>
+	
+	<select id="cget" resultType="CommentVo" parameterType="int">
+		SELECT * FROM comment 
+		WHERE cno = #{cno}
+	</select>
+	
+	<select id="fnowget" resultType="FestivalVo">
+		select * from festival  
+		<![CDATA[ where curdate() >= eventstartdate and curdate() <= eventenddate ]]>
+	</select>
+	
+	
+</mapper>

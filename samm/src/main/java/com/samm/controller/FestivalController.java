@@ -81,7 +81,6 @@ public class FestivalController {
 	@RequestMapping("/reviewimpl")
 	public String review(String contents, String star, String uid, int fid, HttpSession session, Model m,
 			ReviewVo review) {
-		System.out.println(review);
 		try {
 			reviewbiz.register(review);
 		} catch (Exception e) {
@@ -99,8 +98,8 @@ public class FestivalController {
 		SimpleDateFormat formats = new SimpleDateFormat("yyyyMMdd");
 		String today = formats.format(date).toString();
 
-		List<Map<String, String>> alist = null;
-		List<FestivalVo> list = null;
+		List<Map<String, String>> areallist = null;
+		List<FestivalVo> festivalList = null;
 		List<FestivalVo> klist = null;
 		int count = 0;
 		try {
@@ -112,29 +111,31 @@ public class FestivalController {
 				m.addAttribute("keyword",keyword);
 				m.addAttribute("klist", klist);
 			}
-
-			alist = abiz.get();
+			areallist = abiz.get();
+			
 			if ((areacode != null && eventstartdate != null && eventenddate != null)) {
 				if(eventstartdate.equals("999") && eventenddate.equals("999")) {
-					System.out.println("HI");
 					eventstartdate = today;
 					eventenddate = today;
+					festivalList = festbiz.searchFestival3(areacode, eventstartdate, eventenddate);
+				}else {
+					festivalList = festbiz.searchFestival2(areacode, eventstartdate, eventenddate, 2);
+					int start = Integer.parseInt(eventstartdate);
+					int end = Integer.parseInt(eventenddate);
+					m.addAttribute("start", start);
+					m.addAttribute("end", end);
 				}
-				list = festbiz.searchFestival2(areacode, eventstartdate, eventenddate);
-				int start = Integer.parseInt(eventstartdate);
-				int end = Integer.parseInt(eventenddate);
-				m.addAttribute("start", start);
-				m.addAttribute("end", end);
-			}
 
+			}
+			
 			int todays = Integer.parseInt(today);
 			m.addAttribute("today", todays);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("searchfsetival ERROR");
 		}
-		m.addAttribute("festival", list);
-		m.addAttribute("area", alist);
+		m.addAttribute("festival", festivalList);
+		m.addAttribute("area", areallist);
 		m.addAttribute("center", "/festival/searchfestival");
 		return "index";
 	}

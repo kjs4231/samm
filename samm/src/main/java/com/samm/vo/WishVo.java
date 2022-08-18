@@ -23,5 +23,11 @@ public class WishVo {
     private String addr1;
     private String eventstartdate;
     private String eventenddate;
+    
+    private String firstimage;
+    private String email;
+    
+    private int dDay;
+    
 
 }

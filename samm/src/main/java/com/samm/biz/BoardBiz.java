@@ -86,11 +86,11 @@ public class BoardBiz implements Biz<Integer, BoardVo> {
     	return boardDao.selectByUid(uid);
     }
 
-	public List<BoardVo> get(Map<String, Integer> m) throws Exception {
-		return boardDao.get(m);
-	}
-
-	public List<BoardVo> bsearch(Map<String, String> map) throws Exception {
-		return boardDao.bsearch(map);
-	}
+	/*
+	 * public List<BoardVo> get(Map<String, Integer> m) throws Exception { return
+	 * boardDao.get(m); }
+	 * 
+	 * public List<BoardVo> bsearch(Map<String, String> map) throws Exception {
+	 * return boardDao.bsearch(map); }
+	 */
 }

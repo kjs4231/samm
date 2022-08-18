@@ -1,6 +1,15 @@
-
+<meta charset="UTF-8">
+ 
+  <div class="row">
+<h2 class="title col-md-12 text-center"> 현재 진행 중인 축제 </h2> 
+  </div>
+ 
+ <br><hr><br>
+ 
+ 
  <div class="row">
-
+ 
+<!--
 	<div class="col-md-6 grid-margin stretch-card">
      <div class="card">
        <div class="card-body">
@@ -9,19 +18,23 @@
            Basic form layout
          </p>
          
-       </div> <!-- card-body -->
+       </div>  
      </div>
-   </div>
-
-	<div class="col-md-6 grid-margin stretch-card">
-     <div class="card">
-       <div class="card-body">
-         <h4 class="card-title">Default form</h4>
-         <p class="card-description">
-           Basic form layout
-         </p>
-
+   </div> -->
+ 
+   <br><br><br>
+ 
+	<div class="col-md-6 grid-margin stretch-card" th:each="fvo : ${fvolist}">
+     <div class="card" th:style="'background-image:url('+@{${fvo.firstimage}}+')'">
+       <div class="card-body" >
+         <h3 class="card-title" th:text="${fvo.title}"></h3>
+         <p class="card-description" th:text="| ${fvo.eventstartdate} ~ ${fvo.eventenddate} |"></p>
+         <p th:text="| 전화 : ${fvo.tel} |"></p>
+         <p th:text="| 주소 : ${fvo.addr1}|"></p>
        </div>
      </div>
-   </div>
+   </div>  
+   
+
+   
 </div>

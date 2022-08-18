@@ -191,7 +191,7 @@ public class BoardController {
 	    @Override
 	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	        registry.addResourceHandler("/images/board/**")
-	               .addResourceLocations("file:///49.50.174.134:8080/root/apache-tomcat-8.5.27/webapps/samm/WEB-INF/classes/static/images/board/");
+	               .addResourceLocations("file:///root/apache-tomcat-8.5.27/webapps/samm/WEB-INF/classes/static/images/board/");
 	        
 	        //registry.addResourceHandler("/images/board/**")
             //		.addResourceLocations("file:///C:/multicampus finalproject/samm/samm/src/main/resources/static/images/board/");

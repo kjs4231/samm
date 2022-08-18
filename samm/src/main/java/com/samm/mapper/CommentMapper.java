@@ -17,5 +17,5 @@ public interface CommentMapper {
 	 public CommentVo select(Integer cno) throws Exception;
 	 public int update(CommentVo vo) throws Exception;
 	 
-	 public void deleteComment(Integer cno) throws Exception; 
+
 }

@@ -7,9 +7,51 @@ $(document).ready(function() {
 	$('#search-btn2').click(function() {
 		searchKeyowrd();
 	});
+
 	createPaging();
+	endParty();
+	incommingParty();
+	hiidenPosting();
+	$('#moreFestival').click(function(){
+		var size = $('#eventSize').val();
+		var noHidden = size - $('.row .hidden').length;
+		for(i=0; i < 9; i++){
+			var cnt = noHidden+i;
+			$('#festival'+cnt).removeClass("hidden");
+		}	
+		if($('.row .hidden').length === 0 ){
+			$("#moreFestival").hide();
+		}else{
+			$("#moreFestival").text("더 보기"+"("+$('.row .hidden').length+")");
+		}
+	});
 });
 
+function hiidenPosting(){
+	let size = $('#eventSize').val();
+	for(i=0; i < size; i++){
+		if(i > 8){
+			$('#festival'+i).addClass("hidden");
+			
+		}
+	}
+	var printingFestival = $('.row .hidden').length;
+	$("#moreFestival").text("더 보기"+"("+printingFestival+")");
+}
+
+function endParty(){
+	let size = $('#eventSize').val();
+	for(i=0;i<size;i++){
+		$('#event'+i).addClass('endParty');
+	}
+}
+
+function incommingParty(){
+	let size = $('#eventSize').val();
+	for(i=0;i<size;i++){
+		$('#incomming'+i).addClass('incommingParty');
+	}	
+}
 
 function searchFestival() {
 	if (($('#startdate').val() == null || $('#startdate').val() == "") || ($('#enddate').val() == null || $('#enddate').val() == "")) {
@@ -55,10 +97,7 @@ function createPaging() {
 	for (i = 1; i <= 10; i++) {
 		$('#paging').children().eq(pnum + i).removeClass('hidden');
 	}
-	console.log(page);
-
 	$('#paging').children().eq(page).addClass('active');
-	console.log($('#paging').children().eq(page).text())
 }
 
 function nextpage() {

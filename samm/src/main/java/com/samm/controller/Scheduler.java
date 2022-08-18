@@ -1,16 +1,23 @@
 package com.samm.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.samm.biz.EmailBiz;
+import com.samm.biz.WishBiz;
 import com.samm.restapi.TourFestivalAPI;
+import com.samm.vo.WishVo;
 
 @Component
 public class Scheduler {
 
 	@Autowired
 	TourFestivalAPI tour;
+	@Autowired
+	EmailBiz emailBiz;
 
 	@Scheduled(cron = "0 0 1 * * *")
 	public void weeklyMonUpdate() {
@@ -31,6 +38,13 @@ public class Scheduler {
 			e.printStackTrace();
 		}
 		System.out.println("----------- Scheduler End ------------");
+	}
+	
+	@Scheduled(cron = "0 5 0 * * *")
+	public void sendDdayFestival() {
+		
+		emailBiz.sendDdayFestivalMail();
+	
 	}
 
 }

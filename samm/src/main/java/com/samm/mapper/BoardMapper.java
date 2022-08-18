@@ -29,9 +29,7 @@ public interface BoardMapper {
 	public int updateCommentCnt(Integer bno, int cnt);
 	
 	public List<BoardVo> selectByUid(String uid) throws Exception;
-	public List<BoardVo> get(Map<String, Integer> m) throws Exception;
-	
-	public List<BoardVo> bsearch(Map<String, String> map) throws Exception;
-	
+
+
 	
 }
