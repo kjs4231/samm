@@ -29,7 +29,7 @@
 		resultType="CommentVo">
 		SELECT * FROM comment c
 		INNER JOIN users u ON u.id = c.commenter
-		WHERE bno = #{bno} and del_date is null
+		WHERE bno = #{bno} and c.del_date is null
 		ORDER BY reg_date ASC, cno ASC		
 	</select>
 
