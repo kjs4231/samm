@@ -149,7 +149,6 @@ function elm_searchmap(contentid, mapx, mapy, firstimage, eventstartdate, evente
 		gen_l_card_left +
 		'<div class="' + class_l_card_right + '">' +
 		'<div class="inline">' +
-		'<div class="l-card-txt dbtable">축제</div>' +
 		'<div class="l-card-txt ongoing">' + ongoing + '</div>' +
 		'<div class="l-card-txt days"><span>' + dateToStringDash(eventstartdate) + '</span> ~ ' +
 		'<span>' + dateToStringDash(eventenddate) + '</span>' +
