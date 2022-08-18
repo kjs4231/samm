@@ -40,11 +40,11 @@ public class Scheduler {
 		System.out.println("----------- Scheduler End ------------");
 	}
 	
-	@Scheduled(cron = "0 5 0 * * *")
+	@Scheduled(cron = "0 1 0 * * *")
 	public void sendDdayFestival() {
-		
+		System.out.println("------------ mail Scheduler Start -------------------");
 		emailBiz.sendDdayFestivalMail();
-	
+		System.out.println("------------ mail Scheduler End-------------------");
 	}
 
 }
