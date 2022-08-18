@@ -8,7 +8,7 @@
 		SELECT r.pnum,r.contents,r.star,r.regdate,r.uid,r.fid,u.name as username,u.profile_img as profile_img FROM review r
 		INNER JOIN users u ON r.uid = u.id
 		where fid = #{fid} 
-		AND del_date is null
+		AND r.del_date is null
 	</select>
 	<select id="getCount" resultType="int">
 		SELECT count(*) From review where fid = #{fid} AND del_date is null

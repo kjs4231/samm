@@ -228,9 +228,9 @@
 				th:value="${reviewStat.size}" id="size">
 				<div class="vcard bio">
 					<img th:if="${review.profile_img} == null"
-						th:src="@{/images/noimagep.png}" alt="Image placeholder"> <img
-						th:unless="${review.profile_img} == null"
-						th:src="${review.profile_img}" alt="Image placeholder">
+						th:src="@{/images/noimagep.png}" alt="Image placeholder"> 
+					<img th:unless="${review.profile_img} == null"
+						th:src="@{'/images/'+${review.profile_img}}" alt="Image placeholder">
 				</div>
 				<div class="comment-body">
 					<div class="btn-body">
