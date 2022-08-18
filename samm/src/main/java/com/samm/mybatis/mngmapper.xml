@@ -123,15 +123,21 @@
 	
 	
 <!-- 축제 이미지 허용 -->		
+	<update id="iupdateNwhy" parameterType="imgallowVo">
+		UPDATE festivalimg SET allowYN = #{whytext}
+		WHERE id=#{iid}
+	</update>
 
-	<update id="iupdateYN" parameterType="int">
+
+	<update id="iupdateY" parameterType="int">
 		UPDATE festivalimg SET allowYN='Y' 
 		WHERE id=#{id}
 	</update>
- 
+	
+ <!-- 
 	<delete id="ideleteNew" parameterType="int">
 		DELETE FROM festivalimg WHERE id=#{id}
-	</delete>
+	</delete> -->	
 
 	<select id="iselectAllNew" resultType="imgallowVo">
 		SELECT i.id as iid, i.uid as uid, u.name as uname, 
@@ -170,7 +176,7 @@
 		SELECT * FROM
 		( SELECT @rownum:=@rownum+1 as rn, A.* 
   		  FROM board A, (SELECT @ROWNUM := 0) R 
-  		  where A.del_date is null
+  		  <!-- where A.del_date is null -->
   		) list
 		WHERE rn between (#{section}-1)*100 + (#{pageNum}-1)*10+1 
 		         and (#{section}-1)*100 + #{pageNum} * 10 

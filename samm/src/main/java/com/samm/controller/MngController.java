@@ -42,15 +42,42 @@ public class MngController {
 		return "mng/main";
 	}
 	
-	
-	@RequestMapping("/updateYN")
-	public String updateYN(Model m,HttpServletRequest request) {
+	/*
+	 
+	@RequestMapping("/iupdateY")
+	public String iupdateY(Model m, HttpServletRequest request) {
 		String [] arrayParam = request.getParameterValues("iid"); //name=iid 인 value 를 arrayParam에 담음.
 		try {
 			for(int i = 0; i < arrayParam.length; i++) {
 				System.out.println(arrayParam[i]);
-				mbiz.iupdateYN(Integer.parseInt(arrayParam[i])); //배열을 하나씩 업데이트
+				mbiz.iupdateY(Integer.parseInt(arrayParam[i])); //배열을 하나씩 업데이트
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:festivalimg";
+	} */
+	
+	
+	 
+	@RequestMapping("/iupdateY")
+	public String iupdateY(Model m, int iid) {
+		System.out.println("iupdateY: " + iid);
+		try {
+			mbiz.iupdateY(iid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:festivalimg";
+	} 
+	
+	 
+ 
+	@RequestMapping("/iupdateNwhy")
+	public String iupdateNwhy(Model m, imgallowVo vo) {
+		System.out.println("iupdateNwhy: " + vo.toString());
+		try {
+			 mbiz.iupdateNwhy(vo);  
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,9 +85,10 @@ public class MngController {
 	}
 	
 	
+	
 	@RequestMapping("fdelimpl")
 	public String fdelimpl(Model m, imgallowVo vo) {
-		System.out.println("fdelimpl: "+vo.toString());
+		//System.out.println("fdelimpl: "+vo.toString());
 		int iid = vo.getIid();
 		try {
 			mbiz.iremove(iid);
@@ -177,31 +205,7 @@ public class MngController {
 	}
 	
 	
-	@RequestMapping("/getDashboard")
-	public String getDashboard(Model m) {
-		
-		FestivalVo fvo = null;
-		List<FestivalVo> fvolist = null;
-		
-		LocalDate nowdate = LocalDate.now();
-		
-		
-		try { 
-			 
-			fvolist = mbiz.fnowget(); 
-			
-			for(FestivalVo f : fvolist ) {
-				 if(f.getEventenddate()==null) {
-					 
-				 }
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		m.addAttribute("center", "mng/festival/boarddetail");
-		return "mng/main";
-	}
+
 	
 }
 
