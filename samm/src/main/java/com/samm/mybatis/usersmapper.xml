@@ -73,22 +73,7 @@
 		FROM users WHERE id=#{id}
 	</select>
 	
-	<select id="getTotalNum" resultType="int">
-		select count(*) from users  
-	</select>
-	
-	<select id="msearch" resultType="UsersVo" parameterType="map">
-		SELECT * FROM users WHERE ${select} LIKE CONCAT('%',#{txt},'%')
-	</select>	
-	
-	<select id="selectlist" resultType="UsersVo" parameterType="map">
-		SELECT * FROM
-		( SELECT @rownum:=@rownum+1 as rn, A.* 
-  			FROM users A, (SELECT @ROWNUM := 0) R
-  		) list
-		WHERE rn between (#{section}-1)*100 + (#{pageNum}-1)*10+1 
-		         and (#{section}-1)*100 + #{pageNum} * 10     
-	</select>
+
 	
 	<insert id="kakaoLogin" parameterType="UsersVo">
 		INSERT INTO users (id,name,email,gender,profile_img)

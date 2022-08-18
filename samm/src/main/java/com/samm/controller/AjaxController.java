@@ -25,10 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
-import com.samm.biz.AdmintblBiz;
 import com.samm.biz.CommentBiz;
 import com.samm.biz.EmailBiz;
 import com.samm.biz.FestivalBiz;
+import com.samm.biz.MngBiz;
 import com.samm.biz.ReviewBiz;
 import com.samm.biz.UsersBiz;
 import com.samm.biz.WishBiz;
@@ -43,7 +43,7 @@ import com.samm.vo.WishVo;
 public class AjaxController {
 
 	@Autowired
-	AdmintblBiz adminbiz;
+	MngBiz mbiz;
 	@Autowired
 	FestivalBiz fbiz;
 	@Autowired
@@ -140,7 +140,7 @@ public class AjaxController {
 			return "3";
 		}
 		try {
-			vo = adminbiz.get(id);
+			vo = mbiz.aget(id);
 
 			if (vo == null) {
 				result = "0";
@@ -201,7 +201,7 @@ public class AjaxController {
 		String result = "";
 		try {
 			users = ubiz.get(id);
-			admin = adminbiz.get(id);
+			admin = mbiz.aget(id);
 			if(users == null && admin == null) {
 				result = "존재하지 않는 ID 입니다.";
 			}

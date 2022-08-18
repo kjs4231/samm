@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.samm.biz.MngBiz;
 import com.samm.biz.UsersBiz;
 import com.samm.vo.UsersVo;
  
@@ -21,7 +22,7 @@ import com.samm.vo.UsersVo;
 public class MembersController {
 
 	@Autowired
-	UsersBiz biz;
+	MngBiz mngbiz;
 
 	
 	@RequestMapping("/mlist")
@@ -40,8 +41,8 @@ public class MembersController {
 		List<UsersVo> volist = null;
 		
 		try {
-			tot = biz.getTotalNum();
-			volist = biz.selectlist(pagingMap);			
+			tot = mngbiz.mgetTotalNum();
+			volist = mngbiz.mselectlist(pagingMap);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -53,7 +54,6 @@ public class MembersController {
 		}
 		
 		m.addAttribute("tot", tot);
-		
 		m.addAttribute("section", section);
 		m.addAttribute("pageNum", pageNum);		
 		
@@ -66,13 +66,13 @@ public class MembersController {
 	public String minfo(Model m, String id) {
 		UsersVo vo = null; 
 		try {
-			vo = biz.get(id);
+			vo = mngbiz.mget(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		m.addAttribute("vo", vo);		
 		m.addAttribute("center","mng/members/minfo");
-		return "main";
+		return "mng/main";
 	}
 	
 	
@@ -81,14 +81,14 @@ public class MembersController {
 
 		UsersVo vo = null; 
 		try {
-			vo = biz.get(id);
+			vo = mngbiz.mget(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
 		
 		m.addAttribute("vo", vo);		
-		m.addAttribute("center","members/mupdate");
-		return "main"; 
+		m.addAttribute("center","mng/members/mupdate");
+		return "mng/main"; 
 		
 	}
 	
@@ -96,7 +96,7 @@ public class MembersController {
 	@RequestMapping("/modimpl")
 	public String modimpl(Model m, UsersVo vo) {
 		try {
-			biz.modify(vo);
+			mngbiz.mmodify(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -109,7 +109,7 @@ public class MembersController {
 		
 		String id = vo.getId();
 		try {
-			biz.remove(id);
+			mngbiz.mremove(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -128,7 +128,7 @@ public class MembersController {
 		List<UsersVo> volist = null;
 		
 		try {
-			volist = biz.msearch(map);
+			volist = mngbiz.msearch(map);
 			for(UsersVo m1 : volist) {
 				System.out.println(m1);
 			}

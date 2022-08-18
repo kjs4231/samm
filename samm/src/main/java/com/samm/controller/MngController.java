@@ -1,6 +1,7 @@
 package com.samm.controller;
 
  
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,36 +10,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.samm.biz.BoardBiz;
-import com.samm.biz.CommentBiz;
-import com.samm.biz.ImgAllowBiz;
-import com.samm.vo.AdmintblVo;
+ 
+import com.samm.biz.MngBiz;
 import com.samm.vo.BoardVo;
 import com.samm.vo.CommentVo;
+import com.samm.vo.FestivalVo;
 import com.samm.vo.imgallowVo;
  
  
  
 @Controller
 @RequestMapping("/mng/festival")
-public class ManagementController {
+public class MngController {
 	
 	@Autowired
-	ImgAllowBiz imgbiz;
-	
-	@Autowired
-	BoardBiz boardbiz;
-	
-	@Autowired
-	CommentBiz cbiz;
+	MngBiz mbiz; 
 	
 	@RequestMapping("/festivalimg")
 	public String festivalimg(Model m) {
 		
 		List<imgallowVo> volist = null;
 		try {
-			volist= imgbiz.get();
+			volist= mbiz.iselectAllNew();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,7 +46,7 @@ public class ManagementController {
 		System.out.println("updateYN: "+vo.toString());
 		int iid = vo.getIid();
 		try {
-			imgbiz.updateYN(iid);
+			mbiz.iupdateYN(iid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -66,7 +59,7 @@ public class ManagementController {
 		System.out.println("fdelimpl: "+vo.toString());
 		int iid = vo.getIid();
 		try {
-			imgbiz.remove(iid);
+			mbiz.iremove(iid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,8 +83,8 @@ public class ManagementController {
 		int tot = 0;		
 		List<BoardVo> volist = null;
 		try {
-			volist= boardbiz.get(pagingMap);
-			tot = boardbiz.getCount();
+			volist= mbiz.bget(pagingMap);
+			tot = mbiz.getbCount();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,12 +111,8 @@ public class ManagementController {
 		List<CommentVo> cvolist = null;
 		
 		try {
-			vo = boardbiz.get(bno);
-			//System.out.println("boarddetail3333: " + vo.toString());
-			cvolist = cbiz.getList(bno);
-			for(CommentVo c : cvolist ) {
-				//System.out.println("cvolist- cvo: " + c.toString());
-			}
+			vo = mbiz.bget(bno);
+			cvolist = mbiz.getList(bno);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -137,10 +126,8 @@ public class ManagementController {
 	
 	@RequestMapping("bdelimpl")
 	public String bdelimpl(Model m, int bno) {
-		//System.out.println("bdelimpl: "+vo.toString()); 
-		//int bno = vo.getBno();
 		try {
-			boardbiz.remove(bno);
+			mbiz.bremove(bno);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -150,13 +137,11 @@ public class ManagementController {
 	
 	@RequestMapping("cdelimpl")
 	public String cdelimpl(Model m, int cno) { 
-		System.out.println("cdelimpl - cno: "+ cno); 
 		int bno = 0;
 		try {
-			CommentVo cvo = cbiz.read(cno);
+			CommentVo cvo = mbiz.cget(cno);
 			bno = cvo.getBno();
-			cbiz.deleteComment(cno);
-			System.out.println("cdelimpl: "+ cvo.toString()+ " / bno : " + bno); 
+			mbiz.deleteComment(cno);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -177,10 +162,7 @@ public class ManagementController {
 		List<BoardVo> volist = null;
 		
 		try {
-			volist = boardbiz.bsearch(map);
-			for(BoardVo vo : volist) {
-				System.out.println(vo);
-			}
+			volist = mbiz.bsearch(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -191,7 +173,31 @@ public class ManagementController {
 	}
 	
 	
-	
+	@RequestMapping("/getDashboard")
+	public String getDashboard(Model m) {
+		
+		FestivalVo fvo = null;
+		List<FestivalVo> fvolist = null;
+		
+		LocalDate nowdate = LocalDate.now();
+		
+		
+		try { 
+			 
+			fvolist = mbiz.fnowget(); 
+			
+			for(FestivalVo f : fvolist ) {
+				 if(f.getEventenddate()==null) {
+					 
+				 }
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		m.addAttribute("center", "mng/festival/boarddetail");
+		return "mng/main";
+	}
 	
 }
 
