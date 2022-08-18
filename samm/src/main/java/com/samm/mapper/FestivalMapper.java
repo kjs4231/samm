@@ -22,7 +22,8 @@ public interface FestivalMapper {
 	public FestivalVo selectOne(int k) throws Exception;
 	
 	public List<FestivalVo> searchFestival2(HashMap<String, String> hashmap) throws Exception;
-	
+	public List<FestivalVo> searchFestival3(HashMap<String, String> hashmap) throws Exception;
+	public List<FestivalVo> searchFestivalNoArea(HashMap<String, String> hashmap) throws Exception;
 	
 	public void apiinsert (HashMap<String, String> hashmap) throws Exception;
 	public List<String> getContentId() throws Exception;

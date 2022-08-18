@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
- 
+
 import com.samm.biz.MngBiz;
 import com.samm.vo.BoardVo;
 import com.samm.vo.CommentVo;
@@ -42,11 +44,13 @@ public class MngController {
 	
 	
 	@RequestMapping("/updateYN")
-	public String updateYN(Model m, imgallowVo vo) {
-		System.out.println("updateYN: "+vo.toString());
-		int iid = vo.getIid();
+	public String updateYN(Model m,HttpServletRequest request) {
+		String [] arrayParam = request.getParameterValues("iid"); //name=iid 인 value 를 arrayParam에 담음.
 		try {
-			mbiz.iupdateYN(iid);
+			for(int i = 0; i < arrayParam.length; i++) {
+				System.out.println(arrayParam[i]);
+				mbiz.iupdateYN(Integer.parseInt(arrayParam[i])); //배열을 하나씩 업데이트
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

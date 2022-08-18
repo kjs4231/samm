@@ -2,6 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+.modal-body img{
+    width: 100% !important;
+    border-radius: 0 !important;
+    height: 100% !important;
+}
+</style>
 <script>
 $(document).ready(function(){ 
 	$('#mod_btn').click(function(){
@@ -50,42 +57,36 @@ $(document).ready(function(){
 <tbody>
 <tr th:each="vo : ${volist}">
   	<td>
-  		<input type="checkbox" id="allowCheck" name="allowCheck" class="form-check-primary">
-  		<input type="hidden" name="iid" th:value="${vo.iid}">
+  		<input type="checkbox" id="allowCheck" name="iid" th:value="${vo.iid}" class="form-check-primary">
   	</td>
  	<td th:text="|${vo.uname} ( ${vo.uid} )|"></td>
  	<td th:text="${vo.ftitle}"></td>
  	<td th:text="${#dates.format(vo.imgregdate, 'dd/MM/yy')}"></td>
  	<td> 
  	
- 	<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#imgModal"> 보기 </button>
+ 	<button type="button" class="btn btn-warning" data-bs-toggle="modal" th:data-bs-target="'#'+'imgModal'+${vo.iid}"> 보기 </button>
 
 <!-- The Modal -->
-<div class="modal" id="imgModal">
+<div class="modal" th:id="'imgModal'+${vo.iid}">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
-      <!--
+
       <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
+        <h4 class="modal-title">Fesltival 요청 사진</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div> -->
+      </div> 
 
       <!-- Modal body -->
       <div class="modal-body">  
         <img th:src="@{'/images/festival/'+${vo.imgname}}" class="w-200"> 
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
       </div>
-<br><br><br>
-      <!-- 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-      </div> -->
 
     </div>
   </div>
-</div> <!-- The Modal -->
-
+</div> 
+<!-- The Modal -->
 </td>
 </tr>	
 </tbody>
