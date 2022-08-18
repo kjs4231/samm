@@ -70,6 +70,18 @@
 		ORDER BY a.eventstartdate desc
 	</select>
 	
+	<select id="searchFestivalAll" parameterType="Map" resultType="FestivalVo">
+		SELECT a.*, IFNULL(AVG(b.star),0) AS avgstar
+		FROM festival a
+		left join review b on a.contentid = b.fid		
+ 		WHERE
+		a.eventstartdate <![CDATA[ <= #{eventstartdate}]]> AND
+		a.eventenddate <![CDATA[ >= #{eventenddate}]]> AND
+		b.del_date is null
+		GROUP BY a.contentid
+		ORDER BY a.eventstartdate desc
+	</select>
+	
 	<select id="searchKeyword" parameterType="HashMap" resultType="FestivalVo">
 		SELECT * FROM festival WHERE title LIKE CONCAT('%',#{keyword},'%') LIMIT ${page}, 12
 	</select>
