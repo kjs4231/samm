@@ -69,6 +69,7 @@
 															</div>
 															<select name="areacode" id="areacode"
 																class="form-control">
+																<option th:value="national" th:text="전국">
 																<option th:each="area:${area}"
 																	th:value="${area['code']}" th:text="${area['name']}">$100</option>
 															</select>

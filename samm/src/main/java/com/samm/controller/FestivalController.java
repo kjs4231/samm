@@ -81,7 +81,6 @@ public class FestivalController {
 	@RequestMapping("/reviewimpl")
 	public String review(String contents, String star, String uid, int fid, HttpSession session, Model m,
 			ReviewVo review) {
-		System.out.println(review);
 		try {
 			reviewbiz.register(review);
 		} catch (Exception e) {

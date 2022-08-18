@@ -53,7 +53,7 @@ public class MainController {
 		List<FestivalVo> list = null;
 		List<Map<String, String>> area = null;
 		try {
-			list = fbiz.searchFestival2(areacode, eventstartdate, eventenddate);
+			list = fbiz.searchFestival3(areacode, eventstartdate, eventenddate);
 			area = abiz.get();
 		} catch (IOException e) {
 			e.printStackTrace();
