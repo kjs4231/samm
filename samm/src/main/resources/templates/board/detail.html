@@ -104,7 +104,9 @@
 					
 				<div class="tagcloud" 
 					th:if="${session.loginuser} != null and ${session.loginuser.id} == ${dp.writer}">
+					<button id="reviseBtn" class="btn btn-default">revise</button>
 					<button id="deleteBtn" class="btn btn-default">delete</button>
+					
 				</div>
 				
 				<!-- main contents -->
@@ -164,8 +166,6 @@
 							</div>
 							<div class="comment-body">
 								<div class="btn-body">
-								<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.commenter}"
-								   th:onClick="'updateReview('+${review.cno}+','+${reviewStat.index}+')'"> 수정</a> 
 								<a th:if="${session.loginuser} != null and ${session.loginuser.id} == ${review.commenter}"
 									th:onclick="CdeleteBtn([[${review.cno}]],[[${review.bno}]],[[${review.commenter}]])">삭제</a>
 								</div>
