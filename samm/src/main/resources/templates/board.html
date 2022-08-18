@@ -8,9 +8,9 @@ $(document).ready(function(){
 	if(page == null){
 		page = 1 ;
 	}
-	console.log(page);
 	$('.pagenum').removeClass("active");
 	$('.pagenum').eq(page-1).addClass("active");
+	thumbnailPainting();
 	
 });
 function goDetail(bno){
@@ -26,6 +26,21 @@ function Write(){
 		}
 }
 
+function thumbnailPainting(){
+	let size = $('#size').val();
+	console.log($('#contents1').children('img').eq(0));
+	console.log($('#contents1').children('img').eq(0).attr("src"));
+	for(i = 0; i < size; i++){
+		let thumbnail = $('#contents'+i).children('img').eq(0).attr("src");
+		if(thumbnail == null ){
+			$('#board'+i).css({'background-image': "url('/images/festival6.jpg')"})
+		}else{
+			$('#board'+i).css({'background-image': "url("+"'"+thumbnail+"'"+")"})
+		}	
+		
+	}
+	
+}
 
 </script>
 
@@ -149,9 +164,10 @@ function Write(){
 	<div class="container">
 		<div class="row d-flex">
 			<div class="col-md-4 d-flex ftco-animate" th:each="b:${blist}">
+			<input hidden id="size" th:value="${bStat.size}">
 				<div class="blog-entry justify-content-end blog-list">
-					<a class="block-20"
-						style="background-image: url('images/image_1.jpg');"> </a>
+					<a class="block-20" th:id="'board'+${bStat.index}"> </a>
+						<div th:id="'contents'+${bStat.index}" class="hidden" th:utext="${b.content}"></div>
 					<div class="text">
 						<div class="d-flex align-items-center mb-4 topp">
 							<div class="one">

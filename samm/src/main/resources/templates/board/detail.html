@@ -104,8 +104,9 @@
 					
 				<div class="tagcloud" 
 					th:if="${session.loginuser} != null and ${session.loginuser.id} == ${dp.writer}">
+					<button id="reviseBtn" class="btn btn-default">revise</button>
 					<button id="deleteBtn" class="btn btn-default">delete</button>
-					<button id="reviseBtn" class="btn btn-default">delete</button>
+					
 				</div>
 				
 				<!-- main contents -->
