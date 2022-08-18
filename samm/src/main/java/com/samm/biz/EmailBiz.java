@@ -68,8 +68,8 @@ public class EmailBiz {
 				SimpleMailMessage simpleMessage = new SimpleMailMessage();
 				simpleMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
 				simpleMessage.setSubject("[Samm Festival]에서 찜하신 축제가 7일 남았습니다!!");
-				simpleMessage.setText("Samm Festival을 이용해주셔서 감사합니다. 찜하신 축제이신"+wishVo.getTitle()+"축제가 앞으로 7일 남았습니다."
-						+ "축제를 가기전 정보를 다시 확인해 보세요."+"http://49.50.174.134:8080/detail?contentid="+wishVo.getFid());
+				simpleMessage.setText("Samm Festival을 이용해주셔서 감사합니다. 찜하신 축제이신 \""+wishVo.getTitle()+"\" 축제가 앞으로 7일 남았습니다.\n"
+						+ "축제를 가기전 정보를 다시 확인해 보세요!! 아래 링크를 통해 축제 정보를 다시 볼 수 있습니다! \n"+"http://49.50.174.134:8080/detail?contentid="+wishVo.getFid());
 				javaMailSender.send(simpleMessage);
 			}
 			if(wishVo.getDDay() == 3) {
@@ -78,8 +78,8 @@ public class EmailBiz {
 				SimpleMailMessage simpleMessage = new SimpleMailMessage();
 				simpleMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
 				simpleMessage.setSubject("[Samm Festival]에서 찜하신 축제가 3일 남았습니다!!");
-				simpleMessage.setText("Samm Festival을 이용해주셔서 감사합니다. 찜하신 축제이신"+wishVo.getTitle()+"축제가 앞으로 3일 남았습니다."
-						+ "축제를 가기전 정보를 다시 확인해 보세요."+"http://49.50.174.134:8080/detail?contentid="+wishVo.getFid());
+				simpleMessage.setText("Samm Festival을 이용해주셔서 감사합니다. 찜하신 축제이신 \""+wishVo.getTitle()+"\" 축제가 앞으로 3일 남았습니다.\n" 
+						+ "축제를 가기전 정보를 다시 확인해 보세요!! 아래 링크를 통해 축제 정보를 다시 볼 수 있습니다! \n"+"http://49.50.174.134:8080/detail?contentid="+wishVo.getFid());
 				javaMailSender.send(simpleMessage);
 			}
 			if(wishVo.getDDay() == 1) {
@@ -88,8 +88,8 @@ public class EmailBiz {
 				SimpleMailMessage simpleMessage = new SimpleMailMessage();
 				simpleMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
 				simpleMessage.setSubject("[Samm Festival]에서 찜하신 축제가 하루 전 입니다!!");
-				simpleMessage.setText("Samm Festival을 이용해주셔서 감사합니다. 찜하신 축제이신"+wishVo.getTitle()+"축제가 앞으로 하루 전입니다!!"
-						+ "까먹지 말고 축제를 가기전 정보를 다시 확인해 보세요."+"http://49.50.174.134:8080/detail?contentid="+wishVo.getFid());
+				simpleMessage.setText("Samm Festival을 이용해주셔서 감사합니다. 찜하신 축제이신 \""+wishVo.getTitle()+"\" 축제가 앞으로 하루 전 남았습니다.\n"
+						+ "축제를 가기전 정보를 다시 확인해 보세요!! 아래 링크를 통해 축제 정보를 다시 볼 수 있습니다! \n"+"http://49.50.174.134:8080/detail?contentid="+wishVo.getFid());
 				javaMailSender.send(simpleMessage);
 			}
 			if(wishVo.getDDay() == 0) {
@@ -98,8 +98,8 @@ public class EmailBiz {
 				SimpleMailMessage simpleMessage = new SimpleMailMessage();
 				simpleMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
 				simpleMessage.setSubject("[Samm Festival]에서 찜하신 축제가 시작했습니다!!");
-				simpleMessage.setText("Samm Festival을 이용해주셔서 감사합니다. 찜하신 축제이신"+wishVo.getTitle()+"축제가 시작했습니다!! 오늘을 즐기세요!"
-						+ "까먹지 말고 축제를 가기전 정보를 다시 확인해 보세요."+"http://49.50.174.134:8080/detail?contentid="+wishVo.getFid());
+				simpleMessage.setText("Samm Festival을 이용해주셔서 감사합니다. 찜하신 축제이신 \""+wishVo.getTitle()+"\" 오늘 시작합니다!.\n"
+						+ "축제를 가기전 정보를 다시 확인해 보세요!! 아래 링크를 통해 축제 정보를 다시 볼 수 있습니다! \n"+"http://49.50.174.134:8080/detail?contentid="+wishVo.getFid());
 				javaMailSender.send(simpleMessage);
 			}
 		}
