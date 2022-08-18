@@ -32,32 +32,6 @@
 
 
 
-	<update id="updateYN" parameterType="int">
-		UPDATE festivalimg SET allowYN='Y' 
-		WHERE id=#{id}
-	</update>
- 
-	<delete id="deleteNew" parameterType="int">
-		DELETE FROM festivalimg WHERE id=#{id}
-	</delete>
-
-	<select id="selectAllNew" resultType="imgallowVo">
-		SELECT i.id as iid, i.uid as uid, u.name as uname, 
-			   f.title as ftitle, i.regdate as imgregdate, 
-			   i.name as imgname
-		FROM festivalimg i join festival f join users u
-		on i.fid = f.contentid and u.id = i.uid 
-		where i.allowYN = 'N'
-	</select>
-
-	<select id="selectNew" parameterType="int" resultType="imgallowVo">
-		SELECT i.id as iid, i.uid as uid, u.name as uname, 
-			   f.title as ftitle, i.regdate as imgregdate, 
-			   i.name as imgname
-		FROM festivalimg i join festival f join users u
-		on i.fid = f.contentid and u.id = i.uid 
-		where i.id=#{iid}
-	</select>
 	
 	
 	

@@ -46,6 +46,7 @@
 	<select id="getCommon" resultType="Map" parameterType="int" >
 		select * from  detailcommon where contentid=#{contentid}
 	</select>
-	
+  
+
 
 </mapper>

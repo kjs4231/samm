@@ -46,22 +46,7 @@ public class UsersBiz implements Biz<String,UsersVo> {
     
     
     
-    public String idCheck(String k) throws Exception{
-		return usersDao.idCheck(k);    	
-    }
-
-	public int getTotalNum() throws Exception {		
-		return usersDao.getTotalNum();
-	}
-
-	public List<UsersVo> selectlist(Map<String, Integer> Map) throws Exception {
-		return usersDao.selectlist(Map);
-	}
-
-	public List<UsersVo> msearch(Map<String, String> map) throws Exception {
-		return usersDao.msearch(map);
-	}
-	
+ 
 	public void kakaoLogin(UsersVo v) throws Exception{
 		usersDao.kakaoLogin(v);
 	}
