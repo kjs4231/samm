@@ -22,6 +22,7 @@ public class UsersVo {
     private String phone;
     private String gender;
     private String profile_img;
+    private String del_date;
     
     private MultipartFile mf;
 

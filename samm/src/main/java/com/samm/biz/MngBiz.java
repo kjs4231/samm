@@ -61,27 +61,22 @@ public class MngBiz {
 	}
 	
 	/********************************* members */
-	
-    
+	    
     public void mregister(UsersVo v) throws Exception {
         dao.minsert(v);
     }
-
     
     public void mmodify(UsersVo v) throws Exception {
         dao.mupdate(v);
     }
-
     
     public void mremove(String k) throws Exception {
         dao.mdelete(k);
     }
-
     
     public UsersVo mget(String k) throws Exception {
         return dao.mselect(k);
     }
-
     
     public List<UsersVo> mget() throws Exception {
         return dao.mselectAll();
@@ -114,8 +109,12 @@ public class MngBiz {
 		return dao.iselectAllNew();
 	}
 
-	public void iupdateYN(Integer k) throws Exception {
-		dao.iupdateYN(k);
+	public void iupdateY(Integer k) throws Exception {
+		dao.iupdateY(k);
+	}
+	
+	public void iupdateNwhy(int iid, String whytext) throws Exception {
+		dao.iupdateNwhy(iid, whytext); 
 	}
 	
 	/********************************* board */
@@ -154,19 +153,19 @@ public class MngBiz {
 		dao.deleteComment(cno);
 	}
 
-	public CommentVo cget(int cno) {
+	public CommentVo cget(int cno) throws Exception {
 		return dao.cget(cno);
 	}
 
-	/**
-	 * @throws Exception *****************************************/
- 
-
+	public void iupdateNwhy(imgallowVo vo) throws Exception {
+		dao.iupdateNwhy(vo);
+		
+	}
+	
 	public List<FestivalVo> fnowget() throws Exception {
 		return dao.fnowget();
 	}
  
-	
 	
 	
 	

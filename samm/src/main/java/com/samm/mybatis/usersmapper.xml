@@ -10,7 +10,7 @@
 	</select>
 
 	<insert id="insert" parameterType="UsersVo">
-		INSERT INTO users VALUES (#{id},#{pwd},#{name},#{email},#{address},#{phone},#{gender},null)
+		INSERT INTO users VALUES (#{id},#{pwd},#{name},#{email},#{address},#{phone},#{gender},null,null)
 		
 	</insert>
 	
@@ -63,10 +63,11 @@
 		WHERE id=#{id}
 	</update>
 	
-	<delete id="delete" parameterType="String">
-		DELETE FROM users WHERE
-		id=#{id}
-	</delete>
+	<update id="delete" parameterType="String">
+		UPDATE SET users  
+		del_date = now()
+		WHERE id=#{id}
+	</update>
 	
 	<select id="idCheck" parameterType="String" resultType="java.lang.String">
 		SELECT id
