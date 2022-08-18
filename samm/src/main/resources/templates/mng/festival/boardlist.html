@@ -53,8 +53,9 @@ $(document).ready(function(){
 		    <th class="col-md-1"><b>번호</b></th>
 		    <th class="col-md-6"><b>제목</b></th>
  		    <th class="col-md-2"><b>작성자</b></th>
-		    <th class="col-md-2"><b>등록일</b></th> 
-		    <th class="col-md-2"><b>수정일</b></th> 
+		    <th class="col-md-1"><b>등록일</b></th> 
+		    <th class="col-md-1"><b>수정일</b></th>
+		    <th class="col-md-1"><b>삭제일</b></th>  
 		  </tr>
 		</thead>
 		<tbody>	
@@ -63,7 +64,8 @@ $(document).ready(function(){
 		    <td><a href="" th:text="${vo.title}" th:href="@{boarddetail(bno=${vo.bno})}"></a></td>		    
 		    <td th:text="${vo.writer}"></td>
 		    <td th:text="${#dates.format(vo.reg_date, 'dd/MM/yy HH:mm')}"></td>  
-		    <td th:text="${#dates.format(vo.up_date, 'dd/MM/yy HH:mm')}"></td> 
+		    <td th:text="${#dates.format(vo.up_date, 'dd/MM/yy HH:mm')}"></td>
+		    <td th:text="${#dates.format(vo.del_date, 'dd/MM/yy HH:mm')}"></td> 
 		  </tr>
 		</tbody>
 	</table>

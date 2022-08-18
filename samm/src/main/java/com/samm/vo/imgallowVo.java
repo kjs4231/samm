@@ -22,6 +22,7 @@ public class imgallowVo {
 	public Date imgregdate;
 	public String imgname;
 	
+	public String whytext;
 	
 	public imgallowVo(int iid) {
 		super();
